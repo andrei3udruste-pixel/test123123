@@ -1,4 +1,4 @@
-# proiect-inginerie-software
+# Proiect-Inginerie-Software
 # Product Vision
 
 **FOR**  Sports betting enthusiasts and online casino players who seek a secure, fast, and entertaining platform.  
