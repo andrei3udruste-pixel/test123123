@@ -1,0 +1,95 @@
+{
+  "app": {
+    "title": "FinalStake"
+  },
+  "language": {
+    "title": "Limbă",
+    "name": {
+      "en": "Engleză",
+      "ro": "Română"
+    }
+  },
+  "yesOrNo": {
+    "true": "Yes",
+    "false": "No"
+  },
+  "active": {
+    "true": "Activ",
+    "false": "Inactiv"
+  },
+  "error": {
+    "form": {
+      "required": "Acest câmp este obligatoriu.",
+      "email": "Vă rugăm să introduceți o adresă de email validă.",
+      "passwordMismatch": "Parola și parola de confirmare nu se potrivesc.",
+      "weakPassword": "Parola ar trebui să aibă cel puțin 8 caractere, o literă mare, o literă mică și un caracter special."
+    },
+    "authenticationFailed": "Autentificare eșuată! Vă rugăm să vă verificați credențialele!",
+    "unknownError": "O eroare necunoscută s-a produs!",
+    "userDisabled": "Acest cont este dezactivat! Vă rugăm să contactați un administrator pentru a remedia problema!",
+    "invalidCredentials": "Credențiale invalide!",
+    "accessDenied": "Nu aveți acces la această resursă! Vă rugăm să vă verificați permisiunile!"
+  },
+  "actions": {
+    "submit": "Trimite",
+    "edit": "Editează",
+    "view": "Vizualizează",
+    "delete": "Șterge",
+    "add": "Adaugă",
+    "close": "Închide",
+    "back": "Înapoi"
+  },
+  "auth": {
+    "login": {
+      "title": "Autentificare",
+      "username": "Nume utilizator",
+      "password": "Parolă"
+    }
+  },
+  "list": {
+    "itemsPerPage": "Înregistrări per pagină",
+    "actions": "Acțiuni"
+  },
+  "sidenav": {
+    "userManagement": "Gestiune utilizatori",
+    "users": "Users"
+  },
+  "role": {
+    "select": {
+      "addAll": "Adăugați toate rolurile",
+      "deleteAll": "Ștergeți toate rolurile"
+    }
+  },
+  "user": {
+    "profile": {
+      "title": "Profil utilizator",
+      "actions": {
+        "title": "Acțiuni",
+        "logout": "Deconectați-vă",
+        "changePassword": "Schimbare parolă"
+      }
+    },
+    "view": {
+      "title": "Utilizator - {{username}}",
+      "notFound": "Utilizatorul nu a fost găsit!"
+    },
+    "list.title": "Users",
+    "add.title": "Adaugă utilizator",
+    "edit.title": "Editează utilizator",
+    "id": "ID utilizator",
+    "firstName": "Prenume",
+    "lastName": "Nume",
+    "username": "Nume utilizator",
+    "email": "Email",
+    "enabled": "Active",
+    "roles": "Roluri",
+    "createdAt": "Creat la",
+    "updatedAt": "Actualizat la",
+    "password": "Parolă",
+    "confirmPassword": "Confirmare parolă"
+  },
+  "deleteConfirmation": {
+    "title": "Confirmare ștergere",
+    "defaultMessage": "Sunteți sigur că doriți să ștergeți această resursă? Acțiunea este ireversibilă și poate duce la pierderea permanentă a unor date!"
+  }
+}
