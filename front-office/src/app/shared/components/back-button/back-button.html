@@ -1,0 +1,14 @@
+@if (iconOnly()) {
+  <button
+    (click)="navigateBack()"
+    matIconButton
+  >
+    <mat-icon>arrow_back</mat-icon>
+  </button>
+} @else {
+  <button
+    (click)="navigateBack()"
+    matButton="outlined">
+    {{ 'actions.back' | translate }}
+  </button>
+}

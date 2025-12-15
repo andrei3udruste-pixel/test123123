@@ -13,8 +13,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
-import static finalStake.security.token.AuthenticationTokenFilter.HEADER_PREFIX;
-
 @Slf4j
 @Component
 public class TokenUtilities {
@@ -38,19 +36,6 @@ public class TokenUtilities {
                 .withExpiresAt(expirationDate)
                 .withIssuer(applicationName)
                 .sign(algorithm);
-    }
-
-    public String getUsernameFromToken(String token) {
-        if (token.startsWith(HEADER_PREFIX)) {
-            token = token.substring(HEADER_PREFIX.length());
-        }
-
-        var decodedToken = decodeToken(token);
-
-        if (decodedToken != null) {
-            return decodedToken.getSubject();
-        }
-        return null;
     }
 
     private Algorithm getAlgorithm() {
