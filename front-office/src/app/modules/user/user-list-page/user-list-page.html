@@ -1,0 +1,70 @@
+<div class="flex flex-row justify-between items-center mb-4">
+  <h2>{{ 'user.list.title' | translate }}</h2>
+  <button [routerLink]="['/user', 'add']" matMiniFab>
+    <mat-icon>add</mat-icon>
+  </button>
+</div>
+
+@if (isLoading()) {
+  <div class="flex flex-row align-center justify-center">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+  </div>
+} @else {
+  <table (matSortChange)="setSort($event)" [dataSource]="dataSource()" [matSortActive]="predicate()"
+         [matSortDirection]="ascending() ? 'asc' : 'desc'"
+         mat-table matSort>
+    <ng-container matColumnDef="idUser">
+      <th *matHeaderCellDef mat-header-cell mat-sort-header>{{ 'user.id' | translate }}</th>
+      <td *matCellDef="let element" mat-cell>{{ element.idUser }}</td>
+    </ng-container>
+    <ng-container matColumnDef="email">
+      <th *matHeaderCellDef mat-header-cell mat-sort-header>{{ 'user.email' | translate }}</th>
+      <td *matCellDef="let element" mat-cell>{{ element.email }}</td>
+    </ng-container>
+    <ng-container matColumnDef="username">
+      <th *matHeaderCellDef mat-header-cell mat-sort-header>{{ 'user.username' | translate }}</th>
+      <td *matCellDef="let element" mat-cell>{{ element.username }}</td>
+    </ng-container>
+    <ng-container matColumnDef="firstName">
+      <th *matHeaderCellDef mat-header-cell mat-sort-header>{{ 'user.firstName' | translate }}</th>
+      <td *matCellDef="let element" mat-cell>{{ element.firstName }}</td>
+    </ng-container>
+    <ng-container matColumnDef="lastName">
+      <th *matHeaderCellDef mat-header-cell mat-sort-header>{{ 'user.lastName' | translate }}</th>
+      <td *matCellDef="let element" mat-cell>{{ element.lastName }}</td>
+    </ng-container>
+    <ng-container matColumnDef="enabled">
+      <th *matHeaderCellDef mat-header-cell mat-sort-header>{{ 'user.enabled' | translate }}</th>
+      <td *matCellDef="let element" mat-cell>
+        <mat-icon>
+          {{ element.enabled ? 'check_circle' : 'cancel' }}
+        </mat-icon>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="actions">
+      <th *matHeaderCellDef mat-header-cell>{{ 'list.actions' | translate }}</th>
+      <td *matCellDef="let element" mat-cell>
+        <button [routerLink]="['/user', element.idUser, 'view']" matIconButton>
+          <mat-icon>visibility</mat-icon>
+        </button>
+        <button [routerLink]="['/user', element.idUser, 'edit']" matIconButton>
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button [routerLink]="['/user', element.idUser, 'change-password']" matIconButton>
+          <mat-icon>lock_reset</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+    <tr *matRowDef="let row; columns: displayedColumns" mat-row></tr>
+  </table>
+  <mat-paginator
+    (page)="onPageChange($event)"
+    [length]="totalItems()"
+    [pageIndex]="page()"
+    [pageSizeOptions]="pageSizeOptions"
+    [pageSize]="pageSize()"
+    showFirstLastButtons>
+  </mat-paginator>
+}

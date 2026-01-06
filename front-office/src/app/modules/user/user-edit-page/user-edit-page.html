@@ -1,0 +1,38 @@
+<div class="w-full lg:w-1/2 mx-auto mb-[10%]">
+  <div class="w-full flex flex-row justify-between mb-2">
+    <div class="flex flex-row align-center">
+      <h3>{{ 'user.edit.title' | translate }}</h3>
+    </div>
+    <app-back-button></app-back-button>
+  </div>
+  @if (isLoading()) {
+    <mat-progress-bar class="mb-3" mode="indeterminate"></mat-progress-bar>
+  }
+  <mat-card>
+    <mat-card-content>
+      <form (ngSubmit)="submit()" [formGroup]="editForm" autocomplete="off" class="mt-3">
+        <div class="flex flex-col align-center justify-center gap-1">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+            <mat-form-field class="col-span-full">
+              <mat-label>{{ 'user.username' | translate }}</mat-label>
+              <input [formControl]="editForm.controls.username" autocomplete="new-username" matInput>
+              <app-control-errors [control]="editForm.controls.username" [errors]="['required']"></app-control-errors>
+            </mat-form-field>
+            <mat-form-field class="mb-0">
+              <mat-label>{{ 'user.lastName' | translate }}</mat-label>
+              <input [formControl]="editForm.controls.lastName" matInput>
+              <app-control-errors [control]="editForm.controls.lastName" [errors]="['required']"></app-control-errors>
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label>{{ 'user.firstName' | translate }}</mat-label>
+              <input [formControl]="editForm.controls.firstName" matInput>
+              <app-control-errors [control]="editForm.controls.firstName" [errors]="['required']"></app-control-errors>
+            </mat-form-field>
+          </div>
+          <app-role-selector [(roles)]="roles"></app-role-selector>
+        </div>
+        <button class="w-full mt-5" matButton="filled" type="submit">{{ 'actions.edit' | translate }}</button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

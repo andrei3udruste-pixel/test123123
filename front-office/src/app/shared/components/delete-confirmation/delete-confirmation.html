@@ -1,0 +1,8 @@
+<h2 mat-dialog-title>{{ 'deleteConfirmation.title' | translate }}</h2>
+<mat-dialog-content>
+  <p>{{ (data.messageKey ? data.messageKey : 'deleteConfirmation.title') | translate: data.messageParams }}</p>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button (click)="close(false)" cdkFocusInitial matButton>{{ 'actions.close' | translate }}</button>
+  <button (click)="close(true)" matButton>{{ 'actions.delete' | translate }}</button>
+</mat-dialog-actions>

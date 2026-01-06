@@ -1,0 +1,8 @@
+@if (control().touched) {
+  @for (error of errors(); track error) {
+    @if (control().hasError(error)) {
+      <mat-error class="text-xs">{{ ('error.form.' + error) | translate }}</mat-error>
+    }
+  }
+}
+

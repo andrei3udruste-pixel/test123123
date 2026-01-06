@@ -1,0 +1,10 @@
+<button matButton [matMenuTriggerFor]="menu">
+  <span class="text-xl">{{ emojiMapping[language.selectedLanguage] }}</span>
+</button>
+<mat-menu #menu="matMenu">
+  @for (languageEntry of language.languageList; track languageEntry) {
+    <button mat-menu-item
+            (click)="selectLanguage(languageEntry)">{{ emojiMapping[languageEntry] }} {{ ('language.name.' + languageEntry) | translate }}
+    </button>
+  }
+</mat-menu>
