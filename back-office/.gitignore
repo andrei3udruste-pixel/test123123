@@ -6,3 +6,5 @@ dist
 .openapi-generator
 .vscode
 .angular
+**/.DS_Store
+node_modules/
