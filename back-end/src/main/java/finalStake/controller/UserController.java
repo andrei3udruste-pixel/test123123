@@ -61,6 +61,12 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(new BaseResponse<>(userView));
     }
 
+    @GetMapping("/admin/profile/{id}")
+    public ResponseEntity<BaseResponse<UserViewAdminDTO>> getProfileAdmin(@PathVariable UUID id) {
+        var userView = userService.getViewAdmin(id);
+        return ResponseEntity.status(HttpStatus.OK).body(new BaseResponse<>(userView));
+    }
+
     @Tag(name = "Admin")
     @PutMapping("/admin/{id}")
     @PreAuthorize("hasAnyRole('ADMIN')")

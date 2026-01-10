@@ -5,7 +5,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Named;
 import finalStake.model.entity.Role;
 
-import java.util.Set;
+import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface RoleMapper {
@@ -15,5 +15,5 @@ public interface RoleMapper {
     }
 
     @IterableMapping(qualifiedByName = "roleToString")
-    Set<String> rolesToStrings(Set<Role> roles);
+    List<String> rolesToStrings(List<Role> roles);
 }

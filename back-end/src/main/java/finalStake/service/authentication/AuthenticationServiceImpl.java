@@ -29,10 +29,7 @@ import finalStake.model.enums.Role;
 import finalStake.security.token.TokenUtilities;
 import finalStake.service.mail.MailService;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.UUID;
+import java.util.*;
 
 @Slf4j
 @Service
@@ -118,7 +115,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 .username(userSignUpDTO.getUsername())
                 .email(userSignUpDTO.getEmail())
                 .password(passwordEncoder.encode(userSignUpDTO.getPassword()))
-                .roles(Collections.singleton(role))
+                .roles(List.of(role))
                 .enabled(!verifyEmail)
                 .locked(false)
                 .build();
@@ -159,7 +156,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         var verificationToken = getVerificationToken(token, VerificationTokenType.RESET_PASSWORD);
 
         var user = verificationToken.getUser();
-        user.setPassword(passwordEncoder.encode(newPasswordDTO.getPassword()));
+        user.setPassword(passwordEncoder.encode(newPasswordDTO.getNewPassword()));
         userRepository.save(user);
         log.info("Changed password for user {}!", user.getUsername());
 

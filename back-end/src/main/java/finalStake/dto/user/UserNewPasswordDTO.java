@@ -16,5 +16,5 @@ import java.io.Serializable;
 public class UserNewPasswordDTO implements Serializable {
     @NotBlank
     @Size(max = 40)
-    private String password;
+    private String newPassword;
 }

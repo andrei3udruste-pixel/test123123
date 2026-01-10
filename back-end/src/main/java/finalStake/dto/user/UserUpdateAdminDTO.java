@@ -7,7 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Set;
+import java.util.List;
 
 @Data
 @Builder
@@ -21,5 +21,5 @@ public class UserUpdateAdminDTO {
     private Boolean locked;
 
     @NotNull
-    private Set<String> roles;
+    private List<String> roles;
 }

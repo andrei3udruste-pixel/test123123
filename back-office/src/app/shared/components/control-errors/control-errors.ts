@@ -1,5 +1,5 @@
 import {Component, input} from '@angular/core';
-import {AbstractControl, FormControl} from '@angular/forms';
+import {AbstractControl} from '@angular/forms';
 import {MatError} from '@angular/material/input';
 import {TranslatePipe} from '@ngx-translate/core';
 

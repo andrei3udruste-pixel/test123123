@@ -211,7 +211,7 @@ class UserServiceImplAdditionalTest {
         UserUpdateAdminDTO updateAdminDTO = new UserUpdateAdminDTO();
         updateAdminDTO.setEnabled(true);
         updateAdminDTO.setLocked(false);
-        Set<String> newRolesNames = Set.of("ROLE_USER", "ROLE_ADMIN");
+        var newRolesNames = List.of("ROLE_USER", "ROLE_ADMIN");
         updateAdminDTO.setRoles(newRolesNames);
 
         // Mapper: setăm enabled și locked în entitate
@@ -256,7 +256,7 @@ class UserServiceImplAdditionalTest {
         UserUpdateAdminDTO updateAdminDTO = new UserUpdateAdminDTO();
         updateAdminDTO.setEnabled(true);
         updateAdminDTO.setLocked(false);
-        updateAdminDTO.setRoles(Set.of("ROLE_USER"));
+        updateAdminDTO.setRoles(List.of("ROLE_USER"));
 
         // Acțiune + Verificare excepție
         assertThatThrownBy(() -> userService.updateUserAdmin(fakeId, updateAdminDTO))

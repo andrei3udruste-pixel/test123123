@@ -5,7 +5,7 @@ import {DeleteConfirmation, DeleteConfirmationData} from '../delete-confirmation
 import {MatDialog} from '@angular/material/dialog';
 import {ActivatedRoute, Router} from '@angular/router';
 import {IPageResponse} from '../../models/page-response';
-import {MatSort, Sort} from '@angular/material/sort';
+import {Sort} from '@angular/material/sort';
 import {PageEvent} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
 
@@ -77,7 +77,7 @@ export abstract class List<EntityType, EntitySearchType> {
 
   setSort(sort: Sort): void {
     this.predicate.set(sort.active);
-    this.ascending.set(sort.direction === 'asc');
+    this.ascending.set(!(sort.direction === 'desc'));
     this.loadPage(0);
   }
 
@@ -85,6 +85,10 @@ export abstract class List<EntityType, EntitySearchType> {
     this.page.set(event.pageIndex);
     this.pageSize.set(event.pageSize!);
     this.loadPage(event.pageIndex);
+  }
+
+  onSearch(): void {
+    this.loadPage(0);
   }
 
   sort(): string[] {
@@ -136,7 +140,7 @@ export abstract class List<EntityType, EntitySearchType> {
     this.page.set(page);
 
     const data = responseBody?.data ?? [];
-    this.dataSource.set(new MatTableDataSource<EntityType>(responseBody?.data ?? []));
+    this.dataSource.set(new MatTableDataSource<EntityType>(data));
 
     if (navigate) {
       this.router.navigate(this.entityRootPath, {

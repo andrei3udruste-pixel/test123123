@@ -7,9 +7,9 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {TranslatePipe} from '@ngx-translate/core';
 import {LanguageSelector} from '../../../shared/components/language-selector/language-selector';
-import {AuthControllerService} from '../../../openapi';
+import {AuthService} from '../../../openapi';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-import {UserService} from '../../../shared/services/user/user';
+import {UserDataService} from '../../../shared/services/user/user';
 import {Router} from '@angular/router';
 
 @Component({
@@ -29,9 +29,9 @@ import {Router} from '@angular/router';
   styleUrl: './login-page.scss',
 })
 export class LoginPage {
-  authControllerService = inject(AuthControllerService);
+  authService = inject(AuthService);
   router = inject(Router);
-  user = inject(UserService);
+  user = inject(UserDataService);
 
   loginForm = new FormGroup({
     username: new FormControl('', {nonNullable: true, validators: [Validators.required]}),
@@ -52,12 +52,13 @@ export class LoginPage {
     }
 
     this.isLoading.set(true);
-    this.authControllerService.loginUsingPOST({
-      username: this.loginForm.controls.username.value,
-      password: this.loginForm.controls.password.value
-    })
+    this.authService.authenticateUser({
+        username: this.loginForm.controls.username.value,
+        password: this.loginForm.controls.password.value
+      })
       .subscribe({
         next: (response) => {
+          console.log(response);
           if (response.success) {
             this.user.token = response.data!;
             this.router.navigate(['/user/profile']);

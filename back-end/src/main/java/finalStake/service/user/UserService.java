@@ -13,6 +13,8 @@ public interface UserService {
 
     UserViewDTO getView(UUID id);
 
+    UserViewAdminDTO getViewAdmin(UUID id);
+
     Page<UserViewAdminDTO> getSearchPageAdmin(Pageable pageable, UserSearchAdminDTO searchDTO);
 
     List<UserListViewDTO> getSearchList(UserSearchDTO searchDTO);

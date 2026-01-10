@@ -13,6 +13,7 @@ import finalStake.model.entity.User;
 import finalStake.repository.RoleRepository;
 import finalStake.repository.UserRepository;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -48,7 +49,7 @@ public class DataConfig implements ApplicationRunner {
         }
         roleRepository.saveAll(unsavedRoles);
 
-        var allRoles = new HashSet<>(roleRepository.findAll());
+        var allRoles = new ArrayList<>(roleRepository.findAll());
         if (!userRepository.existsByUsername(adminUsername) && !userRepository.existsByEmail(adminEmail)) {
             var user = User.builder()
                     .password(passwordEncoder.encode(adminPassword))

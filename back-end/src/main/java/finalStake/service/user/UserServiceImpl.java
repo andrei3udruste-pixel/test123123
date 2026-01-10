@@ -23,6 +23,7 @@ import finalStake.repository.UserRepository;
 import finalStake.repository.VerificationTokenRepository;
 import finalStake.specification.UserSpecifications;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -57,8 +58,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public UserViewAdminDTO getViewAdmin(UUID id) {
+        var user = userRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("userWithIdNotFound"));
+        return userMapper.userToUserAdminViewDTO(user);
+    }
+
+    @Override
     public Page<UserViewAdminDTO> getSearchPageAdmin(Pageable pageable, UserSearchAdminDTO searchDTO) {
-        Specification<User> specification = Specification.where(null);
+        Specification<User> specification = Specification.unrestricted();
 
         if (searchDTO.getUsername() != null && !searchDTO.getUsername().isEmpty()) {
             specification = specification.and(UserSpecifications.usernameContains(searchDTO.getUsername()));
@@ -96,7 +104,7 @@ public class UserServiceImpl implements UserService {
 
         userMapper.updateUserFromAdminDTO(updateDTO, user);
         var newRoles = roleRepository.findAllByNameIn(updateDTO.getRoles());
-        user.setRoles(newRoles);
+        user.setRoles(new ArrayList<>(newRoles));
 
         userRepository.save(user);
     }
