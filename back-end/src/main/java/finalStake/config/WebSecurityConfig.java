@@ -4,15 +4,18 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import finalStake.security.token.AuthenticationTokenFilter;
 
 import java.util.List;
 
@@ -27,6 +30,9 @@ public class WebSecurityConfig {
     @Value("${com.finalStake.bo.url}")
     private String backOfficeUrl;
 
+    private final AuthenticationProvider authenticationProvider;
+    private final AuthenticationTokenFilter authenticationTokenFilter;
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable);
@@ -39,6 +45,8 @@ public class WebSecurityConfig {
                 .anyRequest().authenticated()
         );
         http.cors(cors -> cors.configurationSource(corsConfigurationSource()));
+        http.authenticationProvider(authenticationProvider);
+        http.addFilterBefore(authenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 

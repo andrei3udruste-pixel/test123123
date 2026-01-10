@@ -1,0 +1,52 @@
+<mat-form-field class="w-full">
+  <mat-label>{{ 'user.roles' | translate }}</mat-label>
+  <mat-chip-grid #chipGrid>
+    @for (role of roles(); track role) {
+      <mat-chip-row (removed)="remove(role)">
+        {{ role }}
+        <button [attr.aria-label]="'remove ' + role" matChipRemove>
+          <mat-icon>cancel</mat-icon>
+        </button>
+      </mat-chip-row>
+    }
+  </mat-chip-grid>
+  <input
+    [(ngModel)]="currentRole"
+    [matAutocomplete]="auto"
+    [matChipInputAddOnBlur]="false"
+    [matChipInputFor]="chipGrid"
+    [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+  />
+  <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event);">
+    @if(filteredRoles().length > 0) {
+    @for (role of filteredRoles(); track role) {
+      <mat-option [value]="role">{{ role }}</mat-option>
+    }
+    } @else {
+      <mat-option [disabled]="true">
+        {{ 'role.select.allSelected' | translate }}
+      </mat-option>
+    }
+
+    <div class="mat-mdc-autocomplete-footer p-2 border-t">
+      @if (filteredRoles().length > 0) {
+        <button
+          (click)="addAll(); $event.stopPropagation()"
+          class="w-full text-left text-sm"
+          matButton
+          type="button">
+          {{ 'role.select.addAll' | translate }}
+        </button>
+      }
+      @if (roles().length > 0) {
+        <button
+          (click)="removeAll(); $event.stopPropagation()"
+          class="w-full text-left text-sm"
+          matButton
+          type="button">
+          {{ 'role.select.deleteAll' | translate }}
+        </button>
+      }
+    </div>
+  </mat-autocomplete>
+</mat-form-field>

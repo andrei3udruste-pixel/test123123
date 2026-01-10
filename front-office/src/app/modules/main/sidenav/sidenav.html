@@ -1,0 +1,30 @@
+<mat-sidenav [opened]="layoutState.isSidenavOpen" mode="over">
+  <div class="h-full">
+    <div class="flex flex-row justify-between align-end p-5">
+      <img alt="Logo" class="h-8 mt-1" src="/img/logo.svg">
+      <h4>{{ 'app.title' | translate }}</h4>
+      <button (click)="layoutState.toggleSidenavOpen()" class="mr-4" matIconButton>
+        <mat-icon>close
+        </mat-icon>
+      </button>
+    </div>
+
+    <mat-tree #tree [childrenAccessor]="childrenAccessor" [dataSource]="sidenavNodes()">
+      <mat-tree-node (click)="navigate(node)" *matTreeNodeDef="let node" matRipple matTreeNodePadding>
+        <span class="ml-5">{{ node.labelKey | translate }}</span>
+      </mat-tree-node>
+
+      <mat-tree-node *matTreeNodeDef="let node;when: hasChild" [cdkTreeNodeTypeaheadLabel]="node.name"
+                     matTreeNodePadding
+                     matTreeNodeToggle>
+        <button [attr.aria-label]="'Toggle ' + node.name" matIconButton
+                matTreeNodeToggle>
+          <mat-icon class="mat-icon-rtl-mirror">
+            {{ tree.isExpanded(node) ? 'expand_more' : 'chevron_right' }}
+          </mat-icon>
+        </button>
+        {{ node.labelKey | translate }}
+      </mat-tree-node>
+    </mat-tree>
+  </div>
+</mat-sidenav>

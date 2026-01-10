@@ -1,0 +1,38 @@
+<div class="flex flex-col justify-center items-center w-screen h-screen">
+  <div class="fixed top-0 right-0 m-4">
+    <app-language-selector></app-language-selector>
+  </div>
+  <mat-card class="w-3/4 md:w-2/3 lg:w-1/3">
+    <div class="w-full flex flex-col items-center mt-5 px-5 gap-3">
+      <img alt="Logo" class="w-full md:w-1/2" mat-card-image src="/img/logo.svg">
+      <p class="mb-5 text-3xl md:text-5xl">{{ 'app.title' | translate }}</p>
+    </div>
+
+    <mat-card-content>
+      <form (ngSubmit)="submit()" [formGroup]="loginForm" class="flex flex-col justify-start gap-2">
+        <mat-form-field class="w-full">
+          <mat-label>{{ 'auth.login.username' | translate }}</mat-label>
+          <input [formControl]="loginForm.controls.username" autocomplete="username" matInput>
+          @if (loginForm.controls.username.hasError('required')) {
+            <mat-error>{{ 'error.form.required' | translate }}</mat-error>
+          }
+        </mat-form-field>
+        <mat-form-field class="w-full">
+          <mat-label>{{ 'auth.login.password' | translate }}</mat-label>
+          <input [formControl]="loginForm.controls.password" [type]="passwordFieldType()"
+                 autocomplete="current-password" matInput>
+          <button (click)="togglePasswordFieldType()" matIconButton matSuffix type="button">
+            <mat-icon>visibility</mat-icon>
+          </button>
+          @if (loginForm.controls.password.hasError('required')) {
+            <mat-error>{{ 'error.form.required' | translate }}</mat-error>
+          }
+        </mat-form-field>
+        <button class="w-full mt-3" matButton="filled" type="submit">{{ 'actions.submit' | translate }}</button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+  @if (isLoading()) {
+    <mat-progress-spinner></mat-progress-spinner>
+  }
+</div>

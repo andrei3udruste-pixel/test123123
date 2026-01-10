@@ -1,0 +1,110 @@
+<mat-card class="mb-5">
+  <mat-card-content>
+    <div class="flex flex-row justify-between items-center mb-4">
+      <h2>{{ 'user.list.title' | translate }}</h2>
+      <button [routerLink]="['/user', 'add']" matMiniFab>
+        <mat-icon>add</mat-icon>
+      </button>
+    </div>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>{{ 'app.filters' | translate }}</mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <form (ngSubmit)="onSearch()" [formGroup]="filterForm">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-2">
+          <mat-form-field class="w-full">
+            <mat-label>Name</mat-label>
+            <input formControlName="name" matInput placeholder="Enter name">
+          </mat-form-field>
+
+          <mat-form-field class="w-full">
+            <mat-label>Username</mat-label>
+            <input formControlName="username" matInput placeholder="Enter username">
+          </mat-form-field>
+
+          <mat-form-field class="w-full">
+            <mat-label>Status</mat-label>
+            <mat-select formControlName="enabled">
+              <mat-option [value]="null"></mat-option>
+              <mat-option [value]="true">{{ 'active.true' | translate }}</mat-option>
+              <mat-option [value]="false">{{ 'active.false' | translate }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="flex items-center gap-2 justify-end">
+          <button (click)="onSearch()" color="primary" matButton="filled" type="button">
+            {{ 'actions.filter' | translate }}
+          </button>
+          <button (click)="clearFilters()" matButton="outlined" type="button">
+            {{ 'actions.reset' | translate }}
+          </button>
+        </div>
+      </form>
+    </mat-expansion-panel>
+  </mat-card-content>
+</mat-card>
+
+@if (isLoading()) {
+  <div class="flex flex-row align-center justify-center">
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  </div>
+} @else {
+  <table (matSortChange)="setSort($event)" [dataSource]="dataSource()" [matSortActive]="predicate()"
+         [matSortDirection]="ascending() ? 'asc' : 'desc'"
+         mat-table matSort>
+    <ng-container matColumnDef="idUser">
+      <th *matHeaderCellDef mat-header-cell mat-sort-header>{{ 'user.id' | translate }}</th>
+      <td *matCellDef="let element" mat-cell>{{ element.idUser }}</td>
+    </ng-container>
+    <ng-container matColumnDef="email">
+      <th *matHeaderCellDef mat-header-cell mat-sort-header>{{ 'user.email' | translate }}</th>
+      <td *matCellDef="let element" mat-cell>{{ element.email }}</td>
+    </ng-container>
+    <ng-container matColumnDef="username">
+      <th *matHeaderCellDef mat-header-cell mat-sort-header>{{ 'user.username' | translate }}</th>
+      <td *matCellDef="let element" mat-cell>{{ element.username }}</td>
+    </ng-container>
+    <ng-container matColumnDef="firstName">
+      <th *matHeaderCellDef mat-header-cell mat-sort-header>{{ 'user.firstName' | translate }}</th>
+      <td *matCellDef="let element" mat-cell>{{ element.firstName }}</td>
+    </ng-container>
+    <ng-container matColumnDef="lastName">
+      <th *matHeaderCellDef mat-header-cell mat-sort-header>{{ 'user.lastName' | translate }}</th>
+      <td *matCellDef="let element" mat-cell>{{ element.lastName }}</td>
+    </ng-container>
+    <ng-container matColumnDef="enabled">
+      <th *matHeaderCellDef mat-header-cell mat-sort-header>{{ 'user.enabled' | translate }}</th>
+      <td *matCellDef="let element" mat-cell>
+        <mat-icon>
+          {{ element.enabled ? 'check_circle' : 'cancel' }}
+        </mat-icon>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="actions">
+      <th *matHeaderCellDef mat-header-cell>{{ 'list.actions' | translate }}</th>
+      <td *matCellDef="let element" mat-cell>
+        <button [routerLink]="['/user', element.idUser, 'view']" matIconButton>
+          <mat-icon>visibility</mat-icon>
+        </button>
+        <button [routerLink]="['/user', element.idUser, 'edit']" matIconButton>
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button [routerLink]="['/user', element.idUser, 'change-password-page']" matIconButton>
+          <mat-icon>lock_reset</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+    <tr *matRowDef="let row; columns: displayedColumns" mat-row></tr>
+  </table>
+  <mat-paginator
+    (page)="onPageChange($event)"
+    [length]="totalItems()"
+    [pageIndex]="page()"
+    [pageSizeOptions]="pageSizeOptions"
+    [pageSize]="pageSize()"
+    showFirstLastButtons>
+  </mat-paginator>
+}

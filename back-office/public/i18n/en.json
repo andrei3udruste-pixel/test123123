@@ -1,6 +1,7 @@
 {
   "app": {
-    "title": "FinalStake"
+    "title": "FinalStake",
+    "filters": "Filters"
   },
   "language": {
     "title": "Language",
@@ -24,7 +25,9 @@
     "delete": "Delete",
     "add": "Add",
     "close": "Close",
-    "back": "Back"
+    "back": "Back",
+    "filter": "Filter",
+    "reset": "Reset"
   },
   "error": {
     "form": {
@@ -51,13 +54,13 @@
     "actions": "Actions"
   },
   "sidenav": {
-    "userManagement": "User management",
     "users": "Users"
   },
   "role": {
     "select": {
       "addAll": "Add all roles",
-      "deleteAll": "Delete all roles"
+      "deleteAll": "Delete all roles",
+      "allSelected": "All roles have been selected"
     }
   },
   "user": {
@@ -76,6 +79,7 @@
     "list.title": "Users",
     "add.title": "Add user",
     "edit.title": "Edit user",
+    "changePassword.title": "Edit user password",
     "id": "User ID",
     "firstName": "First name",
     "lastName": "Last name",
@@ -86,7 +90,10 @@
     "createdAt": "Created at",
     "updatedAt": "Updated at",
     "password": "Password",
-    "confirmPassword": "Confirmar password"
+    "confirmPassword": "Confirm password",
+    "currentPassword": "Current password",
+    "newPassword": "New password",
+    "confirmNewPassword": "Confirm new password"
   },
   "deleteConfirmation": {
     "title": "Confirm deletion",

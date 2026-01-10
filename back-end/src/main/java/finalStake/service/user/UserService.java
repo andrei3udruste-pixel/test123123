@@ -1,0 +1,29 @@
+package finalStake.service.user;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
+import finalStake.dto.user.*;
+
+import java.util.List;
+import java.util.UUID;
+
+public interface UserService {
+    UserViewDTO getView();
+
+    UserViewDTO getView(UUID id);
+
+    UserViewAdminDTO getViewAdmin(UUID id);
+
+    Page<UserViewAdminDTO> getSearchPageAdmin(Pageable pageable, UserSearchAdminDTO searchDTO);
+
+    List<UserListViewDTO> getSearchList(UserSearchDTO searchDTO);
+
+    void updateUserAdmin(UUID id, UserUpdateAdminDTO updateDTO);
+
+    void updateUser(UserUpdateDTO updateDTO);
+
+    void deleteUser();
+
+    void deleteUser(UUID id);
+}

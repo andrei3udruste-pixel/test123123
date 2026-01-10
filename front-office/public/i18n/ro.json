@@ -1,6 +1,7 @@
 {
   "app": {
-    "title": "FinalStake"
+    "title": "FinalStake",
+    "filters": "Filtre"
   },
   "language": {
     "title": "Limbă",
@@ -10,8 +11,8 @@
     }
   },
   "yesOrNo": {
-    "true": "Yes",
-    "false": "No"
+    "true": "Da",
+    "false": "Nu"
   },
   "active": {
     "true": "Activ",
@@ -37,7 +38,9 @@
     "delete": "Șterge",
     "add": "Adaugă",
     "close": "Închide",
-    "back": "Înapoi"
+    "back": "Înapoi",
+    "filter": "Filtrează",
+    "reset": "Resetează"
   },
   "auth": {
     "login": {
@@ -51,13 +54,13 @@
     "actions": "Acțiuni"
   },
   "sidenav": {
-    "userManagement": "Gestiune utilizatori",
-    "users": "Users"
+    "users": "Utilizatori"
   },
   "role": {
     "select": {
       "addAll": "Adăugați toate rolurile",
-      "deleteAll": "Ștergeți toate rolurile"
+      "deleteAll": "Ștergeți toate rolurile",
+      "allSelected": "Toate rolurile au fost selectate"
     }
   },
   "user": {
@@ -76,17 +79,21 @@
     "list.title": "Users",
     "add.title": "Adaugă utilizator",
     "edit.title": "Editează utilizator",
+    "changePassword.title": "Editează parolă utilizator",
     "id": "ID utilizator",
     "firstName": "Prenume",
     "lastName": "Nume",
     "username": "Nume utilizator",
     "email": "Email",
-    "enabled": "Active",
+    "enabled": "Activ",
     "roles": "Roluri",
     "createdAt": "Creat la",
     "updatedAt": "Actualizat la",
     "password": "Parolă",
-    "confirmPassword": "Confirmare parolă"
+    "confirmPassword": "Confirmare parolă",
+    "currentPassword": "Parolă curentă",
+    "newPassword": "Parolă nouă",
+    "confirmNewPassword": "Confirmare parolă nouă"
   },
   "deleteConfirmation": {
     "title": "Confirmare ștergere",

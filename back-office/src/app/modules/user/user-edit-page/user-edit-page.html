@@ -1,0 +1,27 @@
+<div class="w-full lg:w-1/2 mx-auto mb-[10%]">
+  <div class="w-full flex flex-row justify-between mb-2">
+    <div class="flex flex-row align-center">
+      <h3>{{ 'user.edit.title' | translate }}</h3>
+    </div>
+    <app-back-button></app-back-button>
+  </div>
+  @if (isLoading()) {
+    <mat-progress-bar class="mb-3" mode="indeterminate"></mat-progress-bar>
+  }
+  <mat-card>
+    <mat-card-content>
+      <form (ngSubmit)="submit()" [formGroup]="editForm" autocomplete="off" class="mt-3">
+        <div class="flex flex-col align-center justify-center gap-1">
+          <app-role-selector [(roles)]="roles"></app-role-selector>
+          <mat-checkbox [formControl]="editForm.controls.enabled">
+            {{ 'user.enabled' | translate }}
+          </mat-checkbox>
+          <mat-checkbox [formControl]="editForm.controls.locked">
+            {{ 'user.enabled' | translate }}
+          </mat-checkbox>
+        </div>
+        <button class="w-full mt-5" matButton="filled" type="submit">{{ 'actions.edit' | translate }}</button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

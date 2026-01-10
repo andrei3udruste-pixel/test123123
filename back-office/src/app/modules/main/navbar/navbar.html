@@ -1,0 +1,12 @@
+<mat-toolbar class="flex flex-row w-full h-10">
+  <button (click)="layoutState.toggleSidenavOpen()" class="mr-4" matIconButton>
+    <mat-icon>menu</mat-icon>
+  </button>
+  <img alt="Logo" class="h-6 mr-2" src="/img/logo.svg">
+  <h4>{{ 'app.title' | translate }}</h4>
+  <span class="flex-auto"></span>
+  <button [routerLink]="['/user', 'profile']" class="mx-2" matIconButton>
+    <mat-icon>person</mat-icon>
+  </button>
+  <app-language-selector></app-language-selector>
+</mat-toolbar>

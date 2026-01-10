@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "finalstake-back-office": {
+    "final-stake-back-office": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -61,16 +61,16 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "finalstake-back-office:build:production"
+              "buildTarget": "final-stake-back-office:build:production"
             },
             "development": {
-              "buildTarget": "finalstake-back-office:build:development"
+              "buildTarget": "final-stake-back-office:build:development"
             }
           },
+          "defaultConfiguration": "development",
           "options": {
-            "port": 8082
-          },
-          "defaultConfiguration": "development"
+            "port": 4224
+          }
         },
         "extract-i18n": {
           "builder": "@angular/build:extract-i18n"
