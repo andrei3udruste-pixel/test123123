@@ -22,7 +22,7 @@ const userRoutes: Routes = [
     component: UserListPage,
     data: {
       defaultSort: "idUser,asc",
-      authorities: [Authority.ROLE_ADMINISTRATOR]
+      authorities: [Authority.ROLE_ADMIN]
     },
     canActivate: [userAccessGuard],
   },
@@ -34,7 +34,7 @@ const userRoutes: Routes = [
     },
     canActivate: [userAccessGuard],
     data: {
-      authorities: [Authority.ROLE_ADMINISTRATOR]
+      authorities: [Authority.ROLE_ADMIN]
     }
   },
   {
@@ -45,7 +45,7 @@ const userRoutes: Routes = [
     },
     canActivate: [userAccessGuard],
     data: {
-      authorities: [Authority.ROLE_ADMINISTRATOR]
+      authorities: [Authority.ROLE_ADMIN]
     }
   },
 ]

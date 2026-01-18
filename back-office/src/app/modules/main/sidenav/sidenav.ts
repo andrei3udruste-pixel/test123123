@@ -10,6 +10,7 @@ import {MatRippleModule} from '@angular/material/core';
 import {Router} from '@angular/router';
 import {UserDataService} from '../../../shared/services/user/user';
 
+
 interface SidenavNode {
   labelKey: string;
   link?: string[];
@@ -30,6 +31,7 @@ interface SidenavNode {
   ],
   templateUrl: './sidenav.html',
   styleUrl: './sidenav.scss',
+  standalone: true
 })
 export class Sidenav {
   layoutState = inject(LayoutStateService);
@@ -41,7 +43,7 @@ export class Sidenav {
     {
       labelKey: "sidenav.users",
       link: ['/user'],
-      roles: [Authority.ROLE_ADMINISTRATOR]
+      roles: [Authority.ROLE_ADMIN]
     }
   ];
 

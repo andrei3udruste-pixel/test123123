@@ -1,66 +1,100 @@
-import {Component, inject, model, signal} from '@angular/core';
-import {BackButton} from "../../../shared/components/back-button/back-button";
-import {MatButton} from "@angular/material/button";
-import {MatCard, MatCardContent} from "@angular/material/card";
-import {MatProgressBar} from "@angular/material/progress-bar";
-import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
-import {RoleSelector} from "../../../shared/components/role-selector/role-selector";
-import {TranslatePipe} from "@ngx-translate/core";
-import {ActivatedRoute, Router} from '@angular/router';
-import {UserService, UserViewAdminDTO} from '../../../openapi';
-import {MatCheckbox} from '@angular/material/checkbox';
+import { Component, inject, OnInit } from '@angular/core';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+
+import {
+  UserService,
+  UserViewAdminDTO,
+  UserUpdateAdminDTO,
+} from '../../../openapi';
+
+
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatSelectModule } from '@angular/material/select';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatIconModule } from '@angular/material/icon';
+
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-user-edit-page',
-  imports: [BackButton, MatButton, MatCard, MatCardContent, MatProgressBar, ReactiveFormsModule, RoleSelector, TranslatePipe, MatCheckbox],
+  standalone: true,
+  imports: [
+    ReactiveFormsModule,
+    RouterLink,
+
+    MatCardModule,
+    MatButtonModule,
+    MatCheckboxModule,
+    MatSelectModule,
+    MatProgressBarModule,
+    MatIconModule,
+
+    TranslatePipe,
+  ],
   templateUrl: './user-edit-page.html',
   styleUrl: './user-edit-page.scss',
 })
-export class UserEditPage {
-  router = inject(Router);
-  activatedRoute = inject(ActivatedRoute);
-  userService = inject(UserService);
+export class UserEditPage implements OnInit {
+  private readonly route = inject(ActivatedRoute);
+  private readonly router = inject(Router);
+  private readonly userService = inject(UserService);
 
-  userId = signal<string | null>(null);
-  isLoading = signal(false);
-  roles = model<string[]>([]);
+  user!: UserViewAdminDTO;
 
-  editForm = new FormGroup({
-    enabled: new FormControl<boolean>(false, [Validators.required]),
-    locked: new FormControl<boolean>(false, [Validators.required]),
-  })
+  loading = false;
+
+  readonly roles = ['ADMIN', 'CLIENT'];
+
+  form = new FormGroup({
+    enabled: new FormControl<boolean>(false),
+    locked: new FormControl<boolean>(false),
+    roles: new FormControl<string[]>([]),
+  });
 
   ngOnInit(): void {
-    this.activatedRoute.data.subscribe(({user}) => {
-      const userData = user as UserViewAdminDTO;
-      this.userId.set(userData.id!);
-      this.editForm.patchValue({
-        enabled: userData.enabled, locked: userData.locked,
-      });
-      this.roles.set(userData.roles ?? [])
+    const id = this.route.snapshot.paramMap.get('id');
+    if (!id) return;
+
+    this.loading = true;
+
+    this.userService.getProfileAdmin(id).subscribe({
+      next: (res) => {
+        this.user = res.data!;
+        this.form.setValue({
+          enabled: this.user.enabled!,
+          locked: this.user.locked!,
+          roles: this.user.roles ?? [],
+        });
+        this.loading = false;
+      },
+      error: () => {
+        this.loading = false;
+      },
     });
   }
 
-  submit(): void {
-    if (this.editForm.invalid || this.userId() == null) {
-      this.editForm.markAllAsTouched();
-      return;
-    }
+  save(): void {
+    if (!this.user) return;
 
-    this.isLoading.set(true);
-    this.userService.updateUserAdmin(
-      this.userId()!,
-      {
-        enabled: this.editForm.controls.enabled.value!,
-        locked: this.editForm.controls.locked.value!,
-        roles: this.roles()
-      }).subscribe({
+    const body: UserUpdateAdminDTO = {
+      enabled: this.form.value.enabled!,
+      locked: this.form.value.locked!,
+      roles: this.form.value.roles!,
+    };
+
+    this.loading = true;
+
+    this.userService.updateUserAdmin(this.user.id!, body).subscribe({
       next: () => {
-        this.isLoading.set(false);
+        this.loading = false;
         this.router.navigate(['/user']);
-      }, error: () => {
-        this.isLoading.set(false);
-      }
+      },
+      error: () => {
+        this.loading = false;
+      },
     });
   }
 }

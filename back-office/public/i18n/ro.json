@@ -32,6 +32,8 @@
     "accessDenied": "Nu aveți acces la această resursă! Vă rugăm să vă verificați permisiunile!"
   },
   "actions": {
+    "save": "Salvează",
+    "cancel": "Anulează",
     "submit": "Trimite",
     "edit": "Editează",
     "view": "Vizualizează",
@@ -73,7 +75,7 @@
       }
     },
     "view": {
-      "title": "Utilizator - {{username}}",
+      "title": "Utilizator",
       "notFound": "Utilizatorul nu a fost găsit!"
     },
     "list.title": "Users",
@@ -81,6 +83,7 @@
     "edit.title": "Editează utilizator",
     "changePassword.title": "Editează parolă utilizator",
     "id": "ID utilizator",
+    "locked": "Blocat",
     "firstName": "Prenume",
     "lastName": "Nume",
     "username": "Nume utilizator",

@@ -19,6 +19,8 @@
     "false": "Inactive"
   },
   "actions": {
+    "save": "Save",
+    "cancel": "Cancel",
     "submit": "Submit",
     "edit": "Edit",
     "view": "View",
@@ -73,7 +75,7 @@
       }
     },
     "view": {
-      "title": "User - {{username}}",
+      "title": "User",
       "notFound": "User not found!"
     },
     "list.title": "Users",
@@ -92,6 +94,7 @@
     "password": "Password",
     "confirmPassword": "Confirm password",
     "currentPassword": "Current password",
+    "locked": "Locked",
     "newPassword": "New password",
     "confirmNewPassword": "Confirm new password"
   },
