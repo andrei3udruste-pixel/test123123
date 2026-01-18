@@ -1,77 +1,65 @@
-import {Component, inject, OnInit} from '@angular/core';
-import {List} from '../../../shared/components/list/list';
-import {UserListViewDTO, UserSearchAdminDTO, UserService} from '../../../openapi';
-import {Observable} from 'rxjs';
-import {IPageResponse} from '../../../shared/models/page-response';
-import {HttpResponse} from '@angular/common/http';
-import {MatPaginator} from '@angular/material/paginator';
+import { Component, inject, OnInit } from '@angular/core';
+import { MatTooltipModule } from '@angular/material/tooltip';
+
+import { List } from '../../../shared/components/list/list';
 import {
-  MatCell,
-  MatCellDef,
-  MatColumnDef,
-  MatHeaderCell,
-  MatHeaderCellDef,
-  MatHeaderRow,
-  MatHeaderRowDef,
-  MatRow,
-  MatRowDef,
-  MatTable
-} from '@angular/material/table';
-import {TranslatePipe} from '@ngx-translate/core';
-import {MatSort, MatSortHeader} from '@angular/material/sort';
-import {MatIcon} from '@angular/material/icon';
-import {MatButton, MatIconButton, MatMiniFabButton} from '@angular/material/button';
-import {RouterLink} from '@angular/router';
-import {MatProgressBar} from '@angular/material/progress-bar';
-import {MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle} from '@angular/material/expansion';
-import {MatCard, MatCardContent} from '@angular/material/card';
-import {FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
-import {MatFormField, MatInput, MatLabel} from '@angular/material/input';
-import {MatOption, MatSelect} from '@angular/material/select';
+  UserViewAdminDTO,
+  UserSearchAdminDTO,
+  UserService,
+  UserUpdateAdminDTO
+} from '../../../openapi';
+import { Observable } from 'rxjs';
+import { HttpResponse } from '@angular/common/http';
+import { IPageResponse } from '../../../shared/models/page-response';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+
+
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatCardModule } from '@angular/material/card';
+import { MatExpansionModule } from '@angular/material/expansion';
+
+import { RouterLink } from '@angular/router';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-user-list-page',
+  standalone: true,
   imports: [
-    MatTable,
-    MatColumnDef,
-    MatHeaderCell,
-    MatHeaderCellDef,
-    MatCell,
-    MatCellDef,
-    MatHeaderRow,
-    MatHeaderRowDef,
-    MatRow,
-    MatRowDef,
-    MatPaginator,
-    TranslatePipe,
-    MatSort,
-    MatIcon,
-    MatSortHeader,
-    MatIconButton,
-    MatMiniFabButton,
-    RouterLink,
-    MatProgressBar,
-    MatExpansionPanel,
-    MatExpansionPanelHeader,
-    MatExpansionPanelTitle,
-    MatCard,
-    MatCardContent,
-    ReactiveFormsModule,
-    MatFormField,
-    MatLabel,
-    MatInput,
-    MatButton,
-    MatSelect,
-    MatOption,
 
+    MatTooltipModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatButtonModule,
+    MatIconModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatProgressBarModule,
+    MatCardModule,
+    MatExpansionModule,
+
+
+    ReactiveFormsModule,
+    RouterLink,
+    TranslatePipe
   ],
   templateUrl: './user-list-page.html',
   styleUrl: './user-list-page.scss',
 })
-export class UserListPage extends List<UserListViewDTO, UserSearchAdminDTO> implements OnInit {
-  userService = inject(UserService);
+export class UserListPage
+  extends List<UserViewAdminDTO, UserSearchAdminDTO>
+  implements OnInit {
 
-  displayedColumns = ['idUser', 'email', 'username', 'firstName', 'lastName', 'enabled', 'actions'];
+  private userService = inject(UserService);
+
+  displayedColumns = ['id', 'username', 'email', 'enabled', 'locked', 'actions'];
 
   filterForm = new FormGroup({
     username: new FormControl<string>(''),
@@ -79,32 +67,79 @@ export class UserListPage extends List<UserListViewDTO, UserSearchAdminDTO> impl
     id: new FormControl<string>(''),
     enabled: new FormControl<boolean | null>(null),
     locked: new FormControl<boolean | null>(null),
-  })
-
-  override get searchRequestData(): UserSearchAdminDTO {
-    return {
-      username: this.filterForm.controls.username.value ? this.filterForm.controls.username.value : undefined,
-      email: this.filterForm.controls.email.value ? this.filterForm.controls.email.value : undefined,
-      id: this.filterForm.controls.id.value ? this.filterForm.controls.id.value : undefined,
-      enabled: this.filterForm.controls.enabled.value !== null ? this.filterForm.controls.enabled.value : undefined,
-      locked: this.filterForm.controls.locked.value !== null ? this.filterForm.controls.locked.value : undefined,
-    } satisfies UserSearchAdminDTO;
-  }
-
-  override get entityRootPath(): string[] {
-    return ['/user'];
-  }
+  });
 
   ngOnInit(): void {
     this.initialize();
   }
 
-  clearFilters(): void {
-    this.filterForm.reset();
+  override get entityRootPath(): string[] {
+    return ['user'];
   }
 
-  override getSearchRequest(pageToLoad: number): Observable<HttpResponse<IPageResponse<UserListViewDTO>>> {
-    return this.userService.searchAdmin(this.searchRequestData, pageToLoad, this.pageSize(), this.sort(), "response"
-    );
+  override get searchRequestData(): UserSearchAdminDTO {
+    return {
+      username: this.filterForm.value.username || undefined,
+      email: this.filterForm.value.email || undefined,
+      id: this.filterForm.value.id || undefined,
+      enabled: this.filterForm.value.enabled ?? undefined,
+      locked: this.filterForm.value.locked ?? undefined,
+    };
+  }
+
+
+  override sort(): string[] {
+    const pred = this.predicate();
+    const mappedPredicate = pred === 'idUser' ? 'id' : pred;
+
+    return [mappedPredicate + ',' + (this.ascending() ? this.ascendingSort : this.descendingSort)];
+  }
+
+  override getSearchRequest(
+    pageToLoad: number
+  ): Observable<HttpResponse<IPageResponse<UserViewAdminDTO>>> {
+
+    return this.userService.searchAdmin(
+      this.searchRequestData,
+      pageToLoad,
+      this.pageSize(),
+      this.sort(),
+      'response'
+    ) as unknown as Observable<HttpResponse<IPageResponse<UserViewAdminDTO>>>;
+  }
+
+  clearFilters(): void {
+    this.filterForm.reset({
+      username: '',
+      email: '',
+      id: '',
+      enabled: null,
+      locked: null,
+    });
+    this.loadPage(0);
+  }
+
+  toggleEnabled(user: UserViewAdminDTO): void {
+    const body: UserUpdateAdminDTO = {
+      enabled: !user.enabled,
+      locked: user.locked,
+      roles: user.roles,
+    };
+
+    this.userService.updateUserAdmin(user.id, body).subscribe(() => {
+      user.enabled = !user.enabled;
+    });
+  }
+
+  toggleLocked(user: UserViewAdminDTO): void {
+    const body: UserUpdateAdminDTO = {
+      enabled: user.enabled,
+      locked: !user.locked,
+      roles: user.roles,
+    };
+
+    this.userService.updateUserAdmin(user.id, body).subscribe(() => {
+      user.locked = !user.locked;
+    });
   }
 }

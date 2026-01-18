@@ -8,17 +8,18 @@ import {LayoutStateService} from '../../../shared/services/layout-state/layout-s
 import {TranslatePipe} from '@ngx-translate/core';
 
 @Component({
-  selector: 'app-navbar',
-  imports: [
-    MatToolbar,
-    MatIconButton,
-    MatIconModule,
-    LanguageSelector,
-    RouterLink,
-    TranslatePipe
-  ],
-  templateUrl: './navbar.html',
-  styleUrl: './navbar.scss',
+    selector: 'app-navbar',
+    imports: [
+        MatToolbar,
+        MatIconButton,
+        MatIconModule,
+        LanguageSelector,
+        RouterLink,
+        TranslatePipe
+    ],
+    templateUrl: './navbar.html',
+    styleUrl: './navbar.scss',
+    standalone: true
 })
 export class Navbar {
   layoutState = inject(LayoutStateService);

@@ -1,39 +1,58 @@
-import {Component, inject, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
-import {UserViewAdminDTO} from '../../../openapi';
-import {TranslatePipe} from '@ngx-translate/core';
-import {MatCard, MatCardContent} from '@angular/material/card';
-import {MatList, MatListItem, MatListItemLine, MatListItemTitle} from '@angular/material/list';
-import {DatePipe} from '@angular/common';
-import {MatChip, MatChipSet} from '@angular/material/chips';
-import {BackButton} from '../../../shared/components/back-button/back-button';
+import { Component, inject, OnInit } from '@angular/core';
+import { ActivatedRoute, RouterLink } from '@angular/router';
+
+import {
+  UserService,
+  UserViewAdminDTO,
+} from '../../../openapi';
+
+/* Angular Material */
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatIconModule } from '@angular/material/icon';
+import { MatChipsModule } from '@angular/material/chips';
+
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-user-view-page',
+  standalone: true,
   imports: [
+    RouterLink,
+
+    MatCardModule,
+    MatButtonModule,
+    MatProgressBarModule,
+    MatIconModule,
+    MatChipsModule,
+
     TranslatePipe,
-    MatCard,
-    MatCardContent,
-    MatList,
-    MatListItem,
-    MatListItemLine,
-    MatListItemTitle,
-    DatePipe,
-    MatChip,
-    MatChipSet,
-    BackButton,
   ],
   templateUrl: './user-view-page.html',
   styleUrl: './user-view-page.scss',
 })
 export class UserViewPage implements OnInit {
-  activatedRoute = inject(ActivatedRoute);
+  private readonly route = inject(ActivatedRoute);
+  private readonly userService = inject(UserService);
 
-  user: UserViewAdminDTO | null = null;
+  user!: UserViewAdminDTO;
+  loading = false;
 
-  ngOnInit() {
-    this.activatedRoute.data.subscribe(({user}) => {
-      this.user = user as UserViewAdminDTO;
+  ngOnInit(): void {
+    const id = this.route.snapshot.paramMap.get('id');
+    if (!id) return;
+
+    this.loading = true;
+
+    this.userService.getProfileAdmin(id).subscribe({
+      next: (res) => {
+        this.user = res.data!;
+        this.loading = false;
+      },
+      error: () => {
+        this.loading = false;
+      },
     });
   }
 }

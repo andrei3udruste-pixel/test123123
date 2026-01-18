@@ -15,6 +15,7 @@ import {Sidenav} from '../sidenav/sidenav';
   ],
   templateUrl: './layout.html',
   styleUrl: './layout.scss',
+  standalone: true
 })
 export class Layout implements OnInit {
   user = inject(UserDataService);

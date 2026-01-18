@@ -1,0 +1,21 @@
+.page-card {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.user-info {
+  margin-bottom: 16px;
+  font-size: 14px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}

@@ -1,56 +1,79 @@
-<div class="w-full xl:w-2/3 mx-auto">
-  @if (user) {
-    <div class="w-full flex flex-row justify-between mb-2">
-      <div class="flex flex-row align-center">
-        <h3>{{ 'user.view.title' | translate: {username: user.username} }}</h3>
+<mat-card class="page-card">
+  <mat-card-title>
+    {{ 'user.view.title' | translate }} – {{ user.username }}
+  </mat-card-title>
+
+  <mat-card-content>
+
+    @if (loading) {
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    }
+
+    @if (!loading) {
+
+      <div class="info-grid">
+
+        <div class="row">
+          <span class="label">ID</span>
+          <span class="value">{{ user.id }}</span>
+        </div>
+
+        <div class="row">
+          <span class="label">{{ 'user.username' | translate }}</span>
+          <span class="value">{{ user.username }}</span>
+        </div>
+
+        <div class="row">
+          <span class="label">{{ 'user.email' | translate }}</span>
+          <span class="value">{{ user.email }}</span>
+        </div>
+
+        <div class="row">
+          <span class="label">{{ 'user.enabled' | translate }}</span>
+          <span class="value">
+            <mat-icon>
+              {{ user.enabled ? 'check_circle' : 'cancel' }}
+            </mat-icon>
+          </span>
+        </div>
+
+        <div class="row">
+          <span class="label">{{ 'user.locked' | translate }}</span>
+          <span class="value">
+            <mat-icon>
+              {{ user.locked ? 'lock' : 'lock_open' }}
+            </mat-icon>
+          </span>
+        </div>
+
+        <div class="row">
+          <span class="label">{{ 'user.roles' | translate }}</span>
+          <span class="value">
+            <mat-chip-set>
+              @for (role of user.roles; track role) {
+                <mat-chip>{{ role }}</mat-chip>
+              }
+            </mat-chip-set>
+          </span>
+        </div>
+
       </div>
-      <app-back-button></app-back-button>
-    </div>
-    <mat-card>
-      <mat-card-content>
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-1">
-          <mat-list>
-            <mat-list-item>
-              <span matListItemTitle>{{ 'user.id' | translate }}</span>
-              <span matListItemLine>{{ user.id }}</span>
-            </mat-list-item>
-            <mat-list-item>
-              <span matListItemTitle>{{ 'user.createdAt' | translate }}</span>
-              <span matListItemLine>{{ user.createdAt | date : 'short' }}</span>
-            </mat-list-item>
-          </mat-list>
-          <mat-list>
-            <mat-list-item>
-              <span matListItemTitle>{{ 'user.email' | translate }}</span>
-              <span matListItemLine>{{ user.email }}</span>
-            </mat-list-item>
-            <mat-list-item>
-              <span matListItemTitle>{{ 'user.username' | translate }}</span>
-              <span matListItemLine>{{ user.username }}</span>
-            </mat-list-item>
-          </mat-list>
-          <mat-list>
-            <mat-list-item>
-              <span matListItemTitle>{{ 'user.enabled' | translate }}</span>
-              <span matListItemLine>{{ ('yesOrNo.' + user.enabled) | translate }}</span>
-            </mat-list-item>
-            <mat-list-item>
-              <span matListItemTitle>{{ 'user.locked' | translate }}</span>
-              <span matListItemLine>{{ ('yesOrNo.' + user.locked) | translate }}</span>
-            </mat-list-item>
-          </mat-list>
-        </div>
-        <div class="p-2">
-          <h6>{{ 'user.roles' | translate }}</h6>
-          <mat-chip-set>
-            @for (role of user.roles; track role) {
-              <mat-chip>{{ role }}</mat-chip>
-            }
-          </mat-chip-set>
-        </div>
-      </mat-card-content>
-    </mat-card>
-  } @else {
-    <div>{{ 'user.view.notFound' | translate }}</div>
-  }
-</div>
+
+      <div class="actions">
+        <button
+          mat-stroked-button
+          [routerLink]="['/user']">
+          {{ 'actions.back' | translate }}
+        </button>
+
+        <button
+          mat-flat-button
+          color="primary"
+          [routerLink]="['/user', user.id, 'edit']">
+          {{ 'actions.edit' | translate }}
+        </button>
+      </div>
+    }
+
+  </mat-card-content>
+</mat-card>
