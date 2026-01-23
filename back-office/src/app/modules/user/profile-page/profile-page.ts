@@ -5,6 +5,7 @@ import {TranslatePipe} from '@ngx-translate/core';
 import {MatIconModule} from '@angular/material/icon';
 import {MatRippleModule} from '@angular/material/core';
 import {Router, RouterLink} from '@angular/router';
+
 import {MatList, MatListItem, MatListItemIcon, MatListItemLine, MatListItemTitle} from '@angular/material/list';
 
 @Component({
@@ -23,10 +24,12 @@ import {MatList, MatListItem, MatListItemIcon, MatListItemLine, MatListItemTitle
   ],
   templateUrl: './profile-page.html',
   styleUrl: './profile-page.scss',
+  standalone: true
 })
 export class ProfilePage implements OnInit {
   user = inject(UserDataService);
   router = inject(Router);
+
 
   ngOnInit(): void {
     this.user.loadCurrentUser();
@@ -35,5 +38,7 @@ export class ProfilePage implements OnInit {
   logout(): void {
     this.user.token = null;
     this.router.navigate(['/login']);
+
+
   }
 }

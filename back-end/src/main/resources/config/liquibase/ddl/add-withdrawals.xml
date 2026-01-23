@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.23.xsd">
+
+    <changeSet id="add-withdrawals-table" author="finalstake">
+
+        <!-- Create withdrawals table -->
+        <createTable tableName="withdrawals">
+            <column name="id" type="UUID">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+            <column name="user_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="amount" type="NUMERIC(19,2)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="payout_method" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="payout_details" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="status" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="created_at" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="processed_at" type="TIMESTAMP"/>
+
+            <column name="admin_note" type="VARCHAR(255)"/>
+        </createTable>
+
+        <!-- Foreign key to users -->
+        <addForeignKeyConstraint
+                baseTableName="withdrawals"
+                baseColumnNames="user_id"
+                referencedTableName="users"
+                referencedColumnNames="id"
+                constraintName="fk_withdrawals_user"/>
+
+        <!-- Index for faster lookups by user -->
+        <createIndex indexName="idx_withdrawals_user_id" tableName="withdrawals">
+            <column name="user_id"/>
+        </createIndex>
+
+        <!-- Index for admin filtering by status -->
+        <createIndex indexName="idx_withdrawals_status" tableName="withdrawals">
+            <column name="status"/>
+        </createIndex>
+
+    </changeSet>
+
+</databaseChangeLog>

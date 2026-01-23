@@ -98,5 +98,29 @@
   "deleteConfirmation": {
     "title": "Confirm deletion",
     "defaultMessage": "Are you sure you want to delete this resource? The action is irreversible and may result in the permanent loss of data!"
+  },
+  "withdrawal": {
+    "menu": "Withdraw",
+    "title": "Withdraw money",
+    "amount": "Amount",
+    "submit": "Withdraw",
+    "empty": "No withdrawals yet",
+    "payoutMethod": "Payout method",
+    "payoutMethod.placeholder": "Select payout method",
+    "payoutDetails": "Payout details",
+    "payoutDetails.placeholder": "Enter payout details",
+    "status": {
+      "PENDING": "Pending",
+      "APPROVED": "Approved",
+      "PAID": "Paid",
+      "REJECTED": "Rejected"
+    }
+  },
+  "wallet": {
+    "balance": "Balance",
+    "insufficientBalance": "Insufficient balance"
   }
+
 }
+
+

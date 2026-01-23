@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/back-end/be.iml" filepath="$PROJECT_DIR$/back-end/be.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/proiect-inginerie-software-zercher-gym.iml" filepath="$PROJECT_DIR$/.idea/proiect-inginerie-software-zercher-gym.iml" />
     </modules>
   </component>

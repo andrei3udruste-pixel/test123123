@@ -30,6 +30,12 @@
     </mat-card-header>
     <mat-card-content>
       <mat-list>
+        @if (user?.data) {
+          <mat-list-item [routerLink]="['/user', 'withdraw']" matRipple>
+            <mat-icon matListItemIcon>payments</mat-icon>
+            <span matListItemTitle>{{ 'withdrawal.menu' | translate }}</span>
+          </mat-list-item>
+        }
         <mat-list-item (click)="logout()" matRipple>
           <mat-icon matListItemIcon>logout</mat-icon>
           <span matListItemTitle>{{ 'user.profile.actions.logout' | translate }}</span>

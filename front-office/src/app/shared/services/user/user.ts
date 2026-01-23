@@ -1,18 +1,34 @@
 import {inject, Injectable, Injector, signal} from '@angular/core';
 import {UserService, UserViewDTO} from '../../../openapi';
+import { WalletDataService } from '../wallet/wallet';
+
+
+
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserDataService {
+  constructor() {
+    if (this._token()) {
+      this.loadCurrentUser();
+    }
+  }
+
   injector = inject(Injector);
+  private walletData = inject(WalletDataService);
 
   _user = signal<UserViewDTO | null>(null);
   _token = signal<string | null>(this.getTokenLocalStorage());
 
+
   get token(): string | null {
     return this._token();
   }
+  get signal() {
+    return this._user;
+  }
+
 
   set token(token: string | null) {
     if (token) {
@@ -23,6 +39,8 @@ export class UserDataService {
       this._token.set(null);
       this._user.set(null);
       localStorage.removeItem('token');
+      this.walletData.clear();
+
     }
   }
 
@@ -50,6 +68,8 @@ export class UserDataService {
     userService.getProfileCurrent()
       .subscribe((userResponse) => {
         this._user.set(userResponse.data ? userResponse.data : null);
+        this.walletData.loadMyWallet();
+
       });
   }
 
@@ -60,4 +80,5 @@ export class UserDataService {
   private setTokenLocalStorage(token: string): void {
     localStorage.setItem('token', token);
   }
+
 }
