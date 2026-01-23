@@ -95,6 +95,7 @@ public class WithdrawalServiceImpl implements WithdrawalService {
         withdrawal.setPayoutMethod(dto.getPayoutMethod());
         withdrawal.setPayoutDetails(dto.getPayoutDetails());
         withdrawal.setStatus(WithdrawalStatus.PENDING);
+        withdrawal.setUsername(withdrawal.getUser().getUsername());
 
         Withdrawal saved = withdrawalRepository.save(withdrawal);
 
@@ -180,4 +181,44 @@ public class WithdrawalServiceImpl implements WithdrawalService {
 
         throw new RuntimeException("invalidWithdrawalStatusTransition");
     }
+    @Override
+    @Transactional(readOnly = true)
+    public WithdrawalViewDTO getOneAdmin(UUID id) {
+        Withdrawal withdrawal = withdrawalRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Withdrawal not found"));
+
+        return withdrawalMapper.toViewDto(withdrawal);
+    }
+    @Override
+    @Transactional(readOnly = true)
+    public Page<WithdrawalViewDTO> adminSearch(
+            WithdrawalStatus status,
+            String username,
+            Pageable pageable
+    ) {
+        Page<Withdrawal> page;
+
+        boolean hasStatus = status != null;
+        boolean hasUsername = username != null && !username.isBlank();
+
+        if (hasStatus && hasUsername) {
+            page = withdrawalRepository
+                    .findByStatusAndUserUsernameContainingIgnoreCase(
+                            status,
+                            username.trim(),
+                            pageable
+                    );
+        } else if (hasStatus) {
+            page = withdrawalRepository.findByStatus(status, pageable);
+        } else if (hasUsername) {
+            page = withdrawalRepository
+                    .findByStatusAndUserUsernameContainingIgnoreCase(status, username.trim(), pageable);
+        } else {
+            page = withdrawalRepository.findAll(pageable);
+        }
+
+        return page.map(withdrawalMapper::toViewDto);
+    }
+
+
 }

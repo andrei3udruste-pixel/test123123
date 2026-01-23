@@ -76,7 +76,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
             var requiredRoles = new ArrayList<Role>() {{
                 add(Role.ADMIN);
-                add(Role.MODERATOR);
+                add(Role.ACCOUNTING);
             }};
 
             for (var role : requiredRoles) {

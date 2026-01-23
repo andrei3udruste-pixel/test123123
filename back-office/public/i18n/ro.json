@@ -56,7 +56,8 @@
     "actions": "Acțiuni"
   },
   "sidenav": {
-    "users": "Utilizatori"
+    "users": "Utilizatori",
+    "withdrawals": "Retrageri"
   },
   "role": {
     "select": {
@@ -101,5 +102,38 @@
   "deleteConfirmation": {
     "title": "Confirmare ștergere",
     "defaultMessage": "Sunteți sigur că doriți să ștergeți această resursă? Acțiunea este ireversibilă și poate duce la pierderea permanentă a unor date!"
+  },
+  "withdrawal": {
+    "amount": "Sumă",
+    "admin": {
+      "title": "Retrageri",
+      "username": "Utilizator",
+      "status": "Status",
+      "all": "Toate",
+      "date": "Data",
+      "user": "Utilizator",
+      "actions": "Acțiuni",
+      "approve": "Aprobă",
+      "reject": "Respinge",
+      "paid": "Marchează ca plătit",
+      "detailsTitle": "Detalii retragere",
+      "payoutMethod": "Metodă de plată",
+      "payoutDetails": "Detalii plată",
+      "createdAt": "Creat la",
+      "processedAt": "Procesat la",
+      "adminNote": "Notă admin"
+    },
+    "status": {
+      "PENDING": "În așteptare",
+      "APPROVED": "Aprobat",
+      "REJECTED": "Respins",
+      "PAID": "Plătit"
+    }
+  },
+  "common": {
+    "search": "Caută",
+    "view": "Vezi",
+    "back": "Înapoi",
+    "cancel": "Anulează"
   }
 }

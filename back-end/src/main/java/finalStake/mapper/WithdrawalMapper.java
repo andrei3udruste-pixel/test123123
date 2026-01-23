@@ -3,6 +3,7 @@ package finalStake.mapper;
 import finalStake.dto.withdrawal.WithdrawalViewDTO;
 import finalStake.model.entity.Withdrawal;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 
 @Mapper(
@@ -11,5 +12,6 @@ import org.mapstruct.ReportingPolicy;
 )
 public interface WithdrawalMapper {
 
+    @Mapping(source = "user.username", target = "username")
     WithdrawalViewDTO toViewDto(Withdrawal withdrawal);
 }

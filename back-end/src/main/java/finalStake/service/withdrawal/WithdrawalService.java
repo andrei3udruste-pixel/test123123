@@ -3,6 +3,7 @@ package finalStake.service.withdrawal;
 import finalStake.dto.withdrawal.WithdrawalAdminUpdateDTO;
 import finalStake.dto.withdrawal.WithdrawalCreateDTO;
 import finalStake.dto.withdrawal.WithdrawalViewDTO;
+import finalStake.model.enums.WithdrawalStatus;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -29,4 +30,11 @@ public interface WithdrawalService {
      * Updates withdrawal status (admin).
      */
     void updateStatus(UUID withdrawalId, WithdrawalAdminUpdateDTO dto);
+    WithdrawalViewDTO getOneAdmin(UUID id);
+    Page<WithdrawalViewDTO> adminSearch(
+            WithdrawalStatus status,
+            String username,
+            Pageable pageable
+    );
+
 }

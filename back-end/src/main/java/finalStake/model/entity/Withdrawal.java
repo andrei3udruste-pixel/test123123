@@ -85,6 +85,10 @@ public class Withdrawal {
     public Withdrawal() {
     }
 
+    public void setUsername(String username) {
+        this.user.setUsername(username);
+    }
+
     /* =====================
        Getters & Setters
        ===================== */
