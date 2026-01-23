@@ -6,6 +6,13 @@ import {LanguageSelector} from '../../../shared/components/language-selector/lan
 import {RouterLink} from '@angular/router';
 import {LayoutStateService} from '../../../shared/services/layout-state/layout-state';
 import {TranslatePipe} from '@ngx-translate/core';
+import { WalletDataService } from '../../../shared/services/wallet/wallet';
+import { WalletViewDTO } from '../../../shared/services/wallet/wallet-api.service';
+import {UserDataService} from '../../../shared/services/user/user';
+import { CommonModule } from '@angular/common';
+
+
+
 
 @Component({
   selector: 'app-navbar',
@@ -15,11 +22,18 @@ import {TranslatePipe} from '@ngx-translate/core';
     MatIconModule,
     LanguageSelector,
     RouterLink,
+    CommonModule,
     TranslatePipe
   ],
   templateUrl: './navbar.html',
   styleUrl: './navbar.scss',
+  standalone: true
 })
 export class Navbar {
+  private userData = inject(UserDataService);
+  private walletData = inject(WalletDataService);
+
   layoutState = inject(LayoutStateService);
+  user = this.userData.signal;
+  wallet = this.walletData.signal;
 }

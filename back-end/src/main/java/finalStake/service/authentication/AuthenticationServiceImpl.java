@@ -28,6 +28,10 @@ import finalStake.repository.VerificationTokenRepository;
 import finalStake.model.enums.Role;
 import finalStake.security.token.TokenUtilities;
 import finalStake.service.mail.MailService;
+import finalStake.model.entity.Wallet;
+import finalStake.repository.WalletRepository;
+import java.math.BigDecimal;
+
 
 import java.util.*;
 
@@ -35,6 +39,7 @@ import java.util.*;
 @Service
 @RequiredArgsConstructor
 public class AuthenticationServiceImpl implements AuthenticationService {
+
     @Value("${com.finalStake.email.verify}")
     private Boolean verifyEmail;
 
@@ -52,7 +57,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final VerificationTokenRepository verificationTokenRepository;
-
+    private final WalletRepository walletRepository;
     private final TokenUtilities tokenUtilities;
 
     private final AuthenticationManager authenticationManager;
@@ -121,6 +126,13 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 .build();
 
         userRepository.save(user);
+        Wallet wallet = Wallet.builder()
+                .user(user)
+                .balance(BigDecimal.ZERO)
+                .build();
+
+        walletRepository.save(wallet);
+
         log.info("Created new user {}!", user.getUsername());
 
         if (verifyEmail) {

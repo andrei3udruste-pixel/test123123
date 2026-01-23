@@ -98,5 +98,29 @@
   "deleteConfirmation": {
     "title": "Confirmare ștergere",
     "defaultMessage": "Sunteți sigur că doriți să ștergeți această resursă? Acțiunea este ireversibilă și poate duce la pierderea permanentă a unor date!"
+  },
+  "withdrawal": {
+    "menu": "Retragere",
+    "title": "Retrage bani",
+    "amount": "Sumă",
+    "submit": "Retrage",
+    "empty": "Nu există retrageri",
+    "payoutMethod": "Metodă de plată",
+    "payoutMethod.placeholder": "Alege metoda de plată",
+    "payoutDetails": "Detalii plată",
+    "payoutDetails.placeholder": "Introdu detaliile de plată",
+    "status": {
+      "PENDING": "În așteptare",
+      "APPROVED": "Aprobat",
+      "PAID": "Plătit",
+      "REJECTED": "Respins"
+    }
+  },
+  "wallet": {
+    "balance": "Sold",
+    "insufficientBalance": "Sold insuficient"
   }
+
 }
+
+

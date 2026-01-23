@@ -8,5 +8,14 @@
   <button [routerLink]="['/user', 'profile']" class="mx-2" matIconButton>
     <mat-icon>person</mat-icon>
   </button>
+  @if (user() && wallet()) {
+    <div class="wallet-balance">
+      <mat-icon>account_balance_wallet</mat-icon>
+      <span>
+      {{ wallet()!.balance | number:'1.2-2' }}
+        {{ wallet()!.currency }}
+    </span>
+    </div>
+  }
   <app-language-selector></app-language-selector>
 </mat-toolbar>

@@ -7,6 +7,8 @@ import {userAccessGuard} from '../../shared/guards/user-access/user-access-guard
 import {Authority} from '../../shared/models/authority';
 import {UserEditPage} from './user-edit-page/user-edit-page';
 import {ChangePasswordPage} from './change-password-page/change-password-page';
+import {WithdrawPage} from './withdraw-page/withdraw-page';
+
 
 const userRoutes: Routes = [
   {
@@ -16,6 +18,10 @@ const userRoutes: Routes = [
   {
     path: 'change-password-page',
     component: ChangePasswordPage,
+  },
+  {
+    path: 'withdraw',
+    component: WithdrawPage,
   },
   {
     path: '',

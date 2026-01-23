@@ -1,0 +1,137 @@
+<div class="withdraw-page">
+  <h2>{{ 'withdrawal.title' | translate }}</h2>
+
+  @if (wallet) {
+    <div class="wallet-info">
+      <strong>
+        {{ 'wallet.balance' | translate }}:
+      </strong>
+      {{ wallet.balance | number:'1.2-2' }} {{ wallet.currency }}
+    </div>
+  }
+
+  <!-- ========================= -->
+  <!-- FORMULAR WITHDRAW -->
+  <!-- ========================= -->
+  <form [formGroup]="form" (ngSubmit)="submit()" class="withdraw-form">
+
+    <!-- AMOUNT -->
+    <div class="form-group">
+      <label for="amount">
+        {{ 'withdrawal.amount' | translate }}
+      </label>
+
+      <input
+        id="amount"
+        type="number"
+        formControlName="amount"
+        [placeholder]="'withdrawal.amount' | translate"
+        min="1"
+        step="0.01"
+      />
+
+      @if (form.get('amount')?.touched && form.get('amount')?.invalid) {
+        <div class="error">
+          @if (form.get('amount')?.errors?.['required']) {
+            <span>{{ 'withdrawal.amount' | translate }} is required</span>
+          }
+          @if (form.get('amount')?.errors?.['min']) {
+            <span>{{ 'withdrawal.amount' | translate }} must be greater than 0</span>
+          }
+        </div>
+      }
+    </div>
+
+    <!-- PAYOUT METHOD -->
+    <div class="form-group">
+      <label for="payoutMethod">
+        {{ 'withdrawal.payoutMethod' | translate }}
+      </label>
+
+      <select
+        id="payoutMethod"
+        formControlName="payoutMethod"
+      >
+        <option value="" disabled selected>
+          {{ 'withdrawal.payoutMethod.placeholder' | translate }}
+        </option>
+        <option value="IBAN">IBAN</option>
+        <option value="REVOLUT">Revolut</option>
+        <option value="PAYPAL">PayPal</option>
+      </select>
+
+      @if (form.get('payoutMethod')?.touched && form.get('payoutMethod')?.invalid) {
+        <div class="error">
+          <span>{{ 'withdrawal.payoutMethod' | translate }} is required</span>
+        </div>
+      }
+    </div>
+
+    <!-- PAYOUT DETAILS -->
+    <div class="form-group">
+      <label for="payoutDetails">
+        {{ 'withdrawal.payoutDetails' | translate }}
+      </label>
+
+      <input
+        id="payoutDetails"
+        type="text"
+        formControlName="payoutDetails"
+        [placeholder]="'withdrawal.payoutDetails.placeholder' | translate"
+      />
+
+      @if (form.get('payoutDetails')?.touched && form.get('payoutDetails')?.invalid) {
+        <div class="error">
+          <span>{{ 'withdrawal.payoutDetails' | translate }} is required</span>
+        </div>
+      }
+    </div>
+
+    <!-- SUBMIT -->
+    <button type="submit" [disabled]="form.invalid">
+      {{ 'withdrawal.submit' | translate }}
+    </button>
+  </form>
+
+  <!-- ========================= -->
+  <!-- LISTA WITHDRAWALS -->
+  <!-- ========================= -->
+  @if (withdrawals.length > 0) {
+    <div class="withdrawals-list">
+      <h3>{{ 'withdrawal.menu' | translate }}</h3>
+
+      <table>
+        <thead>
+        <tr>
+          <th>Date</th>
+          <th>{{ 'withdrawal.amount' | translate }}</th>
+          <th>Status</th>
+        </tr>
+        </thead>
+
+        <tbody>
+          @for (w of withdrawals; track w.id) {
+            <tr>
+              <td>{{ w.createdAt | date: 'dd.MM.yyyy HH:mm' }}</td>
+              <td>{{ w.amount }}</td>
+              <td>
+                <span class="status" [ngClass]="w.status.toLowerCase()">
+                  {{ ('withdrawal.status.' + w.status) | translate }}
+                </span>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+
+  <!-- ========================= -->
+  <!-- EMPTY STATE -->
+  <!-- ========================= -->
+  @if (withdrawals.length === 0) {
+    <div class="empty">
+      {{ 'withdrawal.empty' | translate }}
+    </div>
+  }
+</div>
