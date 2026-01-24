@@ -18,10 +18,6 @@ public class WithdrawalCreateDTO {
     @NotBlank(message = "payoutDetailsIsRequired")
     private String payoutDetails;
 
-    /* =====================
-       Getters & Setters
-       ===================== */
-
     public BigDecimal getAmount() {
         return amount;
     }

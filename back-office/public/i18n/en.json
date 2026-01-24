@@ -56,7 +56,8 @@
     "actions": "Actions"
   },
   "sidenav": {
-    "users": "Users"
+    "users": "Users",
+    "withdrawals": "Withdrawals"
   },
   "role": {
     "select": {
@@ -101,5 +102,40 @@
   "deleteConfirmation": {
     "title": "Confirm deletion",
     "defaultMessage": "Are you sure you want to delete this resource? The action is irreversible and may result in the permanent loss of data!"
+  },
+  "withdrawal": {
+    "amount": "Amount",
+    "admin": {
+      "title": "Withdrawals",
+      "username": "Username",
+      "status": "Status",
+      "all": "All",
+      "date": "Date",
+      "user": "User",
+      "actions": "Actions",
+      "approve": "Approve",
+      "reject": "Reject",
+      "paid": "Mark as paid",
+      "detailsTitle": "Withdrawal details",
+      "payoutMethod": "Payout method",
+      "payoutDetails": "Payout details",
+      "createdAt": "Created at",
+      "processedAt": "Processed at",
+      "adminNote": "Admin note"
+    },
+    "status": {
+      "PENDING": "Pending",
+      "APPROVED": "Approved",
+      "REJECTED": "Rejected",
+      "PAID": "Paid"
+    }
+  },
+  "common": {
+    "search": "Search",
+    "view": "View",
+    "back": "Back",
+    "cancel": "Cancel"
   }
 }
+
+

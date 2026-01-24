@@ -1,0 +1,90 @@
+<mat-card class="page-card">
+  <mat-card-title>
+    {{ 'withdrawal.admin.title' | translate }}
+  </mat-card-title>
+
+  <mat-card-content>
+
+    <form [formGroup]="filterForm" class="filters">
+      <mat-form-field appearance="outline">
+        <mat-label>{{ 'withdrawal.admin.username' | translate }}</mat-label>
+        <input matInput formControlName="username" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>{{ 'withdrawal.admin.status' | translate }}</mat-label>
+        <mat-select formControlName="status">
+          <mat-option value="">{{ 'withdrawal.admin.all' | translate }}</mat-option>
+          @for (s of statuses; track s.value) {
+            <mat-option [value]="s.value">
+              {{ s.labelKey | translate }}
+            </mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+
+      <button mat-flat-button color="primary" type="button" (click)="applyFilters()">
+        {{ 'common.search' | translate }}
+      </button>
+    </form>
+
+    <table mat-table [dataSource]="rows()" class="mat-elevation-z2 w-full">
+
+      <ng-container matColumnDef="createdAt">
+        <th mat-header-cell *matHeaderCellDef>{{ 'withdrawal.admin.date' | translate }}</th>
+        <td mat-cell *matCellDef="let row">{{ row.createdAt | date:'dd.MM.yyyy HH:mm' }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="username">
+        <th mat-header-cell *matHeaderCellDef>{{ 'withdrawal.admin.user' | translate }}</th>
+        <td mat-cell *matCellDef="let row">{{ row.username }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="amount">
+        <th mat-header-cell *matHeaderCellDef>{{ 'withdrawal.amount' | translate }}</th>
+        <td mat-cell *matCellDef="let row">{{ row.amount | number:'1.2-2' }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef>{{ 'withdrawal.admin.status' | translate }}</th>
+        <td mat-cell *matCellDef="let row">{{ ('withdrawal.status.' + row.status) | translate }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>{{ 'withdrawal.admin.actions' | translate }}</th>
+        <td mat-cell *matCellDef="let row">
+          <button mat-stroked-button color="primary" (click)="approve(row)" [disabled]="row.status !== 'PENDING'">
+            {{ 'withdrawal.admin.approve' | translate }}
+          </button>
+
+          <button mat-stroked-button color="warn" (click)="reject(row)" [disabled]="row.status !== 'PENDING'">
+            {{ 'withdrawal.admin.reject' | translate }}
+          </button>
+
+          <button mat-stroked-button (click)="markPaid(row)" [disabled]="row.status !== 'APPROVED'">
+            {{ 'withdrawal.admin.paid' | translate }}
+          </button>
+          <button
+            mat-stroked-button
+            color="primary"
+            [routerLink]="['/withdrawal', row.id]">
+            {{ 'common.view' | translate }}
+          </button>
+
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+
+    <mat-paginator
+      [length]="totalItems()"
+      [pageIndex]="page()"
+      [pageSize]="pageSize()"
+      [pageSizeOptions]="pageSizeOptions"
+      (page)="onPageChange($event)">
+    </mat-paginator>
+
+  </mat-card-content>
+</mat-card>

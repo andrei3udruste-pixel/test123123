@@ -67,6 +67,7 @@ import {MatOption, MatSelect} from '@angular/material/select';
   ],
   templateUrl: './user-list-page.html',
   styleUrl: './user-list-page.scss',
+  standalone: true
 })
 export class UserListPage extends List<UserListViewDTO, UserSearchAdminDTO> implements OnInit {
   userService = inject(UserService);

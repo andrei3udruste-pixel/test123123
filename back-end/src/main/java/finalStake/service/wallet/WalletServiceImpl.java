@@ -22,18 +22,18 @@ public class WalletServiceImpl implements WalletService {
     @Override
     public WalletViewDTO getMyWallet() {
 
-        // 1. Luăm username-ul din context
+
         Authentication authentication = SecurityContextHolder
                 .getContext()
                 .getAuthentication();
 
         String username = authentication.getName();
 
-        // 2. Găsim userul
+
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new IllegalStateException("userNotFound"));
 
-        // 3. Găsim wallet-ul DUPĂ USER, NU DUPĂ UUID
+
         Wallet wallet = walletRepository.findByUser(user)
                 .orElseThrow(() -> new IllegalStateException("walletNotFound"));
 

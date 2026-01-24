@@ -18,18 +18,19 @@ interface SidenavNode {
 }
 
 @Component({
-  selector: 'app-sidenav',
-  imports: [
-    MatTreeModule,
-    MatIconModule,
-    MatIconButton,
-    TranslatePipe,
-    MatRippleModule,
-    MatSidenav,
+    selector: 'app-sidenav',
+    imports: [
+        MatTreeModule,
+        MatIconModule,
+        MatIconButton,
+        TranslatePipe,
+        MatRippleModule,
+        MatSidenav,
 
-  ],
-  templateUrl: './sidenav.html',
-  styleUrl: './sidenav.scss',
+    ],
+    templateUrl: './sidenav.html',
+    styleUrl: './sidenav.scss',
+    standalone: true
 })
 export class Sidenav {
   layoutState = inject(LayoutStateService);

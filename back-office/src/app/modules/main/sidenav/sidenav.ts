@@ -44,6 +44,11 @@ export class Sidenav {
       labelKey: "sidenav.users",
       link: ['/user'],
       roles: [Authority.ROLE_ADMIN]
+    },
+    {
+      labelKey: "sidenav.withdrawals",
+      link: ['/withdrawal'],
+      roles: [Authority.ROLE_ACCOUNTING, Authority.ROLE_ADMIN]
     }
   ];
 

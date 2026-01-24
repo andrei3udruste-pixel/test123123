@@ -1,0 +1,46 @@
+@if (withdrawal()) {
+  <mat-card class="page-card">
+    <mat-card-title>
+      {{ 'withdrawal.admin.detailsTitle' | translate }}
+    </mat-card-title>
+
+    <mat-card-content>
+      <div class="details-grid">
+        <div><strong>ID:</strong></div>
+        <div>{{ w().id }}</div>
+
+        <div><strong>{{ 'withdrawal.admin.user' | translate }}:</strong></div>
+        <div>{{ w().username }}</div>
+
+        <div><strong>{{ 'withdrawal.amount' | translate }}:</strong></div>
+        <div>{{ w().amount | number:'1.2-2' }}</div>
+
+        <div><strong>{{ 'withdrawal.admin.status' | translate }}:</strong></div>
+        <div>{{ ('withdrawal.status.' + w().status) | translate }}</div>
+
+        <div><strong>{{ 'withdrawal.admin.payoutMethod' | translate }}:</strong></div>
+        <div>{{ w().payoutMethod }}</div>
+
+        <div><strong>{{ 'withdrawal.admin.payoutDetails' | translate }}:</strong></div>
+        <div>{{ w().payoutDetails }}</div>
+
+        <div><strong>{{ 'withdrawal.admin.createdAt' | translate }}:</strong></div>
+        <div>{{ w().createdAt | date:'dd.MM.yyyy HH:mm' }}</div>
+
+        <div><strong>{{ 'withdrawal.admin.processedAt' | translate }}:</strong></div>
+        <div>
+          {{ w().processedAt ? (w().processedAt | date:'dd.MM.yyyy HH:mm') : '-' }}
+        </div>
+
+        <div><strong>{{ 'withdrawal.admin.adminNote' | translate }}:</strong></div>
+        <div>{{ w().adminNote || '-' }}</div>
+      </div>
+
+      <div class="actions">
+        <button mat-stroked-button (click)="back()">
+          {{ 'common.back' | translate }}
+        </button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+}
