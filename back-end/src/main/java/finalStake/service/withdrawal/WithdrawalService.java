@@ -11,24 +11,13 @@ import java.util.UUID;
 
 public interface WithdrawalService {
 
-    /**
-     * Creates a new withdrawal request for the current user.
-     */
+
     WithdrawalViewDTO create(WithdrawalCreateDTO dto);
 
-    /**
-     * Returns withdrawals of the currently authenticated user.
-     */
     Page<WithdrawalViewDTO> getMyWithdrawals(Pageable pageable);
 
-    /**
-     * Returns all withdrawals (admin).
-     */
     Page<WithdrawalViewDTO> getAll(Pageable pageable);
 
-    /**
-     * Updates withdrawal status (admin).
-     */
     void updateStatus(UUID withdrawalId, WithdrawalAdminUpdateDTO dto);
     WithdrawalViewDTO getOneAdmin(UUID id);
     Page<WithdrawalViewDTO> adminSearch(

@@ -8,17 +8,18 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatMenuModule} from '@angular/material/menu';
 
 @Component({
-  selector: 'app-language-selector',
-  imports: [
-    TranslatePipe,
-    MatSelectModule,
-    MatFormFieldModule,
-    ReactiveFormsModule,
-    MatButtonModule,
-    MatMenuModule,
-  ],
-  templateUrl: './language-selector.html',
-  styleUrl: './language-selector.scss',
+    selector: 'app-language-selector',
+    imports: [
+        TranslatePipe,
+        MatSelectModule,
+        MatFormFieldModule,
+        ReactiveFormsModule,
+        MatButtonModule,
+        MatMenuModule,
+    ],
+    templateUrl: './language-selector.html',
+    styleUrl: './language-selector.scss',
+    standalone: true
 })
 export class LanguageSelector {
   public language = inject(LanguageService);

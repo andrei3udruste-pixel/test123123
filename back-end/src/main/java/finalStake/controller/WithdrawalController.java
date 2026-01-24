@@ -29,10 +29,6 @@ public class WithdrawalController {
 
     private final WithdrawalService withdrawalService;
 
-    /* =====================
-       USER ENDPOINTS
-       ===================== */
-
     @PostMapping
     public ResponseEntity<BaseResponse<WithdrawalViewDTO>> create(@Valid @RequestBody WithdrawalCreateDTO dto) {
         var result = withdrawalService.create(dto);
@@ -44,10 +40,6 @@ public class WithdrawalController {
         var page = withdrawalService.getMyWithdrawals(pageable);
         return ResponseEntity.status(HttpStatus.OK).body(new PageResponse<>(page));
     }
-
-    /* =====================
-       ADMIN ENDPOINTS
-       ===================== */
 
     @Tag(name = "Admin")
     @GetMapping("/admin/search")

@@ -12,9 +12,6 @@
   }
 }
 
-/* =========================
-   FORM
-   ========================= */
 .withdraw-form {
   display: flex;
   flex-direction: column;
@@ -54,9 +51,6 @@
   }
 }
 
-/* =========================
-   TABLE
-   ========================= */
 .withdrawals-list {
   table {
     width: 100%;
@@ -75,9 +69,6 @@
   }
 }
 
-/* =========================
-   STATUS COLORS
-   ========================= */
 .status {
   font-weight: 600;
   text-transform: uppercase;
@@ -99,9 +90,6 @@
   color: #c62828;
 }
 
-/* =========================
-   EMPTY STATE
-   ========================= */
 .empty {
   margin-top: 24px;
   color: #777;

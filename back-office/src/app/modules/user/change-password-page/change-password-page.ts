@@ -30,6 +30,7 @@ import {AuthService} from '../../../openapi';
   ],
   templateUrl: './change-password-page.html',
   styleUrl: './change-password-page.scss',
+  standalone: true
 })
 export class ChangePasswordPage {
   router = inject(Router);

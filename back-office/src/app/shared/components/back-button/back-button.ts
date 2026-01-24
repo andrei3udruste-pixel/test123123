@@ -5,15 +5,16 @@ import {Location} from '@angular/common';
 import {TranslatePipe} from '@ngx-translate/core';
 
 @Component({
-  selector: 'app-back-button',
-  imports: [
-    MatIcon,
-    MatButton,
-    TranslatePipe,
-    MatIconButton
-  ],
-  templateUrl: './back-button.html',
-  styleUrl: './back-button.scss',
+    selector: 'app-back-button',
+    imports: [
+        MatIcon,
+        MatButton,
+        TranslatePipe,
+        MatIconButton
+    ],
+    templateUrl: './back-button.html',
+    styleUrl: './back-button.scss',
+    standalone: true
 })
 export class BackButton {
   iconOnly = input(true);

@@ -16,14 +16,13 @@ import {TranslatePipe} from '@ngx-translate/core';
 @Component({
   selector: 'app-withdraw-page',
   standalone: true,
-
-
-  // IMPORTANT: adăugăm imports ca la restul paginilor standalone din proiect
-  imports: [CommonModule, ReactiveFormsModule, DatePipe, TranslatePipe],
-
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    DatePipe,
+    TranslatePipe
+  ],
   templateUrl: './withdraw-page.html',
-
-  // IMPORTANT: în proiectul tău se folosește styleUrl (nu styleUrls)
   styleUrl: './withdraw-page.scss',
 })
 export class WithdrawPage implements OnInit {
@@ -32,7 +31,6 @@ export class WithdrawPage implements OnInit {
 
   withdrawals: WithdrawalViewDTO[] = [];
 
-  // paging simplu (dacă deja aveai paging în fișier, păstrează-l pe al tău)
   page = 0;
   size = 10;
 
@@ -71,8 +69,6 @@ export class WithdrawPage implements OnInit {
   loadMyWithdrawals(): void {
     this.withdrawalApi.getMy(this.page, this.size).subscribe({
       next: (res: any) => {
-        // În proiectul tău răspunsurile sunt fie {data: ...} fie PageResponse direct.
-        // Lăsăm fallback safe:
         const content = res?.data?.content ?? res?.content ?? res?.data ?? [];
         this.withdrawals = content;
       },

@@ -6,9 +6,6 @@ import { BASE_PATH } from '../../../openapi';
 import { IBaseResponse } from '../../models/base-response';
 import { IPageResponse } from '../../models/page-response';
 
-/* =======================
-   DTOs – exact ca backend
-   ======================= */
 
 export interface WithdrawalCreateDTO {
   amount: number;
@@ -18,7 +15,7 @@ export interface WithdrawalCreateDTO {
 
 
 export interface WithdrawalViewDTO {
-  id: string; // UUID
+  id: string;
   amount: number;
   payoutMethod: string;
   payoutDetails: string;
@@ -29,9 +26,6 @@ export interface WithdrawalViewDTO {
 }
 
 
-/* =======================
-   Service
-   ======================= */
 
 @Injectable({
   providedIn: 'root',
@@ -46,7 +40,6 @@ export class WithdrawalApiService {
     this.http = http;
   }
 
-  /** construim baseUrl din BASE_PATH */
   private get baseUrl(): string {
     const bp = Array.isArray(this.basePath)
       ? this.basePath[0]
@@ -55,11 +48,6 @@ export class WithdrawalApiService {
     return `${bp ?? 'http://localhost:8080'}/api/withdrawal`;
   }
 
-  /* =======================
-     USER endpoints
-     ======================= */
-
-  /** POST /api/withdrawal */
   create(
     dto: WithdrawalCreateDTO
   ): Observable<IBaseResponse<WithdrawalViewDTO>> {
@@ -69,7 +57,6 @@ export class WithdrawalApiService {
     );
   }
 
-  /** GET /api/withdrawal/my */
   getMy(
     page: number,
     size: number

@@ -25,6 +25,7 @@ import {BackButton} from '../../../shared/components/back-button/back-button';
   ],
   templateUrl: './user-view-page.html',
   styleUrl: './user-view-page.scss',
+  standalone: true
 })
 export class UserViewPage implements OnInit {
   activatedRoute = inject(ActivatedRoute);

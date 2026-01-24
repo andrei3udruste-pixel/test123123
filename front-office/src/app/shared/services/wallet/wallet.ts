@@ -24,7 +24,6 @@ export class WalletDataService {
         this._wallet.set(res.data ?? null);
       },
       error: () => {
-        // dacă nu e logat sau endpointul dă eroare, nu blocăm UI
         this._wallet.set(null);
       },
     });

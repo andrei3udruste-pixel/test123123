@@ -10,10 +10,6 @@ public class WithdrawalAdminUpdateDTO {
 
     private String adminNote;
 
-    /* =====================
-       Getters & Setters
-       ===================== */
-
     public WithdrawalStatus getStatus() {
         return status;
     }

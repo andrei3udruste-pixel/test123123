@@ -22,8 +22,5 @@ public class WithdrawalViewDTO {
     private LocalDateTime processedAt;
     private String adminNote;
 
-    /* =====================
-       Getters & Setters
-       ===================== */
 
 }

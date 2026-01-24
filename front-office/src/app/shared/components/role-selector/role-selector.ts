@@ -15,24 +15,25 @@ import {TranslatePipe} from '@ngx-translate/core';
 import {MatButton} from '@angular/material/button';
 
 @Component({
-  selector: 'app-role-selector',
-  imports: [
-    MatFormField,
-    MatLabel,
-    MatChipGrid,
-    MatChipInput,
-    FormsModule,
-    MatAutocomplete,
-    MatOption,
-    MatAutocompleteTrigger,
-    MatChipRow,
-    MatChipRemove,
-    MatIcon,
-    TranslatePipe,
-    MatButton
-  ],
-  templateUrl: './role-selector.html',
-  styleUrl: './role-selector.scss',
+    selector: 'app-role-selector',
+    imports: [
+        MatFormField,
+        MatLabel,
+        MatChipGrid,
+        MatChipInput,
+        FormsModule,
+        MatAutocomplete,
+        MatOption,
+        MatAutocompleteTrigger,
+        MatChipRow,
+        MatChipRemove,
+        MatIcon,
+        TranslatePipe,
+        MatButton
+    ],
+    templateUrl: './role-selector.html',
+    styleUrl: './role-selector.scss',
+    standalone: true
 })
 export class RoleSelector {
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];

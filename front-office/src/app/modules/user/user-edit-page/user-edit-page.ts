@@ -15,6 +15,7 @@ import {MatCheckbox} from '@angular/material/checkbox';
   imports: [BackButton, MatButton, MatCard, MatCardContent, MatProgressBar, ReactiveFormsModule, RoleSelector, TranslatePipe, MatCheckbox],
   templateUrl: './user-edit-page.html',
   styleUrl: './user-edit-page.scss',
+  standalone: true
 })
 export class UserEditPage {
   router = inject(Router);

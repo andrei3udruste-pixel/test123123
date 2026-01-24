@@ -42,13 +42,6 @@ public class WithdrawalServiceImpl implements WithdrawalService {
         this.withdrawalMapper = withdrawalMapper;
     }
 
-//    private UUID getCurrentUserId() {
-//        Authentication authentication = SecurityContextHolder
-//                .getContext()
-//                .getAuthentication();
-//
-//        return UUID.fromString(authentication.getName());
-//    }
     private String getCurrentUsername() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null || authentication.getName() == null) {
@@ -58,14 +51,11 @@ public class WithdrawalServiceImpl implements WithdrawalService {
     }
 
 
-    /**
-     * USER: create withdrawal
-     */
     @Override
     @Transactional
     public WithdrawalViewDTO create(WithdrawalCreateDTO dto) {
 
-        // 1️⃣ Validare sumă
+
         if (dto.getAmount() == null || dto.getAmount().compareTo(BigDecimal.ZERO) <= 0) {
             throw new IllegalArgumentException("Withdrawal amount must be greater than 0");
         }
@@ -79,16 +69,14 @@ public class WithdrawalServiceImpl implements WithdrawalService {
         Wallet wallet = walletRepository.findByUser(user)
                 .orElseThrow(() -> new IllegalStateException("walletNotFound"));
 
-        // 2️⃣ Verificare fonduri
+
         if (wallet.getBalance().compareTo(dto.getAmount()) < 0) {
             throw new IllegalArgumentException("insufficientBalance");
         }
 
-        // 3️⃣ Scade banii (blocare)
         wallet.setBalance(wallet.getBalance().subtract(dto.getAmount()));
         walletRepository.save(wallet);
 
-        // 4️⃣ Creează withdrawal
         Withdrawal withdrawal = new Withdrawal();
         withdrawal.setUser(user);
         withdrawal.setAmount(dto.getAmount());
@@ -102,9 +90,6 @@ public class WithdrawalServiceImpl implements WithdrawalService {
         return withdrawalMapper.toViewDto(saved);
     }
 
-    /**
-     * USER: list my withdrawals
-     */
     @Override
     @Transactional(readOnly = true)
     public Page<WithdrawalViewDTO> getMyWithdrawals(Pageable pageable) {
@@ -116,9 +101,6 @@ public class WithdrawalServiceImpl implements WithdrawalService {
                 .map(withdrawalMapper::toViewDto);
     }
 
-    /**
-     * ADMIN: list all withdrawals
-     */
     @Override
     @Transactional(readOnly = true)
     public Page<WithdrawalViewDTO> getAll(Pageable pageable) {
@@ -128,9 +110,6 @@ public class WithdrawalServiceImpl implements WithdrawalService {
                 .map(withdrawalMapper::toViewDto);
     }
 
-    /**
-     * ADMIN: update withdrawal status
-     */
     @Override
     @Transactional
     public void updateStatus(UUID withdrawalId, WithdrawalAdminUpdateDTO dto) {
@@ -140,7 +119,7 @@ public class WithdrawalServiceImpl implements WithdrawalService {
 
         validateStatusTransition(withdrawal.getStatus(), dto.getStatus());
 
-        // Dacă admin respinge → returnăm banii
+
         if (withdrawal.getStatus() == WithdrawalStatus.PENDING
                 && dto.getStatus() == WithdrawalStatus.REJECTED) {
 
@@ -162,9 +141,7 @@ public class WithdrawalServiceImpl implements WithdrawalService {
         withdrawalRepository.save(withdrawal);
     }
 
-    /**
-     * Business rules for withdrawal lifecycle.
-     */
+
     private void validateStatusTransition(
             WithdrawalStatus current,
             WithdrawalStatus next

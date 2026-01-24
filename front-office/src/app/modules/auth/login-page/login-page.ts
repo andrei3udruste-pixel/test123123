@@ -27,6 +27,7 @@ import {Router} from '@angular/router';
   ],
   templateUrl: './login-page.html',
   styleUrl: './login-page.scss',
+  standalone: true
 })
 export class LoginPage {
   authService = inject(AuthService);

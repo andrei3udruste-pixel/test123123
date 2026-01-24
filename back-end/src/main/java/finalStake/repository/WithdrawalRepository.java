@@ -10,10 +10,6 @@ import java.util.UUID;
 
 public interface WithdrawalRepository extends JpaRepository<Withdrawal, UUID> {
 
-    /**
-     * Returns all withdrawals for a specific user.
-     */
-    //Page<Withdrawal> findByUserId(UUID userId, Pageable pageable);
     Page<Withdrawal> findByUserUsername(String username, Pageable pageable);
     Page<Withdrawal> findByStatus(WithdrawalStatus status, Pageable pageable);
 
