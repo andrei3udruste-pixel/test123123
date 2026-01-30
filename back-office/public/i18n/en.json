@@ -86,6 +86,7 @@
   "sidenav": {
     "users": "Users",
     "withdrawals": "Withdrawals",
+    "payments": "Payments",
     "currencies": "Currencies"
   },
   "role": {
@@ -185,6 +186,24 @@
     "error": {
       "conversionMin": "Conversion rate must be greater than 0",
       "buyingMustBeGreater": "Buying rate must be greater than selling rate"
+    }
+  },
+  "payment": {
+    "amount": "Amount",
+    "convertedAmount": "Stakes Credited",
+    "admin": {
+      "title": "Payments",
+      "username": "Username",
+      "status": "Status",
+      "all": "All",
+      "date": "Date",
+      "user": "User"
+    },
+    "status": {
+      "PENDING": "Pending",
+      "COMPLETED": "Completed",
+      "FAILED": "Failed",
+      "CANCELLED": "Cancelled"
     }
   }
 }

@@ -10,5 +10,6 @@
     <include file="/ddl/1769776577414-add-currencies.xml" relativeToChangelogFile="true"/>
     <include file="/ddl/1769777405258-add-currency-to-withdrawals.xml" relativeToChangelogFile="true"/>
     <include file="/ddl/1769779512000-add-buying-selling-rates.xml" relativeToChangelogFile="true"/>
+    <include file="/ddl/1769782860979-add-payments.xml" relativeToChangelogFile="true"/>
 
 </databaseChangeLog>

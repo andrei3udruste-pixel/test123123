@@ -8,6 +8,8 @@ import {Authority} from '../../shared/models/authority';
 import {UserEditPage} from './user-edit-page/user-edit-page';
 import {ChangePasswordPage} from './change-password-page/change-password-page';
 import {WithdrawPage} from './withdraw-page/withdraw-page';
+import {PaymentSuccessPage} from './payment-success-page/payment-success-page';
+import {PaymentCancelledPage} from './payment-cancelled-page/payment-cancelled-page';
 
 
 const userRoutes: Routes = [
@@ -22,6 +24,14 @@ const userRoutes: Routes = [
   {
     path: 'withdraw',
     component: WithdrawPage,
+  },
+  {
+    path: 'payment-success',
+    component: PaymentSuccessPage,
+  },
+  {
+    path: 'payment-cancelled',
+    component: PaymentCancelledPage,
   },
   {
     path: '',

@@ -10,10 +10,10 @@
 
 
 export interface CurrencyViewDTO { 
-    code?: string;
     buyingConversion?: number;
-    sellingConversion?: number;
+    code?: string;
     id?: number;
     name?: string;
+    sellingConversion?: number;
 }
 

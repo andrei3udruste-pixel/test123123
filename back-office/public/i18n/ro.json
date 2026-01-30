@@ -86,6 +86,7 @@
   "sidenav": {
     "users": "Utilizatori",
     "withdrawals": "Retrageri",
+    "payments": "Plăți",
     "currencies": "Valute"
   },
   "role": {
@@ -185,6 +186,24 @@
     "error": {
       "conversionMin": "Rata de conversie trebuie să fie mai mare decât 0",
       "buyingMustBeGreater": "Rata de cumpărare trebuie să fie mai mare decât rata de vânzare"
+    }
+  },
+  "payment": {
+    "amount": "Sumă",
+    "convertedAmount": "Stakes Creditați",
+    "admin": {
+      "title": "Plăți",
+      "username": "Utilizator",
+      "status": "Status",
+      "all": "Toate",
+      "date": "Data",
+      "user": "Utilizator"
+    },
+    "status": {
+      "PENDING": "În așteptare",
+      "COMPLETED": "Finalizat",
+      "FAILED": "Eșuat",
+      "CANCELLED": "Anulat"
     }
   }
 }

@@ -6,6 +6,7 @@ api/admin.service.ts
 api/api.ts
 api/auth.service.ts
 api/currency.service.ts
+api/payment.service.ts
 api/user.service.ts
 api/wallet.service.ts
 api/withdrawal.service.ts
@@ -13,6 +14,7 @@ configuration.ts
 encoder.ts
 git_push.sh
 index.ts
+model/baseResponseCheckoutSessionDTO.ts
 model/baseResponseCurrencyViewDTO.ts
 model/baseResponseListCurrencyViewDTO.ts
 model/baseResponseListString.ts
@@ -23,12 +25,16 @@ model/baseResponseUserViewDTO.ts
 model/baseResponseVoid.ts
 model/baseResponseWalletViewDTO.ts
 model/baseResponseWithdrawalViewDTO.ts
+model/checkoutSessionDTO.ts
 model/currencyUpdateDTO.ts
 model/currencyViewDTO.ts
 model/models.ts
+model/pageResponsePaymentViewDTO.ts
 model/pageResponseUserViewAdminDTO.ts
 model/pageResponseWithdrawalViewDTO.ts
 model/pageable.ts
+model/paymentCreateDTO.ts
+model/paymentViewDTO.ts
 model/userEmailDTO.ts
 model/userListViewDTO.ts
 model/userNewPasswordDTO.ts

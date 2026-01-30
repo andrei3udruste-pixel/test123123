@@ -113,6 +113,9 @@
   "user": {
     "profile": {
       "title": "Profil utilizator",
+      "wallet": {
+        "title": "Portofel"
+      },
       "actions": {
         "title": "Acțiuni",
         "logout": "Deconectați-vă",
@@ -174,6 +177,29 @@
   "wallet": {
     "balance": "Sold",
     "insufficientBalance": "Sold insuficient"
+  },
+  "payment": {
+    "addStakes": {
+      "title": "Adaugă Stakes",
+      "menu": "Adaugă Stakes"
+    },
+    "amount": "Sumă",
+    "amountMin": "Suma trebuie să fie cel puțin 1",
+    "currency": "Valută",
+    "youWillReceive": "Vei primi",
+    "proceedToPayment": "Continuă la plată",
+    "success": {
+      "title": "Plată primită",
+      "message": "Plata ta a fost primită.",
+      "confirmationNote": "Stakes-urile vor fi adăugate în portofel în scurt timp, după confirmarea plății.",
+      "backToProfile": "Mergi la profil"
+    },
+    "cancelled": {
+      "title": "Plată anulată",
+      "message": "Plata a fost anulată. Nu s-au efectuat tranzacții.",
+      "backToProfile": "Înapoi la profil",
+      "tryAgain": "Încearcă din nou"
+    }
   }
 
 }

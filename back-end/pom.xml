@@ -141,6 +141,11 @@
             <artifactId>spring-cloud-azure-starter-keyvault-secrets</artifactId>
             <version>5.19.0</version>
         </dependency>
+        <dependency>
+            <groupId>com.stripe</groupId>
+            <artifactId>stripe-java</artifactId>
+            <version>28.3.0</version>
+        </dependency>
     </dependencies>
 
     <build>

@@ -10,6 +10,7 @@
 
 
 export interface CurrencyUpdateDTO { 
-    conversion: number;
+    buyingConversion: number;
+    sellingConversion: number;
 }
 

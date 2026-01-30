@@ -51,6 +51,11 @@ export class Sidenav {
       roles: [Authority.ROLE_ACCOUNTING, Authority.ROLE_ADMIN]
     },
     {
+      labelKey: "sidenav.payments",
+      link: ['/payment'],
+      roles: [Authority.ROLE_ACCOUNTING, Authority.ROLE_ADMIN]
+    },
+    {
       labelKey: "sidenav.currencies",
       link: ['/currency'],
       roles: [Authority.ROLE_ADMIN]
