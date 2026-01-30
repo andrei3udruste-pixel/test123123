@@ -10,6 +10,7 @@ import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Profile;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,7 @@ import java.util.ResourceBundle;
 
 @Slf4j
 @Service
+@Profile("!local")
 @RequiredArgsConstructor
 public class MailServiceImpl implements MailService {
     private final TemplateEngine templateEngine;
