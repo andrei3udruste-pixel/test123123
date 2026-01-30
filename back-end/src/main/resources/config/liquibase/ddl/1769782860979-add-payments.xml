@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.29.xsd">
+
+    <changeSet id="1769782860979-add-payments-table" author="system">
+        <createTable tableName="payments">
+            <column name="id" type="uuid">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="user_id" type="uuid">
+                <constraints nullable="false"/>
+            </column>
+            <column name="username" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="amount" type="decimal(19,2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="currency_id" type="uuid">
+                <constraints nullable="true"/>
+            </column>
+            <column name="converted_amount" type="decimal(19,2)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="status" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="stripe_payment_intent_id" type="varchar(255)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="stripe_checkout_session_id" type="varchar(255)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="created_at" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="completed_at" type="timestamp">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint
+                baseTableName="payments"
+                baseColumnNames="user_id"
+                constraintName="fk_payments_user"
+                referencedTableName="users"
+                referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint
+                baseTableName="payments"
+                baseColumnNames="currency_id"
+                constraintName="fk_payments_currency"
+                referencedTableName="currencies"
+                referencedColumnNames="id"/>
+
+        <createIndex indexName="idx_payments_user_id" tableName="payments">
+            <column name="user_id"/>
+        </createIndex>
+
+        <createIndex indexName="idx_payments_stripe_session" tableName="payments">
+            <column name="stripe_checkout_session_id"/>
+        </createIndex>
+    </changeSet>
+
+</databaseChangeLog>

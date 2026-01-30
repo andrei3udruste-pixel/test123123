@@ -12,7 +12,9 @@
 export interface WithdrawalViewDTO { 
     adminNote?: string;
     amount?: number;
+    convertedAmount?: number;
     createdAt?: string;
+    currencyCode?: string;
     id?: string;
     payoutDetails?: string;
     payoutMethod?: string;

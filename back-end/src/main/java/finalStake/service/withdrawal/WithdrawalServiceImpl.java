@@ -4,10 +4,12 @@ import finalStake.dto.withdrawal.WithdrawalAdminUpdateDTO;
 import finalStake.dto.withdrawal.WithdrawalCreateDTO;
 import finalStake.dto.withdrawal.WithdrawalViewDTO;
 import finalStake.mapper.WithdrawalMapper;
+import finalStake.model.entity.Currency;
 import finalStake.model.entity.User;
 import finalStake.model.entity.Wallet;
 import finalStake.model.entity.Withdrawal;
 import finalStake.model.enums.WithdrawalStatus;
+import finalStake.repository.CurrencyRepository;
 import finalStake.repository.UserRepository;
 import finalStake.repository.WalletRepository;
 import finalStake.repository.WithdrawalRepository;
@@ -19,6 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -28,17 +31,20 @@ public class WithdrawalServiceImpl implements WithdrawalService {
     private final WithdrawalRepository withdrawalRepository;
     private final UserRepository userRepository;
     private final WalletRepository walletRepository;
+    private final CurrencyRepository currencyRepository;
     private final WithdrawalMapper withdrawalMapper;
 
     public WithdrawalServiceImpl(
             WithdrawalRepository withdrawalRepository,
             UserRepository userRepository,
             WalletRepository walletRepository,
+            CurrencyRepository currencyRepository,
             WithdrawalMapper withdrawalMapper
     ) {
         this.withdrawalRepository = withdrawalRepository;
         this.userRepository = userRepository;
         this.walletRepository = walletRepository;
+        this.currencyRepository = currencyRepository;
         this.withdrawalMapper = withdrawalMapper;
     }
 
@@ -69,6 +75,12 @@ public class WithdrawalServiceImpl implements WithdrawalService {
         Wallet wallet = walletRepository.findByUser(user)
                 .orElseThrow(() -> new IllegalStateException("walletNotFound"));
 
+        // Find the selected currency
+        Currency currency = currencyRepository.findByCode(dto.getCurrencyCode())
+                .orElseThrow(() -> new IllegalArgumentException("currencyNotFound"));
+
+        // Calculate converted amount using selling rate (amount in Stakes / selling conversion = amount in currency)
+        BigDecimal convertedAmount = dto.getAmount().divide(currency.getSellingConversion(), 2, RoundingMode.HALF_UP);
 
         if (wallet.getBalance().compareTo(dto.getAmount()) < 0) {
             throw new IllegalArgumentException("insufficientBalance");
@@ -80,6 +92,8 @@ public class WithdrawalServiceImpl implements WithdrawalService {
         Withdrawal withdrawal = new Withdrawal();
         withdrawal.setUser(user);
         withdrawal.setAmount(dto.getAmount());
+        withdrawal.setCurrency(currency);
+        withdrawal.setConvertedAmount(convertedAmount);
         withdrawal.setPayoutMethod(dto.getPayoutMethod());
         withdrawal.setPayoutDetails(dto.getPayoutDetails());
         withdrawal.setStatus(WithdrawalStatus.PENDING);

@@ -46,6 +46,8 @@ public class WebSecurityConfig {
                 .requestMatchers("/api/auth/signin", "/api/auth/signup").permitAll()
                 .requestMatchers("/api/auth/admin/signin").permitAll()
                 .requestMatchers("/api/auth/confirmEmail/**", "/api/auth/resetPassword/**").permitAll()
+                // Stripe webhook
+                .requestMatchers("/api/payment/webhook").permitAll()
                 // Swagger documentation
                 .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
                 // All other requests require authentication (role checks done at controller level)

@@ -37,7 +37,7 @@ public class WalletServiceImpl implements WalletService {
         Wallet wallet = walletRepository.findByUser(user)
                 .orElseThrow(() -> new IllegalStateException("walletNotFound"));
 
-        String currency = "RON";
+        String currency = "Stakes";
 
         return new WalletViewDTO(wallet.getBalance(), currency);
     }

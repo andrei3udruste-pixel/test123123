@@ -12,6 +12,9 @@ public class WithdrawalCreateDTO {
     @Positive(message = "amountMustBePositive")
     private BigDecimal amount;
 
+    @NotBlank(message = "currencyCodeIsRequired")
+    private String currencyCode;
+
     @NotBlank(message = "payoutMethodIsRequired")
     private String payoutMethod;
 
@@ -24,6 +27,14 @@ public class WithdrawalCreateDTO {
 
     public void setAmount(BigDecimal amount) {
         this.amount = amount;
+    }
+
+    public String getCurrencyCode() {
+        return currencyCode;
+    }
+
+    public void setCurrencyCode(String currencyCode) {
+        this.currencyCode = currencyCode;
     }
 
     public String getPayoutMethod() {

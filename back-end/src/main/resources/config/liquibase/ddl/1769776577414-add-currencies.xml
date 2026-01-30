@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.23.xsd">
+
+    <changeSet id="add-currencies-table" author="finalstake">
+
+        <createTable tableName="currencies">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+            <column name="code" type="VARCHAR(3)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="conversion" type="NUMERIC(19,6)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createIndex indexName="idx_currencies_code" tableName="currencies" unique="true">
+            <column name="code"/>
+        </createIndex>
+
+    </changeSet>
+
+    <changeSet id="seed-currencies" author="finalstake">
+        <insert tableName="currencies">
+            <column name="code" value="RON"/>
+            <column name="name" value="Romanian Leu"/>
+            <column name="conversion" value="1.000000"/>
+        </insert>
+
+        <insert tableName="currencies">
+            <column name="code" value="EUR"/>
+            <column name="name" value="Euro"/>
+            <column name="conversion" value="5.000000"/>
+        </insert>
+
+        <insert tableName="currencies">
+            <column name="code" value="GBP"/>
+            <column name="name" value="British Pound"/>
+            <column name="conversion" value="5.850000"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>

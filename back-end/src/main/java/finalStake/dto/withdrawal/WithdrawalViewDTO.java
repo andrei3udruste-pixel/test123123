@@ -15,6 +15,8 @@ public class WithdrawalViewDTO {
     private UUID id;
     private String username;
     private BigDecimal amount;
+    private String currencyCode;
+    private BigDecimal convertedAmount;
     private String payoutMethod;
     private String payoutDetails;
     private WithdrawalStatus status;

@@ -11,6 +11,7 @@
 
 export interface WithdrawalCreateDTO { 
     amount: number;
+    currencyCode: string;
     payoutDetails: string;
     payoutMethod: string;
 }

@@ -85,7 +85,9 @@
   },
   "sidenav": {
     "users": "Users",
-    "withdrawals": "Withdrawals"
+    "withdrawals": "Withdrawals",
+    "payments": "Payments",
+    "currencies": "Currencies"
   },
   "role": {
     "select": {
@@ -133,6 +135,7 @@
   },
   "withdrawal": {
     "amount": "Amount",
+    "convertedAmount": "Converted Amount",
     "admin": {
       "title": "Withdrawals",
       "username": "Username",
@@ -164,6 +167,44 @@
     "view": "View",
     "back": "Back",
     "cancel": "Cancel"
+  },
+  "currency": {
+    "list": {
+      "title": "Currencies",
+      "empty": "No currencies found"
+    },
+    "edit": {
+      "title": "Edit Currency"
+    },
+    "id": "ID",
+    "code": "Code",
+    "name": "Name",
+    "buyingConversion": "Buying Rate",
+    "buyingConversion.hint": "Stakes per unit of currency (for buying Stakes)",
+    "sellingConversion": "Selling Rate",
+    "sellingConversion.hint": "Stakes per unit of currency (for withdrawals)",
+    "error": {
+      "conversionMin": "Conversion rate must be greater than 0",
+      "buyingMustBeGreater": "Buying rate must be greater than selling rate"
+    }
+  },
+  "payment": {
+    "amount": "Amount",
+    "convertedAmount": "Stakes Credited",
+    "admin": {
+      "title": "Payments",
+      "username": "Username",
+      "status": "Status",
+      "all": "All",
+      "date": "Date",
+      "user": "User"
+    },
+    "status": {
+      "PENDING": "Pending",
+      "COMPLETED": "Completed",
+      "FAILED": "Failed",
+      "CANCELLED": "Cancelled"
+    }
   }
 }
 

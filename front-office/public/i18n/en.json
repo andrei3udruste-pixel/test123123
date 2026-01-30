@@ -100,7 +100,8 @@
     "actions": "Actions"
   },
   "sidenav": {
-    "users": "Users"
+    "users": "Users",
+    "withdrawals": "Withdrawals"
   },
   "role": {
     "select": {
@@ -112,6 +113,9 @@
   "user": {
     "profile": {
       "title": "User profile",
+      "wallet": {
+        "title": "Wallet"
+      },
       "actions": {
         "title": "Actions",
         "logout": "Log out",
@@ -148,9 +152,17 @@
   "withdrawal": {
     "menu": "Withdraw",
     "title": "Withdraw money",
+    "list.title": "My Withdrawals",
+    "add.title": "New Withdrawal",
     "amount": "Amount",
+    "currency": "Currency",
+    "convertedAmount": "Converted Amount",
+    "conversionPreview": "You will receive:",
+    "insufficientBalance": "Amount exceeds your wallet balance",
     "submit": "Withdraw",
     "empty": "No withdrawals yet",
+    "createdAt": "Date",
+    "statusLabel": "Status",
     "payoutMethod": "Payout method",
     "payoutMethod.placeholder": "Select payout method",
     "payoutDetails": "Payout details",
@@ -165,6 +177,29 @@
   "wallet": {
     "balance": "Balance",
     "insufficientBalance": "Insufficient balance"
+  },
+  "payment": {
+    "addStakes": {
+      "title": "Add Stakes",
+      "menu": "Add Stakes"
+    },
+    "amount": "Amount",
+    "amountMin": "Amount must be at least 1",
+    "currency": "Currency",
+    "youWillReceive": "You will receive",
+    "proceedToPayment": "Proceed to Payment",
+    "success": {
+      "title": "Payment Received",
+      "message": "Your payment has been received.",
+      "confirmationNote": "Your stakes will be added to your wallet shortly once the payment is confirmed.",
+      "backToProfile": "Go to Profile"
+    },
+    "cancelled": {
+      "title": "Payment Cancelled",
+      "message": "Your payment was cancelled. No charges were made.",
+      "backToProfile": "Back to Profile",
+      "tryAgain": "Try Again"
+    }
   }
 
 }

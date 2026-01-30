@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.23.xsd">
+
+    <changeSet id="add-currency-to-withdrawals" author="finalstake">
+
+        <addColumn tableName="withdrawals">
+            <column name="currency_id" type="BIGINT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="converted_amount" type="NUMERIC(19,2)">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+
+        <addForeignKeyConstraint
+                baseTableName="withdrawals"
+                baseColumnNames="currency_id"
+                referencedTableName="currencies"
+                referencedColumnNames="id"
+                constraintName="fk_withdrawals_currency"/>
+
+        <createIndex indexName="idx_withdrawals_currency_id" tableName="withdrawals">
+            <column name="currency_id"/>
+        </createIndex>
+
+    </changeSet>
+
+</databaseChangeLog>

@@ -9,6 +9,7 @@ import { IPageResponse } from '../../models/page-response';
 
 export interface WithdrawalCreateDTO {
   amount: number;
+  currencyCode: string;
   payoutMethod: string;
   payoutDetails: string;
 }
@@ -17,6 +18,8 @@ export interface WithdrawalCreateDTO {
 export interface WithdrawalViewDTO {
   id: string;
   amount: number;
+  currencyCode?: string;
+  convertedAmount?: number;
   payoutMethod: string;
   payoutDetails: string;
   status: 'PENDING' | 'APPROVED' | 'REJECTED';
@@ -59,11 +62,17 @@ export class WithdrawalApiService {
 
   getMy(
     page: number,
-    size: number
+    size: number,
+    sort?: string,
+    direction?: string
   ): Observable<IPageResponse<WithdrawalViewDTO>> {
-    const params = new HttpParams()
+    let params = new HttpParams()
       .set('page', page)
       .set('size', size);
+
+    if (sort && direction) {
+      params = params.set('sort', `${sort},${direction}`);
+    }
 
     return this.http.get<IPageResponse<WithdrawalViewDTO>>(
       `${this.baseUrl}/my`,

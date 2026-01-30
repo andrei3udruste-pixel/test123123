@@ -85,7 +85,9 @@
   },
   "sidenav": {
     "users": "Utilizatori",
-    "withdrawals": "Retrageri"
+    "withdrawals": "Retrageri",
+    "payments": "Plăți",
+    "currencies": "Valute"
   },
   "role": {
     "select": {
@@ -133,6 +135,7 @@
   },
   "withdrawal": {
     "amount": "Sumă",
+    "convertedAmount": "Sumă convertită",
     "admin": {
       "title": "Retrageri",
       "username": "Utilizator",
@@ -164,5 +167,43 @@
     "view": "Vezi",
     "back": "Înapoi",
     "cancel": "Anulează"
+  },
+  "currency": {
+    "list": {
+      "title": "Valute",
+      "empty": "Nu au fost găsite valute"
+    },
+    "edit": {
+      "title": "Editează Valuta"
+    },
+    "id": "ID",
+    "code": "Cod",
+    "name": "Denumire",
+    "buyingConversion": "Rată Cumpărare",
+    "buyingConversion.hint": "Stakes per unitate de valută (pentru cumpărare Stakes)",
+    "sellingConversion": "Rată Vânzare",
+    "sellingConversion.hint": "Stakes per unitate de valută (pentru retrageri)",
+    "error": {
+      "conversionMin": "Rata de conversie trebuie să fie mai mare decât 0",
+      "buyingMustBeGreater": "Rata de cumpărare trebuie să fie mai mare decât rata de vânzare"
+    }
+  },
+  "payment": {
+    "amount": "Sumă",
+    "convertedAmount": "Stakes Creditați",
+    "admin": {
+      "title": "Plăți",
+      "username": "Utilizator",
+      "status": "Status",
+      "all": "Toate",
+      "date": "Data",
+      "user": "Utilizator"
+    },
+    "status": {
+      "PENDING": "În așteptare",
+      "COMPLETED": "Finalizat",
+      "FAILED": "Eșuat",
+      "CANCELLED": "Anulat"
+    }
   }
 }
