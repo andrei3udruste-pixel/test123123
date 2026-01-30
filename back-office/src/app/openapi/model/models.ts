@@ -1,3 +1,5 @@
+export * from './baseResponseCurrencyViewDTO';
+export * from './baseResponseListCurrencyViewDTO';
 export * from './baseResponseListString';
 export * from './baseResponseListUserListViewDTO';
 export * from './baseResponseString';
@@ -6,6 +8,8 @@ export * from './baseResponseUserViewDTO';
 export * from './baseResponseVoid';
 export * from './baseResponseWalletViewDTO';
 export * from './baseResponseWithdrawalViewDTO';
+export * from './currencyUpdateDTO';
+export * from './currencyViewDTO';
 export * from './pageResponseUserViewAdminDTO';
 export * from './pageResponseWithdrawalViewDTO';
 export * from './pageable';

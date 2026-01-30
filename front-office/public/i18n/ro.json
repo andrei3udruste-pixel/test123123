@@ -100,7 +100,8 @@
     "actions": "Acțiuni"
   },
   "sidenav": {
-    "users": "Utilizatori"
+    "users": "Utilizatori",
+    "withdrawals": "Retrageri"
   },
   "role": {
     "select": {
@@ -148,9 +149,17 @@
   "withdrawal": {
     "menu": "Retragere",
     "title": "Retrage bani",
+    "list.title": "Retragerile Mele",
+    "add.title": "Retragere Nouă",
     "amount": "Sumă",
+    "currency": "Valută",
+    "convertedAmount": "Sumă convertită",
+    "conversionPreview": "Vei primi:",
+    "insufficientBalance": "Suma depășește soldul portofelului",
     "submit": "Retrage",
     "empty": "Nu există retrageri",
+    "createdAt": "Data",
+    "statusLabel": "Status",
     "payoutMethod": "Metodă de plată",
     "payoutMethod.placeholder": "Alege metoda de plată",
     "payoutDetails": "Detalii plată",

@@ -57,7 +57,7 @@ export class WithdrawalListPage implements OnInit {
   pageSize = signal<number>(10);
   pageSizeOptions = [5, 10, 25];
 
-  displayedColumns: string[] = ['createdAt', 'username', 'amount', 'status', 'actions'];
+  displayedColumns: string[] = ['createdAt', 'username', 'amount', 'convertedAmount', 'status', 'actions'];
 
   statuses: { value: WithdrawalStatus; labelKey: string }[] = [
     { value: 'PENDING', labelKey: 'withdrawal.status.PENDING' },

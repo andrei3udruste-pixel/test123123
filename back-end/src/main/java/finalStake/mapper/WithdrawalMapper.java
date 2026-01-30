@@ -13,5 +13,6 @@ import org.mapstruct.ReportingPolicy;
 public interface WithdrawalMapper {
 
     @Mapping(source = "user.username", target = "username")
+    @Mapping(source = "currency.code", target = "currencyCode")
     WithdrawalViewDTO toViewDto(Withdrawal withdrawal);
 }

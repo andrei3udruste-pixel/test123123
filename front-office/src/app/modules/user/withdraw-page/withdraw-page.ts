@@ -1,70 +1,59 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal, inject } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
-import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { WalletApiService, WalletViewDTO } from '../../../shared/services/wallet/wallet-api.service';
-import { WalletDataService } from '../../../shared/services/wallet/wallet';
-
 import { MatCardModule } from '@angular/material/card';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatIconModule } from '@angular/material/icon';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { TranslatePipe } from '@ngx-translate/core';
 
 import {
   WithdrawalApiService,
   WithdrawalViewDTO,
-  WithdrawalCreateDTO
 } from '../../../shared/services/withdrawal/withdrawal-api.service';
-import {TranslatePipe} from '@ngx-translate/core';
+import { WalletApiService, WalletViewDTO } from '../../../shared/services/wallet/wallet-api.service';
+import { WithdrawalCreateDialog } from './withdrawal-create-dialog/withdrawal-create-dialog';
 
 @Component({
   selector: 'app-withdraw-page',
   standalone: true,
   imports: [
     CommonModule,
-    ReactiveFormsModule,
     DatePipe,
     TranslatePipe,
     MatCardModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatSelectModule,
     MatButtonModule,
     MatTableModule,
-    MatProgressBarModule
+    MatPaginatorModule,
+    MatProgressBarModule,
+    MatIconModule,
+    MatDialogModule
   ],
   templateUrl: './withdraw-page.html',
   styleUrl: './withdraw-page.scss',
 })
 export class WithdrawPage implements OnInit {
-  form!: FormGroup;
+  private withdrawalApi = inject(WithdrawalApiService);
+  private walletApi = inject(WalletApiService);
+  private dialog = inject(MatDialog);
+
   wallet?: WalletViewDTO;
+  withdrawals = signal<WithdrawalViewDTO[]>([]);
+  isLoading = signal(false);
 
-  withdrawals: WithdrawalViewDTO[] = [];
+  // Pagination
+  page = signal(0);
+  pageSize = signal(10);
+  totalItems = signal(0);
+  pageSizeOptions = [5, 10, 25, 50];
 
-  page = 0;
-  size = 10;
-
-  constructor(
-    private fb: FormBuilder,
-    private withdrawalApi: WithdrawalApiService,
-    private walletApi: WalletApiService,
-    private walletData: WalletDataService
-
-) {}
+  displayedColumns = ['createdAt', 'amount', 'convertedAmount', 'payoutMethod', 'status'];
 
   ngOnInit(): void {
-    this.form = this.fb.group({
-      amount: [null, [Validators.required, Validators.min(1)]],
-      payoutMethod: [null, [Validators.required]],
-      payoutDetails: [null, [Validators.required]],
-    });
-
-
     this.loadWallet();
-    this.loadMyWithdrawals();
+    this.loadWithdrawals();
   }
 
   loadWallet(): void {
@@ -72,48 +61,45 @@ export class WithdrawPage implements OnInit {
       next: (res) => {
         this.wallet = res.data;
       },
-      error: (err: any) => {
+      error: (err) => {
         console.error('Failed to load wallet', err);
       },
     });
   }
 
-
-  loadMyWithdrawals(): void {
-    this.withdrawalApi.getMy(this.page, this.size).subscribe({
+  loadWithdrawals(): void {
+    this.isLoading.set(true);
+    this.withdrawalApi.getMy(this.page(), this.pageSize(), 'createdAt', 'desc').subscribe({
       next: (res: any) => {
         const content = res?.data?.content ?? res?.content ?? res?.data ?? [];
-        this.withdrawals = content;
+        const total = res?.data?.totalElements ?? res?.totalElements ?? content.length;
+        this.withdrawals.set(content);
+        this.totalItems.set(total);
+        this.isLoading.set(false);
       },
       error: (err) => {
         console.error('Failed to load withdrawals', err);
+        this.isLoading.set(false);
       },
     });
   }
 
-  submit(): void {
-    if (this.form.invalid) {
-      this.form.markAllAsTouched();
-      return;
-    }
+  onPageChange(event: PageEvent): void {
+    this.page.set(event.pageIndex);
+    this.pageSize.set(event.pageSize);
+    this.loadWithdrawals();
+  }
 
-    const dto: WithdrawalCreateDTO = {
-      amount: Number(this.form.value.amount),
-      payoutMethod: String(this.form.value.payoutMethod),
-      payoutDetails: String(this.form.value.payoutDetails),
-    };
+  openAddDialog(): void {
+    const dialogRef = this.dialog.open(WithdrawalCreateDialog, {
+      width: '500px',
+    });
 
-
-    this.withdrawalApi.create(dto).subscribe({
-      next: () => {
-        this.form.reset();
-        this.loadMyWithdrawals();
-        this.walletData.loadMyWallet();
-
-      },
-      error: (err) => {
-        console.error('Failed to create withdrawal', err);
-      },
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.loadWithdrawals();
+        this.loadWallet();
+      }
     });
   }
 }

@@ -31,6 +31,15 @@ public class Withdrawal {
     private BigDecimal amount;
 
     @Setter
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "currency_id")
+    private Currency currency;
+
+    @Setter
+    @Column(name = "converted_amount", precision = 19, scale = 2)
+    private BigDecimal convertedAmount;
+
+    @Setter
     @Column(name = "payout_method", nullable = false)
     private String payoutMethod;
 

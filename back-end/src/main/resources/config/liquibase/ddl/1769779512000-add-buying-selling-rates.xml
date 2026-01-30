@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.23.xsd">
+
+    <changeSet id="add-buying-selling-rates" author="finalstake">
+        <!-- Add buying_conversion column (rate for buying Stakes with currency) -->
+        <addColumn tableName="currencies">
+            <column name="buying_conversion" type="NUMERIC(19,6)">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+
+        <!-- Add selling_conversion column (rate for selling Stakes for currency) -->
+        <addColumn tableName="currencies">
+            <column name="selling_conversion" type="NUMERIC(19,6)">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+
+        <!-- Migrate existing conversion data: buying = conversion, selling = conversion * 0.95 -->
+        <sql>
+            UPDATE currencies 
+            SET buying_conversion = conversion,
+                selling_conversion = conversion * 0.95
+        </sql>
+
+        <!-- Make columns not null after data migration -->
+        <addNotNullConstraint tableName="currencies" columnName="buying_conversion" columnDataType="NUMERIC(19,6)"/>
+        <addNotNullConstraint tableName="currencies" columnName="selling_conversion" columnDataType="NUMERIC(19,6)"/>
+
+        <!-- Drop the old conversion column -->
+        <dropColumn tableName="currencies" columnName="conversion"/>
+
+        <!-- Add check constraint: buying_conversion > selling_conversion -->
+        <sql>
+            ALTER TABLE currencies ADD CONSTRAINT chk_buying_greater_than_selling 
+            CHECK (buying_conversion > selling_conversion)
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>
