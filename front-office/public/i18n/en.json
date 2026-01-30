@@ -29,6 +29,14 @@
     "filter": "Filter",
     "reset": "Reset"
   },
+  "success": {
+    "saved": "Changes saved successfully!",
+    "created": "Created successfully!",
+    "deleted": "Deleted successfully!",
+    "updated": "Updated successfully!",
+    "withdrawalSubmitted": "Withdrawal request submitted successfully!",
+    "passwordChanged": "Password changed successfully!"
+  },
   "error": {
     "form": {
       "required": "This field is required.",
@@ -40,13 +48,51 @@
     "unknownError": "An unknown error has occurred!",
     "userDisabled": "This account is disabled! Please contact an administrator in order to remediate this problem!",
     "invalidCredentials": "Invalid credentials!",
-    "accessDenied": "You do not have access to this resource! Please review your permissions!"
+    "accessDenied": "You do not have access to this resource! Please review your permissions!",
+    "tokenExpired": "Your session has expired. Please log in again.",
+    "userWithUsernameExists": "A user with this username already exists.",
+    "userWithEmailExists": "A user with this email already exists.",
+    "userWithIdNotFound": "User not found.",
+    "userWithUsernameNotFound": "User not found.",
+    "userNotEnabled": "Your account is not yet activated. Please check your email.",
+    "userAuthenticationFailed": "Authentication failed. Please check your credentials.",
+    "expiredVerificationToken": "This verification link has expired. Please request a new one.",
+    "invalidVerificationTokenType": "Invalid verification link.",
+    "verificationTokenNotFound": "Verification link not found or already used.",
+    "insufficientBalance": "Insufficient balance for this withdrawal.",
+    "invalidWithdrawalStatusTransition": "Invalid withdrawal status transition.",
+    "invalidDataProvided": "Invalid data provided. Please check your input.",
+    "validationFailed": "Validation failed. Please check your input.",
+    "roleNotFound": "Role not found.",
+    "adminShouldUseBackOffice": "Admin and accounting users should use the back-office application."
   },
   "auth": {
     "login": {
       "title": "Login",
       "username": "Username",
-      "password": "Password"
+      "password": "Password",
+      "noAccount": "Don't have an account?"
+    },
+    "register": {
+      "title": "Register",
+      "username": "Username",
+      "email": "Email",
+      "password": "Password",
+      "confirmPassword": "Confirm password",
+      "submit": "Create account",
+      "haveAccount": "Already have an account?",
+      "success": "Account created successfully! Please check your email to verify your account."
+    },
+    "confirmEmail": {
+      "verifying": "Verifying your email...",
+      "success": "Email verified successfully!",
+      "successTitle": "Email Confirmed",
+      "successMessage": "Your email has been verified successfully. You can now log in to your account.",
+      "errorTitle": "Verification Failed",
+      "redirecting": "Redirecting to login page...",
+      "failed": "Email verification failed. The link may be expired or invalid.",
+      "invalidToken": "Invalid verification link.",
+      "backToLogin": "Back to login"
     }
   },
   "list": {

@@ -22,6 +22,11 @@ public class UserSpecifications {
         return (root, _, cb) -> cb.equal(root.get(User_.ID), id);
     }
 
+    public static Specification<User> idContains(String partialId) {
+        return (root, _, cb) -> cb.like(
+                cb.lower(root.get(User_.ID).as(String.class)), "%" + partialId.toLowerCase() + "%");
+    }
+
     public static Specification<User> enabledEquals(Boolean enabled) {
         return (root, _, cb) -> cb.equal(root.get(User_.ENABLED), enabled);
     }

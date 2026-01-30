@@ -97,7 +97,7 @@ public class WithdrawalServiceImpl implements WithdrawalService {
         String username = getCurrentUsername();
 
         return withdrawalRepository
-                .findByUserUsername(username, pageable)
+                .findByUserUsernameOrderByCreatedAtDesc(username, pageable)
                 .map(withdrawalMapper::toViewDto);
     }
 
@@ -106,7 +106,7 @@ public class WithdrawalServiceImpl implements WithdrawalService {
     public Page<WithdrawalViewDTO> getAll(Pageable pageable) {
 
         return withdrawalRepository
-                .findAll(pageable)
+                .findAllByOrderByCreatedAtDesc(pageable)
                 .map(withdrawalMapper::toViewDto);
     }
 
@@ -180,18 +180,18 @@ public class WithdrawalServiceImpl implements WithdrawalService {
 
         if (hasStatus && hasUsername) {
             page = withdrawalRepository
-                    .findByStatusAndUserUsernameContainingIgnoreCase(
+                    .findByStatusAndUserUsernameContainingIgnoreCaseOrderByCreatedAtDesc(
                             status,
                             username.trim(),
                             pageable
                     );
         } else if (hasStatus) {
-            page = withdrawalRepository.findByStatus(status, pageable);
+            page = withdrawalRepository.findByStatusOrderByCreatedAtDesc(status, pageable);
         } else if (hasUsername) {
             page = withdrawalRepository
-                    .findByStatusAndUserUsernameContainingIgnoreCase(status, username.trim(), pageable);
+                    .findByUserUsernameContainingIgnoreCaseOrderByCreatedAtDesc(username.trim(), pageable);
         } else {
-            page = withdrawalRepository.findAll(pageable);
+            page = withdrawalRepository.findAllByOrderByCreatedAtDesc(pageable);
         }
 
         return page.map(withdrawalMapper::toViewDto);

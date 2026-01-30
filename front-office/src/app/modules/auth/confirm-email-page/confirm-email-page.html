@@ -1,0 +1,37 @@
+<div class="flex flex-col justify-center items-center w-screen h-screen">
+  <div class="fixed top-0 right-0 m-4">
+    <app-language-selector></app-language-selector>
+  </div>
+  <mat-card class="w-3/4 md:w-2/3 lg:w-1/3 p-6">
+    @if (isLoading()) {
+      <mat-card-content class="flex flex-col items-center justify-center gap-4 p-6">
+        <mat-spinner diameter="48"></mat-spinner>
+        <p class="text-lg">{{ 'auth.confirmEmail.verifying' | translate }}</p>
+      </mat-card-content>
+    }
+
+    @if (!isLoading() && isSuccess()) {
+      <mat-card-header>
+        <mat-card-title class="text-2xl font-semibold">{{ 'auth.confirmEmail.successTitle' | translate }}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content class="py-6">
+        <p>{{ 'auth.confirmEmail.successMessage' | translate }}</p>
+      </mat-card-content>
+      <mat-card-actions align="end">
+        <a routerLink="/login" mat-raised-button color="primary">{{ 'auth.login.title' | translate }}</a>
+      </mat-card-actions>
+    }
+
+    @if (!isLoading() && errorMessage()) {
+      <mat-card-header>
+        <mat-card-title class="text-2xl font-semibold">{{ 'auth.confirmEmail.errorTitle' | translate }}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content class="py-6">
+        <p>{{ errorMessage() | translate }}</p>
+      </mat-card-content>
+      <mat-card-actions align="end">
+        <a routerLink="/login" mat-raised-button color="primary">{{ 'auth.confirmEmail.backToLogin' | translate }}</a>
+      </mat-card-actions>
+    }
+  </mat-card>
+</div>

@@ -1,5 +1,5 @@
 import {computed, inject, Injectable} from '@angular/core';
-import {RoleService} from '../../../openapi';
+import {AdminService} from '../../../openapi';
 import {UserDataService} from '../user/user';
 import {toSignal} from '@angular/core/rxjs-interop';
 import {map} from 'rxjs';
@@ -8,11 +8,11 @@ import {map} from 'rxjs';
   providedIn: 'root',
 })
 export class RoleDataService {
-  roleService = inject(RoleService);
+  adminService = inject(AdminService);
   userService = inject(UserDataService);
 
   private rolesSignal = toSignal(
-    this.roleService.getAllRoles()
+    this.adminService.getAllRoles()
       .pipe(map(response => response.data || [])),
     {initialValue: [] as string[]},
   );

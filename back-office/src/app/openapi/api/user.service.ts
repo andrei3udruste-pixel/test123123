@@ -27,8 +27,6 @@ import { BaseResponseVoid } from '../model/baseResponseVoid';
 // @ts-ignore
 import { PageResponseUserViewAdminDTO } from '../model/pageResponseUserViewAdminDTO';
 // @ts-ignore
-import { UserSearchAdminDTO } from '../model/userSearchAdminDTO';
-// @ts-ignore
 import { UserSearchDTO } from '../model/userSearchDTO';
 // @ts-ignore
 import { UserUpdateAdminDTO } from '../model/userUpdateAdminDTO';
@@ -392,20 +390,21 @@ export class UserService extends BaseService {
 
     /**
      * @endpoint get /api/user/admin/search
-     * @param searchDTO 
      * @param page Zero-based page index (0..N)
      * @param size The size of the page to be returned
      * @param sort Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     * @param username 
+     * @param email 
+     * @param id 
+     * @param enabled 
+     * @param locked 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public searchAdmin(searchDTO: UserSearchAdminDTO, page?: number, size?: number, sort?: Array<string>, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<PageResponseUserViewAdminDTO>;
-    public searchAdmin(searchDTO: UserSearchAdminDTO, page?: number, size?: number, sort?: Array<string>, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<PageResponseUserViewAdminDTO>>;
-    public searchAdmin(searchDTO: UserSearchAdminDTO, page?: number, size?: number, sort?: Array<string>, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<PageResponseUserViewAdminDTO>>;
-    public searchAdmin(searchDTO: UserSearchAdminDTO, page?: number, size?: number, sort?: Array<string>, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
-        if (searchDTO === null || searchDTO === undefined) {
-            throw new Error('Required parameter searchDTO was null or undefined when calling searchAdmin.');
-        }
+    public searchAdmin1(page?: number, size?: number, sort?: Array<string>, username?: string, email?: string, id?: string, enabled?: boolean, locked?: boolean, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<PageResponseUserViewAdminDTO>;
+    public searchAdmin1(page?: number, size?: number, sort?: Array<string>, username?: string, email?: string, id?: string, enabled?: boolean, locked?: boolean, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<PageResponseUserViewAdminDTO>>;
+    public searchAdmin1(page?: number, size?: number, sort?: Array<string>, username?: string, email?: string, id?: string, enabled?: boolean, locked?: boolean, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<PageResponseUserViewAdminDTO>>;
+    public searchAdmin1(page?: number, size?: number, sort?: Array<string>, username?: string, email?: string, id?: string, enabled?: boolean, locked?: boolean, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
         localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
@@ -419,7 +418,15 @@ export class UserService extends BaseService {
             })
         }
         localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
-          <any>searchDTO, 'searchDTO');
+          <any>username, 'username');
+        localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+          <any>email, 'email');
+        localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+          <any>id, 'id');
+        localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+          <any>enabled, 'enabled');
+        localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+          <any>locked, 'locked');
 
         let localVarHeaders = this.defaultHeaders;
 

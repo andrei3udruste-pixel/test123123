@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.authorization.AuthorizationDeniedException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -18,6 +19,14 @@ public class GlobalExceptionHandler {
     public ResponseEntity<BaseResponse<Void>> handleRuntimeException(RuntimeException exception) {
         log.error(exception.getMessage(), exception);
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(new BaseResponse<>("unknownError"));
+    }
+
+    @ExceptionHandler({IllegalArgumentException.class})
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<BaseResponse<Void>> handleIllegalArgumentException(IllegalArgumentException exception) {
+        log.error("Invalid argument: {}", exception.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(new BaseResponse<>(exception.getMessage()));
     }
 
@@ -46,10 +55,18 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler({HttpMessageNotReadableException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ResponseEntity<BaseResponse<Void>> handleResourceExistsException(HttpMessageNotReadableException exception) {
+    public ResponseEntity<BaseResponse<Void>> handleHttpMessageNotReadableException(HttpMessageNotReadableException exception) {
         log.error("Invalid data! {}", exception.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(new BaseResponse<>("invalidDataProvided"));
+    }
+
+    @ExceptionHandler({MethodArgumentNotValidException.class})
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<BaseResponse<Void>> handleMethodArgumentNotValidException(MethodArgumentNotValidException exception) {
+        log.error("Validation failed! {}", exception.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(new BaseResponse<>("validationFailed"));
     }
 
     @ExceptionHandler({InvalidBusinessLogic.class})

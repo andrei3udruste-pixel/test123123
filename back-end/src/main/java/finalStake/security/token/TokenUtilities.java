@@ -3,10 +3,12 @@ package finalStake.security.token;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 
 import java.util.Date;
 
+import finalStake.exception.authentication.JwtExpiredException;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -61,10 +63,12 @@ public class TokenUtilities {
             var algorithm = getAlgorithm();
             var verifier = JWT.require(algorithm).withIssuer(applicationName).build();
             return verifier.verify(token);
+        } catch (TokenExpiredException exception) {
+            log.error("JWT token expired: {}", exception.getMessage());
+            throw new JwtExpiredException("JWT token has expired", exception);
         } catch (JWTVerificationException exception) {
-            log.error(exception.getMessage());
-            return null;
+            log.error("JWT verification failed: {}", exception.getMessage());
+            throw new JwtExpiredException("Invalid JWT token", exception);
         }
-
     }
 }

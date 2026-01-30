@@ -29,7 +29,23 @@
     "unknownError": "O eroare necunoscută s-a produs!",
     "userDisabled": "Acest cont este dezactivat! Vă rugăm să contactați un administrator pentru a remedia problema!",
     "invalidCredentials": "Credențiale invalide!",
-    "accessDenied": "Nu aveți acces la această resursă! Vă rugăm să vă verificați permisiunile!"
+    "accessDenied": "Nu aveți acces la această resursă! Vă rugăm să vă verificați permisiunile!",
+    "tokenExpired": "Sesiunea dumneavoastră a expirat. Vă rugăm să vă autentificați din nou.",
+    "userWithUsernameExists": "Un utilizator cu acest nume de utilizator există deja.",
+    "userWithEmailExists": "Un utilizator cu acest email există deja.",
+    "userWithIdNotFound": "Utilizator negăsit.",
+    "userWithUsernameNotFound": "Utilizator negăsit.",
+    "userNotEnabled": "Contul dumneavoastră nu este încă activat. Vă rugăm să verificați emailul.",
+    "userAuthenticationFailed": "Autentificare eșuată. Vă rugăm să vă verificați credențialele.",
+    "expiredVerificationToken": "Acest link de verificare a expirat. Vă rugăm să solicitați unul nou.",
+    "invalidVerificationTokenType": "Link de verificare invalid.",
+    "verificationTokenNotFound": "Link de verificare negăsit sau deja utilizat.",
+    "insufficientBalance": "Sold insuficient pentru această retragere.",
+    "invalidWithdrawalStatusTransition": "Tranziție invalidă a statusului retragerii.",
+    "invalidDataProvided": "Date invalide furnizate. Vă rugăm să verificați datele introduse.",
+    "validationFailed": "Validare eșuată. Vă rugăm să verificați datele introduse.",
+    "roleNotFound": "Rol negăsit.",
+    "adminShouldUseBackOffice": "Utilizatorii admin și contabilitate ar trebui să folosească aplicația back-office."
   },
   "actions": {
     "submit": "Trimite",
@@ -42,11 +58,41 @@
     "filter": "Filtrează",
     "reset": "Resetează"
   },
+  "success": {
+    "saved": "Modificările au fost salvate cu succes!",
+    "created": "Creat cu succes!",
+    "deleted": "Șters cu succes!",
+    "updated": "Actualizat cu succes!",
+    "withdrawalSubmitted": "Cererea de retragere a fost trimisă cu succes!",
+    "passwordChanged": "Parola a fost schimbată cu succes!"
+  },
   "auth": {
     "login": {
       "title": "Autentificare",
       "username": "Nume utilizator",
-      "password": "Parolă"
+      "password": "Parolă",
+      "noAccount": "Nu ai un cont?"
+    },
+    "register": {
+      "title": "Înregistrare",
+      "username": "Nume de utilizator",
+      "email": "Email",
+      "password": "Parolă",
+      "confirmPassword": "Confirmă parola",
+      "submit": "Creează cont",
+      "haveAccount": "Ai deja un cont?",
+      "success": "Contul a fost creat cu succes! Verifică-ți emailul pentru a activa contul."
+    },
+    "confirmEmail": {
+      "verifying": "Se verifică emailul...",
+      "success": "Email verificat cu succes!",
+      "successTitle": "Email Confirmat",
+      "successMessage": "Emailul tău a fost verificat cu succes. Acum te poți autentifica în cont.",
+      "errorTitle": "Verificare Eșuată",
+      "redirecting": "Redirectare către pagina de autentificare...",
+      "failed": "Verificarea emailului a eșuat. Link-ul poate fi expirat sau invalid.",
+      "invalidToken": "Link de verificare invalid.",
+      "backToLogin": "Înapoi la autentificare"
     }
   },
   "list": {

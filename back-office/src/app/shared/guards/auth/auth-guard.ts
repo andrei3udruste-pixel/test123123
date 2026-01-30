@@ -7,8 +7,8 @@ export const authGuard: CanActivateFn = (route) => {
   const user = inject(UserDataService);
   const router = inject(Router);
 
-  if (user.isAuthenticated) {
-    return true;
+  if (!user.isAuthenticated) {
+    return router.createUrlTree(['/login']);
   }
 
   const roles = route.data['roles'] as Authority[];

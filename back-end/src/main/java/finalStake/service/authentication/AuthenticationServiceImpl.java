@@ -66,32 +66,38 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Override
     public String signIn(UserSignInDTO userSignInDTO) {
         var user = signInUser(userSignInDTO);
+        
+        // Check if user has admin or accounting roles - they should use back-office
+        var adminRole = roleRepository.findByName(Role.ADMIN.getName());
+        var accountingRole = roleRepository.findByName(Role.ACCOUNTING.getName());
+        
+        boolean isAdmin = adminRole.isPresent() && user.getRoles().contains(adminRole.get());
+        boolean isAccounting = accountingRole.isPresent() && user.getRoles().contains(accountingRole.get());
+        
+        if (isAdmin || isAccounting) {
+            throw new AuthorizationDeniedException("adminShouldUseBackOffice");
+        }
+        
         return tokenUtilities.generateToken(user);
     }
 
     @Override
     public String signInAdmin(UserSignInDTO userSignInDTO) {
-        try {
-            var user = signInUser(userSignInDTO);
+        var user = signInUser(userSignInDTO);
 
-            var requiredRoles = new ArrayList<Role>() {{
-                add(Role.ADMIN);
-                add(Role.ACCOUNTING);
-            }};
+        var adminRole = roleRepository.findByName(Role.ADMIN.getName())
+                .orElseThrow(() -> new ResourceNotFoundException("roleNotFound"));
+        var accountingRole = roleRepository.findByName(Role.ACCOUNTING.getName())
+                .orElseThrow(() -> new ResourceNotFoundException("roleNotFound"));
 
-            for (var role : requiredRoles) {
-                var roleEntity = roleRepository.findByName(role.getName()).orElseThrow(
-                        () -> new ResourceNotFoundException("roleNotFound")
-                );
-                if (!user.getRoles().contains(roleEntity)) {
-                    throw new AuthorizationDeniedException("accessDenied");
-                }
-            }
+        boolean isAdmin = user.getRoles().contains(adminRole);
+        boolean isAccounting = user.getRoles().contains(accountingRole);
 
-            return tokenUtilities.generateToken(user);
-        } catch (Exception exception) {
-            throw new BadCredentialsException("invalidCredentials");
+        if (!isAdmin && !isAccounting) {
+            throw new AuthorizationDeniedException("accessDenied");
         }
+
+        return tokenUtilities.generateToken(user);
     }
 
     private User signInUser(UserSignInDTO userSignInDTO) {

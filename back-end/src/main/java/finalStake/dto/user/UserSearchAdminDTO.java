@@ -7,7 +7,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.util.UUID;
 
 @Data
 @Builder
@@ -20,7 +19,8 @@ public class UserSearchAdminDTO implements Serializable {
     @Size(max = 255)
     private String email;
 
-    private UUID id;
+    @Size(max = 36)
+    private String id;
 
     private Boolean enabled;
 

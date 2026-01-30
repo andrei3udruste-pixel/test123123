@@ -58,7 +58,6 @@ export class LoginPage {
       })
       .subscribe({
         next: (response) => {
-          console.log(response);
           if (response.success) {
             this.user.token = response.data!;
             this.router.navigate(['/user/profile']);

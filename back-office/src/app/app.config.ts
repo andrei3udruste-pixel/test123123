@@ -15,6 +15,8 @@ import {registerLocaleData} from '@angular/common';
 import localeRo from '@angular/common/locales/ro';
 import localeEn from '@angular/common/locales/en-GB';
 import {Languages, LanguageService} from './shared/services/language/language';
+import {environment} from '../environments/environment';
+import {provideApi} from './openapi/provide-api';
 
 registerLocaleData(localeRo, Languages['ro'].locale);
 registerLocaleData(localeEn, Languages['en'].locale);
@@ -27,6 +29,7 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(
       withInterceptors([errorInterceptor, authInterceptor]),
     ),
+    provideApi(environment.apiUrl),
     provideTranslateService({
       loader: provideTranslateHttpLoader({
         prefix: './i18n/',

@@ -1,47 +1,75 @@
-<div class="register-wrapper">
-  <mat-card class="register-card">
-    <h1>Create account</h1>
+<div class="flex flex-col justify-center items-center w-screen h-screen">
+  <div class="fixed top-0 right-0 m-4">
+    <app-language-selector></app-language-selector>
+  </div>
+  <mat-card class="w-3/4 md:w-2/3 lg:w-1/3">
+    <div class="w-full flex flex-col items-center mt-5 px-5 gap-3">
+      <img alt="Logo" class="w-full md:w-1/2" mat-card-image src="/img/logo.svg">
+      <p class="mb-5 text-3xl md:text-5xl">{{ 'app.title' | translate }}</p>
+    </div>
 
-    <form [formGroup]="registerForm" (ngSubmit)="submit()">
+    <mat-card-content>
+      <form (ngSubmit)="submit()" [formGroup]="registerForm" class="flex flex-col justify-start gap-2">
+        <mat-form-field class="w-full">
+          <mat-label>{{ 'auth.register.username' | translate }}</mat-label>
+          <input [formControl]="registerForm.controls.username" autocomplete="username" matInput>
+          @if (registerForm.controls.username.hasError('required')) {
+            <mat-error>{{ 'error.form.required' | translate }}</mat-error>
+          }
+        </mat-form-field>
 
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Username</mat-label>
-        <input matInput formControlName="username" />
-      </mat-form-field>
+        <mat-form-field class="w-full">
+          <mat-label>{{ 'auth.register.email' | translate }}</mat-label>
+          <input [formControl]="registerForm.controls.email" autocomplete="email" matInput type="email">
+          @if (registerForm.controls.email.hasError('required')) {
+            <mat-error>{{ 'error.form.required' | translate }}</mat-error>
+          }
+          @if (registerForm.controls.email.hasError('email')) {
+            <mat-error>{{ 'error.form.email' | translate }}</mat-error>
+          }
+        </mat-form-field>
 
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Email</mat-label>
-        <input matInput type="email" formControlName="email" />
-      </mat-form-field>
+        <mat-form-field class="w-full">
+          <mat-label>{{ 'auth.register.password' | translate }}</mat-label>
+          <input [formControl]="registerForm.controls.password" [type]="passwordFieldType()" autocomplete="new-password" matInput>
+          <button (click)="togglePasswordFieldType()" matIconButton matSuffix type="button">
+            <mat-icon>visibility</mat-icon>
+          </button>
+          @if (registerForm.controls.password.hasError('required')) {
+            <mat-error>{{ 'error.form.required' | translate }}</mat-error>
+          }
+          @if (registerForm.controls.password.hasError('minlength')) {
+            <mat-error>{{ 'error.form.weakPassword' | translate }}</mat-error>
+          }
+        </mat-form-field>
 
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Password</mat-label>
-        <input matInput type="password" formControlName="password" />
-      </mat-form-field>
+        <mat-form-field class="w-full">
+          <mat-label>{{ 'auth.register.confirmPassword' | translate }}</mat-label>
+          <input [formControl]="registerForm.controls.confirmPassword" [type]="confirmPasswordFieldType()" autocomplete="new-password" matInput>
+          <button (click)="toggleConfirmPasswordFieldType()" matIconButton matSuffix type="button">
+            <mat-icon>visibility</mat-icon>
+          </button>
+          @if (registerForm.controls.confirmPassword.hasError('required')) {
+            <mat-error>{{ 'error.form.required' | translate }}</mat-error>
+          }
+        </mat-form-field>
 
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Confirm password</mat-label>
-        <input matInput type="password" formControlName="confirmPassword" />
-      </mat-form-field>
+        @if (errorMessage()) {
+          <p class="text-red-500 text-center">{{ errorMessage() | translate }}</p>
+        }
 
-      <button
-        mat-raised-button
-        color="primary"
-        class="submit-button"
-        type="submit"
-        [disabled]="isLoading()"
-      >
-        Create account
-      </button>
+        <button class="w-full mt-3" matButton="filled" type="submit" [disabled]="isLoading()">
+          {{ 'auth.register.submit' | translate }}
+        </button>
 
-      <p class="error" *ngIf="errorMessage()">{{ errorMessage() }}</p>
-      <p class="success" *ngIf="successMessage()">{{ successMessage() }}</p>
-
-      <div class="login-link">
-        <span>Already have an account?</span>
-        <a routerLink="/login">Login</a>
-      </div>
-
-    </form>
+        <div class="text-center mt-4">
+          <span class="opacity-70">{{ 'auth.register.haveAccount' | translate }}</span>
+          <a routerLink="/login" class="ml-1 text-blue-400 hover:underline">{{ 'auth.login.title' | translate }}</a>
+        </div>
+      </form>
+    </mat-card-content>
   </mat-card>
+  @if (isLoading()) {
+    <mat-progress-spinner></mat-progress-spinner>
+  }
 </div>

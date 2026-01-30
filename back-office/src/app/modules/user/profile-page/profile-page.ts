@@ -1,4 +1,5 @@
 import {Component, inject, OnInit} from '@angular/core';
+import {DatePipe} from '@angular/common';
 import {UserDataService} from '../../../shared/services/user/user';
 import {MatCardModule} from '@angular/material/card';
 import {TranslatePipe} from '@ngx-translate/core';
@@ -21,6 +22,7 @@ import {MatList, MatListItem, MatListItemIcon, MatListItemLine, MatListItemTitle
     MatListItemLine,
     MatListItemIcon,
     RouterLink,
+    DatePipe,
   ],
   templateUrl: './profile-page.html',
   styleUrl: './profile-page.scss',

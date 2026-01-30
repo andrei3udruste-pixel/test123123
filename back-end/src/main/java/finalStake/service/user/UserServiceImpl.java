@@ -74,8 +74,8 @@ public class UserServiceImpl implements UserService {
         if (searchDTO.getEmail() != null && !searchDTO.getEmail().isEmpty()) {
             specification = specification.and(UserSpecifications.emailContains(searchDTO.getEmail()));
         }
-        if (searchDTO.getId() != null) {
-            specification = specification.and(UserSpecifications.idEquals(searchDTO.getId()));
+        if (searchDTO.getId() != null && !searchDTO.getId().isEmpty()) {
+            specification = specification.and(UserSpecifications.idContains(searchDTO.getId()));
         }
         if (searchDTO.getEnabled() != null) {
             specification = specification.and(UserSpecifications.enabledEquals(searchDTO.getEnabled()));

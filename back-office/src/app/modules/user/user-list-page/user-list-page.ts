@@ -4,7 +4,6 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { List } from '../../../shared/components/list/list';
 import {
   UserViewAdminDTO,
-  UserSearchAdminDTO,
   UserService,
   UserUpdateAdminDTO
 } from '../../../openapi';
@@ -54,7 +53,7 @@ import { TranslatePipe } from '@ngx-translate/core';
   styleUrl: './user-list-page.scss',
 })
 export class UserListPage
-  extends List<UserViewAdminDTO, UserSearchAdminDTO>
+  extends List<UserViewAdminDTO, Record<string, unknown>>
   implements OnInit {
 
   private userService = inject(UserService);
@@ -77,7 +76,7 @@ export class UserListPage
     return ['user'];
   }
 
-  override get searchRequestData(): UserSearchAdminDTO {
+  override get searchRequestData(): Record<string, unknown> {
     return {
       username: this.filterForm.value.username || undefined,
       email: this.filterForm.value.email || undefined,
@@ -98,12 +97,17 @@ export class UserListPage
   override getSearchRequest(
     pageToLoad: number
   ): Observable<HttpResponse<IPageResponse<UserViewAdminDTO>>> {
+    const data = this.searchRequestData;
 
-    return this.userService.searchAdmin(
-      this.searchRequestData,
+    return this.userService.searchAdmin1(
       pageToLoad,
       this.pageSize(),
       this.sort(),
+      data['username'] as string | undefined,
+      data['email'] as string | undefined,
+      data['id'] as string | undefined,
+      data['enabled'] as boolean | undefined,
+      data['locked'] as boolean | undefined,
       'response'
     ) as unknown as Observable<HttpResponse<IPageResponse<UserViewAdminDTO>>>;
   }

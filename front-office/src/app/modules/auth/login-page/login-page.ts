@@ -10,7 +10,7 @@ import {LanguageSelector} from '../../../shared/components/language-selector/lan
 import {AuthService} from '../../../openapi';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {UserDataService} from '../../../shared/services/user/user';
-import {Router} from '@angular/router';
+import {Router, RouterLink} from '@angular/router';
 
 @Component({
   selector: 'app-login-page',
@@ -23,7 +23,8 @@ import {Router} from '@angular/router';
     MatIconModule,
     TranslatePipe,
     LanguageSelector,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    RouterLink
   ],
   templateUrl: './login-page.html',
   styleUrl: './login-page.scss',
@@ -59,7 +60,6 @@ export class LoginPage {
       })
       .subscribe({
         next: (response) => {
-          console.log(response);
           if (response.success) {
             this.user.token = response.data!;
             this.router.navigate(['/user/profile']);

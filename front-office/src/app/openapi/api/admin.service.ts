@@ -17,17 +17,27 @@ import { CustomHttpParameterCodec }                          from '../encoder';
 import { Observable }                                        from 'rxjs';
 
 // @ts-ignore
+import { BaseResponseListString } from '../model/baseResponseListString';
+// @ts-ignore
 import { BaseResponseString } from '../model/baseResponseString';
+// @ts-ignore
+import { BaseResponseUserViewAdminDTO } from '../model/baseResponseUserViewAdminDTO';
 // @ts-ignore
 import { BaseResponseVoid } from '../model/baseResponseVoid';
 // @ts-ignore
+import { BaseResponseWithdrawalViewDTO } from '../model/baseResponseWithdrawalViewDTO';
+// @ts-ignore
 import { PageResponseUserViewAdminDTO } from '../model/pageResponseUserViewAdminDTO';
 // @ts-ignore
-import { UserSearchAdminDTO } from '../model/userSearchAdminDTO';
+import { PageResponseWithdrawalViewDTO } from '../model/pageResponseWithdrawalViewDTO';
+// @ts-ignore
+import { Pageable } from '../model/pageable';
 // @ts-ignore
 import { UserSignInDTO } from '../model/userSignInDTO';
 // @ts-ignore
 import { UserUpdateAdminDTO } from '../model/userUpdateAdminDTO';
+// @ts-ignore
+import { WithdrawalAdminUpdateDTO } from '../model/withdrawalAdminUpdateDTO';
 
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
@@ -167,21 +177,257 @@ export class AdminService extends BaseService {
     }
 
     /**
-     * @endpoint get /api/user/admin/search
-     * @param searchDTO 
-     * @param page Zero-based page index (0..N)
-     * @param size The size of the page to be returned
-     * @param sort Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     * @endpoint get /api/role/all
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public searchAdmin(searchDTO: UserSearchAdminDTO, page?: number, size?: number, sort?: Array<string>, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<PageResponseUserViewAdminDTO>;
-    public searchAdmin(searchDTO: UserSearchAdminDTO, page?: number, size?: number, sort?: Array<string>, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<PageResponseUserViewAdminDTO>>;
-    public searchAdmin(searchDTO: UserSearchAdminDTO, page?: number, size?: number, sort?: Array<string>, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<PageResponseUserViewAdminDTO>>;
-    public searchAdmin(searchDTO: UserSearchAdminDTO, page?: number, size?: number, sort?: Array<string>, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
-        if (searchDTO === null || searchDTO === undefined) {
-            throw new Error('Required parameter searchDTO was null or undefined when calling searchAdmin.');
+    public getAllRoles(observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<BaseResponseListString>;
+    public getAllRoles(observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<BaseResponseListString>>;
+    public getAllRoles(observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<BaseResponseListString>>;
+    public getAllRoles(observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+
+        let localVarHeaders = this.defaultHeaders;
+
+        // authentication (Authentication) required
+        localVarHeaders = this.configuration.addCredentialToHeaders('Authentication', 'Authorization', localVarHeaders, 'Bearer ');
+
+        const localVarHttpHeaderAcceptSelected: string | undefined = options?.httpHeaderAccept ?? this.configuration.selectHeaderAccept([
+            'application/json'
+        ]);
+        if (localVarHttpHeaderAcceptSelected !== undefined) {
+            localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
         }
+
+        const localVarHttpContext: HttpContext = options?.context ?? new HttpContext();
+
+        const localVarTransferCache: boolean = options?.transferCache ?? true;
+
+
+        let responseType_: 'text' | 'json' | 'blob' = 'json';
+        if (localVarHttpHeaderAcceptSelected) {
+            if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
+                responseType_ = 'text';
+            } else if (this.configuration.isJsonMime(localVarHttpHeaderAcceptSelected)) {
+                responseType_ = 'json';
+            } else {
+                responseType_ = 'blob';
+            }
+        }
+
+        let localVarPath = `/api/role/all`;
+        const { basePath, withCredentials } = this.configuration;
+        return this.httpClient.request<BaseResponseListString>('get', `${basePath}${localVarPath}`,
+            {
+                context: localVarHttpContext,
+                responseType: <any>responseType_,
+                ...(withCredentials ? { withCredentials } : {}),
+                headers: localVarHeaders,
+                observe: observe,
+                ...(localVarTransferCache !== undefined ? { transferCache: localVarTransferCache } : {}),
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * @endpoint get /api/withdrawal/admin/{id}
+     * @param id 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getOneAdmin(id: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<BaseResponseWithdrawalViewDTO>;
+    public getOneAdmin(id: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<BaseResponseWithdrawalViewDTO>>;
+    public getOneAdmin(id: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<BaseResponseWithdrawalViewDTO>>;
+    public getOneAdmin(id: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling getOneAdmin.');
+        }
+
+        let localVarHeaders = this.defaultHeaders;
+
+        // authentication (Authentication) required
+        localVarHeaders = this.configuration.addCredentialToHeaders('Authentication', 'Authorization', localVarHeaders, 'Bearer ');
+
+        const localVarHttpHeaderAcceptSelected: string | undefined = options?.httpHeaderAccept ?? this.configuration.selectHeaderAccept([
+            'application/json'
+        ]);
+        if (localVarHttpHeaderAcceptSelected !== undefined) {
+            localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
+        }
+
+        const localVarHttpContext: HttpContext = options?.context ?? new HttpContext();
+
+        const localVarTransferCache: boolean = options?.transferCache ?? true;
+
+
+        let responseType_: 'text' | 'json' | 'blob' = 'json';
+        if (localVarHttpHeaderAcceptSelected) {
+            if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
+                responseType_ = 'text';
+            } else if (this.configuration.isJsonMime(localVarHttpHeaderAcceptSelected)) {
+                responseType_ = 'json';
+            } else {
+                responseType_ = 'blob';
+            }
+        }
+
+        let localVarPath = `/api/withdrawal/admin/${this.configuration.encodeParam({name: "id", value: id, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: "uuid"})}`;
+        const { basePath, withCredentials } = this.configuration;
+        return this.httpClient.request<BaseResponseWithdrawalViewDTO>('get', `${basePath}${localVarPath}`,
+            {
+                context: localVarHttpContext,
+                responseType: <any>responseType_,
+                ...(withCredentials ? { withCredentials } : {}),
+                headers: localVarHeaders,
+                observe: observe,
+                ...(localVarTransferCache !== undefined ? { transferCache: localVarTransferCache } : {}),
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * @endpoint get /api/user/admin/profile/{id}
+     * @param id 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getProfileAdmin(id: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<BaseResponseUserViewAdminDTO>;
+    public getProfileAdmin(id: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<BaseResponseUserViewAdminDTO>>;
+    public getProfileAdmin(id: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<BaseResponseUserViewAdminDTO>>;
+    public getProfileAdmin(id: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling getProfileAdmin.');
+        }
+
+        let localVarHeaders = this.defaultHeaders;
+
+        // authentication (Authentication) required
+        localVarHeaders = this.configuration.addCredentialToHeaders('Authentication', 'Authorization', localVarHeaders, 'Bearer ');
+
+        const localVarHttpHeaderAcceptSelected: string | undefined = options?.httpHeaderAccept ?? this.configuration.selectHeaderAccept([
+            'application/json'
+        ]);
+        if (localVarHttpHeaderAcceptSelected !== undefined) {
+            localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
+        }
+
+        const localVarHttpContext: HttpContext = options?.context ?? new HttpContext();
+
+        const localVarTransferCache: boolean = options?.transferCache ?? true;
+
+
+        let responseType_: 'text' | 'json' | 'blob' = 'json';
+        if (localVarHttpHeaderAcceptSelected) {
+            if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
+                responseType_ = 'text';
+            } else if (this.configuration.isJsonMime(localVarHttpHeaderAcceptSelected)) {
+                responseType_ = 'json';
+            } else {
+                responseType_ = 'blob';
+            }
+        }
+
+        let localVarPath = `/api/user/admin/profile/${this.configuration.encodeParam({name: "id", value: id, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: "uuid"})}`;
+        const { basePath, withCredentials } = this.configuration;
+        return this.httpClient.request<BaseResponseUserViewAdminDTO>('get', `${basePath}${localVarPath}`,
+            {
+                context: localVarHttpContext,
+                responseType: <any>responseType_,
+                ...(withCredentials ? { withCredentials } : {}),
+                headers: localVarHeaders,
+                observe: observe,
+                ...(localVarTransferCache !== undefined ? { transferCache: localVarTransferCache } : {}),
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * @endpoint get /api/withdrawal/admin/search
+     * @param pageable 
+     * @param status 
+     * @param username 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public searchAdmin(pageable: Pageable, status?: 'PENDING' | 'APPROVED' | 'REJECTED' | 'PAID', username?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<PageResponseWithdrawalViewDTO>;
+    public searchAdmin(pageable: Pageable, status?: 'PENDING' | 'APPROVED' | 'REJECTED' | 'PAID', username?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<PageResponseWithdrawalViewDTO>>;
+    public searchAdmin(pageable: Pageable, status?: 'PENDING' | 'APPROVED' | 'REJECTED' | 'PAID', username?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<PageResponseWithdrawalViewDTO>>;
+    public searchAdmin(pageable: Pageable, status?: 'PENDING' | 'APPROVED' | 'REJECTED' | 'PAID', username?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+        if (pageable === null || pageable === undefined) {
+            throw new Error('Required parameter pageable was null or undefined when calling searchAdmin.');
+        }
+
+        let localVarQueryParameters = new HttpParams({encoder: this.encoder});
+        localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+          <any>status, 'status');
+        localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+          <any>username, 'username');
+        localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+          <any>pageable, 'pageable');
+
+        let localVarHeaders = this.defaultHeaders;
+
+        // authentication (Authentication) required
+        localVarHeaders = this.configuration.addCredentialToHeaders('Authentication', 'Authorization', localVarHeaders, 'Bearer ');
+
+        const localVarHttpHeaderAcceptSelected: string | undefined = options?.httpHeaderAccept ?? this.configuration.selectHeaderAccept([
+            'application/json'
+        ]);
+        if (localVarHttpHeaderAcceptSelected !== undefined) {
+            localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
+        }
+
+        const localVarHttpContext: HttpContext = options?.context ?? new HttpContext();
+
+        const localVarTransferCache: boolean = options?.transferCache ?? true;
+
+
+        let responseType_: 'text' | 'json' | 'blob' = 'json';
+        if (localVarHttpHeaderAcceptSelected) {
+            if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
+                responseType_ = 'text';
+            } else if (this.configuration.isJsonMime(localVarHttpHeaderAcceptSelected)) {
+                responseType_ = 'json';
+            } else {
+                responseType_ = 'blob';
+            }
+        }
+
+        let localVarPath = `/api/withdrawal/admin/search`;
+        const { basePath, withCredentials } = this.configuration;
+        return this.httpClient.request<PageResponseWithdrawalViewDTO>('get', `${basePath}${localVarPath}`,
+            {
+                context: localVarHttpContext,
+                params: localVarQueryParameters,
+                responseType: <any>responseType_,
+                ...(withCredentials ? { withCredentials } : {}),
+                headers: localVarHeaders,
+                observe: observe,
+                ...(localVarTransferCache !== undefined ? { transferCache: localVarTransferCache } : {}),
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * @endpoint get /api/user/admin/search
+     * @param page Zero-based page index (0..N)
+     * @param size The size of the page to be returned
+     * @param sort Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     * @param username 
+     * @param email 
+     * @param id 
+     * @param enabled 
+     * @param locked 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public searchAdmin1(page?: number, size?: number, sort?: Array<string>, username?: string, email?: string, id?: string, enabled?: boolean, locked?: boolean, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<PageResponseUserViewAdminDTO>;
+    public searchAdmin1(page?: number, size?: number, sort?: Array<string>, username?: string, email?: string, id?: string, enabled?: boolean, locked?: boolean, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<PageResponseUserViewAdminDTO>>;
+    public searchAdmin1(page?: number, size?: number, sort?: Array<string>, username?: string, email?: string, id?: string, enabled?: boolean, locked?: boolean, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<PageResponseUserViewAdminDTO>>;
+    public searchAdmin1(page?: number, size?: number, sort?: Array<string>, username?: string, email?: string, id?: string, enabled?: boolean, locked?: boolean, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
         localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
@@ -195,7 +441,15 @@ export class AdminService extends BaseService {
             })
         }
         localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
-          <any>searchDTO, 'searchDTO');
+          <any>username, 'username');
+        localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+          <any>email, 'email');
+        localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+          <any>id, 'id');
+        localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+          <any>enabled, 'enabled');
+        localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+          <any>locked, 'locked');
 
         let localVarHeaders = this.defaultHeaders;
 
@@ -231,6 +485,77 @@ export class AdminService extends BaseService {
             {
                 context: localVarHttpContext,
                 params: localVarQueryParameters,
+                responseType: <any>responseType_,
+                ...(withCredentials ? { withCredentials } : {}),
+                headers: localVarHeaders,
+                observe: observe,
+                ...(localVarTransferCache !== undefined ? { transferCache: localVarTransferCache } : {}),
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * @endpoint put /api/withdrawal/admin/{id}
+     * @param id 
+     * @param withdrawalAdminUpdateDTO 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public updateStatus(id: string, withdrawalAdminUpdateDTO: WithdrawalAdminUpdateDTO, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<BaseResponseVoid>;
+    public updateStatus(id: string, withdrawalAdminUpdateDTO: WithdrawalAdminUpdateDTO, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<BaseResponseVoid>>;
+    public updateStatus(id: string, withdrawalAdminUpdateDTO: WithdrawalAdminUpdateDTO, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<BaseResponseVoid>>;
+    public updateStatus(id: string, withdrawalAdminUpdateDTO: WithdrawalAdminUpdateDTO, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling updateStatus.');
+        }
+        if (withdrawalAdminUpdateDTO === null || withdrawalAdminUpdateDTO === undefined) {
+            throw new Error('Required parameter withdrawalAdminUpdateDTO was null or undefined when calling updateStatus.');
+        }
+
+        let localVarHeaders = this.defaultHeaders;
+
+        // authentication (Authentication) required
+        localVarHeaders = this.configuration.addCredentialToHeaders('Authentication', 'Authorization', localVarHeaders, 'Bearer ');
+
+        const localVarHttpHeaderAcceptSelected: string | undefined = options?.httpHeaderAccept ?? this.configuration.selectHeaderAccept([
+            'application/json'
+        ]);
+        if (localVarHttpHeaderAcceptSelected !== undefined) {
+            localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
+        }
+
+        const localVarHttpContext: HttpContext = options?.context ?? new HttpContext();
+
+        const localVarTransferCache: boolean = options?.transferCache ?? true;
+
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected !== undefined) {
+            localVarHeaders = localVarHeaders.set('Content-Type', httpContentTypeSelected);
+        }
+
+        let responseType_: 'text' | 'json' | 'blob' = 'json';
+        if (localVarHttpHeaderAcceptSelected) {
+            if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
+                responseType_ = 'text';
+            } else if (this.configuration.isJsonMime(localVarHttpHeaderAcceptSelected)) {
+                responseType_ = 'json';
+            } else {
+                responseType_ = 'blob';
+            }
+        }
+
+        let localVarPath = `/api/withdrawal/admin/${this.configuration.encodeParam({name: "id", value: id, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: "uuid"})}`;
+        const { basePath, withCredentials } = this.configuration;
+        return this.httpClient.request<BaseResponseVoid>('put', `${basePath}${localVarPath}`,
+            {
+                context: localVarHttpContext,
+                body: withdrawalAdminUpdateDTO,
                 responseType: <any>responseType_,
                 ...(withCredentials ? { withCredentials } : {}),
                 headers: localVarHeaders,

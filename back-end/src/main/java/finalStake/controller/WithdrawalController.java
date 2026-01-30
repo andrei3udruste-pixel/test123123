@@ -30,12 +30,14 @@ public class WithdrawalController {
     private final WithdrawalService withdrawalService;
 
     @PostMapping
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<BaseResponse<WithdrawalViewDTO>> create(@Valid @RequestBody WithdrawalCreateDTO dto) {
         var result = withdrawalService.create(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(new BaseResponse<>(result));
     }
 
     @GetMapping("/my")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<PageResponse<WithdrawalViewDTO>> getMyWithdrawals(@ParameterObject Pageable pageable) {
         var page = withdrawalService.getMyWithdrawals(pageable);
         return ResponseEntity.status(HttpStatus.OK).body(new PageResponse<>(page));
@@ -60,6 +62,7 @@ public class WithdrawalController {
         withdrawalService.updateStatus(id, dto);
         return ResponseEntity.status(HttpStatus.OK).body(new BaseResponse<>(true));
     }
+    @Tag(name = "Admin")
     @GetMapping("/admin/{id}")
     @PreAuthorize("hasAnyRole('ADMIN','ACCOUNTING')")
     public ResponseEntity<BaseResponse<WithdrawalViewDTO>> getOneAdmin(

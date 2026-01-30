@@ -7,6 +7,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { TranslatePipe } from '@ngx-translate/core';
 
 import { WithdrawalApiService, WithdrawalStatus, WithdrawalViewDTO } from '../../../shared/services/withdrawal/withdrawal-api.service';
@@ -14,6 +15,7 @@ import {DatePipe, DecimalPipe} from '@angular/common';
 import {RouterLink} from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { WithdrawalRejectDialog } from '../reject-dialog/reject-dialog';
+import { WithdrawalPaidDialog } from '../paid-dialog/paid-dialog';
 
 
 @Component({
@@ -28,6 +30,7 @@ import { WithdrawalRejectDialog } from '../reject-dialog/reject-dialog';
     MatButtonModule,
     MatTableModule,
     MatPaginatorModule,
+    MatExpansionModule,
     TranslatePipe,
     DatePipe,
     DecimalPipe,
@@ -113,10 +116,14 @@ export class WithdrawalListPage implements OnInit {
 
 
   markPaid(w: WithdrawalViewDTO): void {
-    if (!confirm('Mark this withdrawal as paid?')) return;
+    const ref = this.dialog.open(WithdrawalPaidDialog, { width: '480px' });
 
-    this.api.updateAdmin(w.id, { status: 'PAID' })
-      .subscribe(() => this.load());
+    ref.afterClosed().subscribe((confirmed: boolean) => {
+      if (!confirmed) return;
+
+      this.api.updateAdmin(w.id, { status: 'PAID' })
+        .subscribe(() => this.load());
+    });
   }
 
 }

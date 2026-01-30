@@ -1,6 +1,8 @@
-<mat-card class="page-card">
+<mat-card class="max-w-xl mx-auto p-4">
   <mat-card-title>
+    <p class="p-3 mb-1 text-3xl md:text-4xl">
     {{ 'user.view.title' | translate }} – {{ user.username }}
+    </p>
   </mat-card-title>
 
   <mat-card-content>
@@ -11,44 +13,44 @@
 
     @if (!loading) {
 
-      <div class="info-grid">
+      <div class="flex flex-col gap-5 mb-6">
 
-        <div class="row">
-          <span class="label">ID</span>
-          <span class="value">{{ user.id }}</span>
+        <div class="grid grid-cols-1 md:grid-cols-[140px_1fr] items-center gap-2">
+          <span class="font-medium opacity-70">ID</span>
+          <span>{{ user.id }}</span>
         </div>
 
-        <div class="row">
-          <span class="label">{{ 'user.username' | translate }}</span>
-          <span class="value">{{ user.username }}</span>
+        <div class="grid grid-cols-1 md:grid-cols-[140px_1fr] items-center gap-2">
+          <span class="font-medium opacity-70">{{ 'user.username' | translate }}</span>
+          <span>{{ user.username }}</span>
         </div>
 
-        <div class="row">
-          <span class="label">{{ 'user.email' | translate }}</span>
-          <span class="value">{{ user.email }}</span>
+        <div class="grid grid-cols-1 md:grid-cols-[140px_1fr] items-center gap-2">
+          <span class="font-medium opacity-70">{{ 'user.email' | translate }}</span>
+          <span>{{ user.email }}</span>
         </div>
 
-        <div class="row">
-          <span class="label">{{ 'user.enabled' | translate }}</span>
-          <span class="value">
-            <mat-icon>
+        <div class="grid grid-cols-1 md:grid-cols-[140px_1fr] items-center gap-2">
+          <span class="font-medium opacity-70">{{ 'user.enabled' | translate }}</span>
+          <span>
+            <mat-icon class="align-middle">
               {{ user.enabled ? 'check_circle' : 'cancel' }}
             </mat-icon>
           </span>
         </div>
 
-        <div class="row">
-          <span class="label">{{ 'user.locked' | translate }}</span>
-          <span class="value">
-            <mat-icon>
+        <div class="grid grid-cols-1 md:grid-cols-[140px_1fr] items-center gap-2">
+          <span class="font-medium opacity-70">{{ 'user.locked' | translate }}</span>
+          <span>
+            <mat-icon class="align-middle">
               {{ user.locked ? 'lock' : 'lock_open' }}
             </mat-icon>
           </span>
         </div>
 
-        <div class="row">
-          <span class="label">{{ 'user.roles' | translate }}</span>
-          <span class="value">
+        <div class="grid grid-cols-1 md:grid-cols-[140px_1fr] items-center gap-2">
+          <span class="font-medium opacity-70">{{ 'user.roles' | translate }}</span>
+          <span>
             <mat-chip-set>
               @for (role of user.roles; track role) {
                 <mat-chip>{{ role }}</mat-chip>
@@ -59,7 +61,7 @@
 
       </div>
 
-      <div class="actions">
+      <div class="flex gap-3 justify-end">
         <button
           mat-stroked-button
           [routerLink]="['/user']">

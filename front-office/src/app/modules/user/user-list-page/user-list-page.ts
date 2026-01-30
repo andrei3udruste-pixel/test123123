@@ -1,6 +1,6 @@
 import {Component, inject, OnInit} from '@angular/core';
 import {List} from '../../../shared/components/list/list';
-import {UserListViewDTO, UserSearchAdminDTO, UserService} from '../../../openapi';
+import {UserListViewDTO, UserService} from '../../../openapi';
 import {Observable} from 'rxjs';
 import {IPageResponse} from '../../../shared/models/page-response';
 import {HttpResponse} from '@angular/common/http';
@@ -69,7 +69,7 @@ import {MatOption, MatSelect} from '@angular/material/select';
   styleUrl: './user-list-page.scss',
   standalone: true
 })
-export class UserListPage extends List<UserListViewDTO, UserSearchAdminDTO> implements OnInit {
+export class UserListPage extends List<UserListViewDTO, Record<string, unknown>> implements OnInit {
   userService = inject(UserService);
 
   displayedColumns = ['idUser', 'email', 'username', 'firstName', 'lastName', 'enabled', 'actions'];
@@ -82,14 +82,14 @@ export class UserListPage extends List<UserListViewDTO, UserSearchAdminDTO> impl
     locked: new FormControl<boolean | null>(null),
   })
 
-  override get searchRequestData(): UserSearchAdminDTO {
+  override get searchRequestData(): Record<string, unknown> {
     return {
       username: this.filterForm.controls.username.value ? this.filterForm.controls.username.value : undefined,
       email: this.filterForm.controls.email.value ? this.filterForm.controls.email.value : undefined,
       id: this.filterForm.controls.id.value ? this.filterForm.controls.id.value : undefined,
       enabled: this.filterForm.controls.enabled.value !== null ? this.filterForm.controls.enabled.value : undefined,
       locked: this.filterForm.controls.locked.value !== null ? this.filterForm.controls.locked.value : undefined,
-    } satisfies UserSearchAdminDTO;
+    };
   }
 
   override get entityRootPath(): string[] {
@@ -105,7 +105,17 @@ export class UserListPage extends List<UserListViewDTO, UserSearchAdminDTO> impl
   }
 
   override getSearchRequest(pageToLoad: number): Observable<HttpResponse<IPageResponse<UserListViewDTO>>> {
-    return this.userService.searchAdmin(this.searchRequestData, pageToLoad, this.pageSize(), this.sort(), "response"
+    const data = this.searchRequestData;
+    return this.userService.searchAdmin1(
+      pageToLoad,
+      this.pageSize(),
+      this.sort(),
+      data['username'] as string | undefined,
+      data['email'] as string | undefined,
+      data['id'] as string | undefined,
+      data['enabled'] as boolean | undefined,
+      data['locked'] as boolean | undefined,
+      "response"
     );
   }
 }

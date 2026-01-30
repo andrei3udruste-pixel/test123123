@@ -10,13 +10,20 @@ import java.util.UUID;
 
 public interface WithdrawalRepository extends JpaRepository<Withdrawal, UUID> {
 
-    Page<Withdrawal> findByUserUsername(String username, Pageable pageable);
-    Page<Withdrawal> findByStatus(WithdrawalStatus status, Pageable pageable);
+    Page<Withdrawal> findByUserUsernameOrderByCreatedAtDesc(String username, Pageable pageable);
+    Page<Withdrawal> findByStatusOrderByCreatedAtDesc(WithdrawalStatus status, Pageable pageable);
 
-    Page<Withdrawal> findByStatusAndUserUsernameContainingIgnoreCase(
+    Page<Withdrawal> findByStatusAndUserUsernameContainingIgnoreCaseOrderByCreatedAtDesc(
             WithdrawalStatus status,
             String username,
             Pageable pageable
     );
+
+    Page<Withdrawal> findByUserUsernameContainingIgnoreCaseOrderByCreatedAtDesc(
+            String username,
+            Pageable pageable
+    );
+
+    Page<Withdrawal> findAllByOrderByCreatedAtDesc(Pageable pageable);
 
 }

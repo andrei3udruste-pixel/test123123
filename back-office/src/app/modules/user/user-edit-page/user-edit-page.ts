@@ -6,6 +6,7 @@ import {
   UserService,
   UserViewAdminDTO,
   UserUpdateAdminDTO,
+  AdminService,
 } from '../../../openapi';
 
 
@@ -17,6 +18,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatIconModule } from '@angular/material/icon';
 
 import { TranslatePipe } from '@ngx-translate/core';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-user-edit-page',
@@ -41,12 +43,13 @@ export class UserEditPage implements OnInit {
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
   private readonly userService = inject(UserService);
+  private readonly adminService = inject(AdminService);
 
   user!: UserViewAdminDTO;
 
   loading = false;
 
-  readonly roles = ['ADMIN', 'CLIENT'];
+  roles: string[] = [];
 
   form = new FormGroup({
     enabled: new FormControl<boolean>(false),
@@ -60,9 +63,13 @@ export class UserEditPage implements OnInit {
 
     this.loading = true;
 
-    this.userService.getProfileAdmin(id).subscribe({
+    forkJoin({
+      user: this.userService.getProfileAdmin(id),
+      roles: this.adminService.getAllRoles(),
+    }).subscribe({
       next: (res) => {
-        this.user = res.data!;
+        this.user = res.user.data!;
+        this.roles = res.roles.data ?? [];
         this.form.setValue({
           enabled: this.user.enabled!,
           locked: this.user.locked!,

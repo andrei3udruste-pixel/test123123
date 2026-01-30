@@ -2,6 +2,7 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { TranslatePipe } from '@ngx-translate/core';
 
 
@@ -11,7 +12,7 @@ import {DatePipe, DecimalPipe} from '@angular/common';
 @Component({
   selector: 'app-withdrawal-details-page',
   standalone: true,
-  imports: [MatCardModule, MatButtonModule, TranslatePipe, DecimalPipe, DatePipe],
+  imports: [MatCardModule, MatButtonModule, MatProgressBarModule, TranslatePipe, DecimalPipe, DatePipe],
   templateUrl: './withdrawal-details-page.html',
   styleUrl: './withdrawal-details-page.scss'
 })

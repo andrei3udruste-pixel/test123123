@@ -1,13 +1,16 @@
 package finalStake.service.mail;
 
-import jakarta.mail.MessagingException;
-import jakarta.mail.internet.MimeMessage;
+import com.azure.communication.email.EmailClient;
+import com.azure.communication.email.EmailClientBuilder;
+import com.azure.communication.email.models.EmailMessage;
+import com.azure.communication.email.models.EmailSendResult;
+import com.azure.core.util.polling.PollResponse;
+import com.azure.core.util.polling.SyncPoller;
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
-
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.i18n.LocaleContextHolder;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
@@ -19,8 +22,22 @@ import java.util.ResourceBundle;
 @Service
 @RequiredArgsConstructor
 public class MailServiceImpl implements MailService {
-    private final JavaMailSender mailSender;
     private final TemplateEngine templateEngine;
+
+    @Value("${azure.communication.connection-string}")
+    private String connectionString;
+
+    @Value("${azure.communication.sender-address}")
+    private String senderAddress;
+
+    private EmailClient emailClient;
+
+    @PostConstruct
+    public void init() {
+        emailClient = new EmailClientBuilder()
+                .connectionString(connectionString)
+                .buildClient();
+    }
 
     @Async
     @Override
@@ -34,19 +51,19 @@ public class MailServiceImpl implements MailService {
 
             log.info("Attempting to send email template {} to {}", templatePath, to);
 
-            MimeMessage mimeMessage = mailSender.createMimeMessage();
-            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
-
             String htmlContent = templateEngine.process(templatePath, context);
 
-            helper.setTo(to);
-            helper.setSubject(translatedSubject);
-            helper.setText(htmlContent, true);
+            EmailMessage emailMessage = new EmailMessage()
+                    .setSenderAddress(senderAddress)
+                    .setToRecipients(to)
+                    .setSubject(translatedSubject)
+                    .setBodyHtml(htmlContent);
 
-            mailSender.send(mimeMessage);
+            SyncPoller<EmailSendResult, EmailSendResult> poller = emailClient.beginSend(emailMessage);
+            PollResponse<EmailSendResult> response = poller.waitForCompletion();
 
-            log.info("Successfully sent email template {} to {}", templatePath, to);
-        } catch (MessagingException exception) {
+            log.info("Successfully sent email template {} to {}, status: {}", templatePath, to, response.getStatus());
+        } catch (Exception exception) {
             log.error("Could not send email!", exception);
             throw new RuntimeException(exception);
         }

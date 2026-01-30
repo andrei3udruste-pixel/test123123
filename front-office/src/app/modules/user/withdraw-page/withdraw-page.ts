@@ -4,7 +4,13 @@ import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angula
 import { WalletApiService, WalletViewDTO } from '../../../shared/services/wallet/wallet-api.service';
 import { WalletDataService } from '../../../shared/services/wallet/wallet';
 
-
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatButtonModule } from '@angular/material/button';
+import { MatTableModule } from '@angular/material/table';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 import {
   WithdrawalApiService,
@@ -20,7 +26,14 @@ import {TranslatePipe} from '@ngx-translate/core';
     CommonModule,
     ReactiveFormsModule,
     DatePipe,
-    TranslatePipe
+    TranslatePipe,
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatButtonModule,
+    MatTableModule,
+    MatProgressBarModule
   ],
   templateUrl: './withdraw-page.html',
   styleUrl: './withdraw-page.scss',

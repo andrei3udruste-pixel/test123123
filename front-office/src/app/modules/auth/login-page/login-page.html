@@ -29,6 +29,11 @@
           }
         </mat-form-field>
         <button class="w-full mt-3" matButton="filled" type="submit">{{ 'actions.submit' | translate }}</button>
+
+        <div class="text-center mt-4">
+          <span class="opacity-70">{{ 'auth.login.noAccount' | translate }}</span>
+          <a routerLink="/register" class="ml-1 text-blue-400 hover:underline">{{ 'auth.register.title' | translate }}</a>
+        </div>
       </form>
     </mat-card-content>
   </mat-card>

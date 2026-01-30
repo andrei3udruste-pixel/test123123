@@ -21,6 +21,7 @@
   "actions": {
     "save": "Save",
     "cancel": "Cancel",
+    "confirm": "Confirm",
     "submit": "Submit",
     "edit": "Edit",
     "view": "View",
@@ -30,6 +31,18 @@
     "back": "Back",
     "filter": "Filter",
     "reset": "Reset"
+  },
+  "success": {
+    "saved": "Changes saved successfully!",
+    "created": "Created successfully!",
+    "deleted": "Deleted successfully!",
+    "updated": "Updated successfully!",
+    "withdrawalApproved": "Withdrawal approved successfully!",
+    "withdrawalRejected": "Withdrawal rejected.",
+    "withdrawalPaid": "Withdrawal marked as paid!",
+    "userUpdated": "User updated successfully!",
+    "userCreated": "User created successfully!",
+    "userDeleted": "User deleted successfully!"
   },
   "error": {
     "form": {
@@ -42,7 +55,22 @@
     "unknownError": "An unknown error has occurred!",
     "userDisabled": "This account is disabled! Please contact an administrator in order to remediate this problem!",
     "invalidCredentials": "Invalid credentials!",
-    "accessDenied": "You do not have access to this resource! Please review your permissions!"
+    "accessDenied": "You do not have access to this resource! Please review your permissions!",
+    "tokenExpired": "Your session has expired. Please log in again.",
+    "userWithUsernameExists": "A user with this username already exists.",
+    "userWithEmailExists": "A user with this email already exists.",
+    "userWithIdNotFound": "User not found.",
+    "userWithUsernameNotFound": "User not found.",
+    "userNotEnabled": "This account is not yet activated.",
+    "userAuthenticationFailed": "Authentication failed. Please check your credentials.",
+    "expiredVerificationToken": "This verification link has expired.",
+    "invalidVerificationTokenType": "Invalid verification link.",
+    "verificationTokenNotFound": "Verification link not found or already used.",
+    "insufficientBalance": "Insufficient balance for this withdrawal.",
+    "invalidWithdrawalStatusTransition": "Invalid withdrawal status transition.",
+    "invalidDataProvided": "Invalid data provided. Please check your input.",
+    "validationFailed": "Validation failed. Please check your input.",
+    "roleNotFound": "Role not found."
   },
   "auth": {
     "login": {
@@ -116,6 +144,7 @@
       "approve": "Approve",
       "reject": "Reject",
       "paid": "Mark as paid",
+      "paidConfirm": "Are you sure you want to mark this withdrawal as paid?",
       "detailsTitle": "Withdrawal details",
       "payoutMethod": "Payout method",
       "payoutDetails": "Payout details",

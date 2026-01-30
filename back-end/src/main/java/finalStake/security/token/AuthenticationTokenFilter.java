@@ -1,5 +1,8 @@
 package finalStake.security.token;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import finalStake.exception.authentication.JwtExpiredException;
+import finalStake.response.BaseResponse;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -7,6 +10,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.MediaType;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -29,6 +33,7 @@ public class AuthenticationTokenFilter extends OncePerRequestFilter {
     private final HandlerExceptionResolver handlerExceptionResolver;
     private final UserDetailsService userDetailsService;
     private final TokenUtilities tokenUtilities;
+    private final ObjectMapper objectMapper;
 
     @Override
     protected void doFilterInternal(
@@ -64,6 +69,12 @@ public class AuthenticationTokenFilter extends OncePerRequestFilter {
             }
 
             filterChain.doFilter(request, response);
+        } catch (JwtExpiredException exception) {
+            log.error("JWT authentication failed: {}", exception.getMessage());
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+            BaseResponse<Void> errorResponse = new BaseResponse<>("tokenExpired");
+            response.getWriter().write(objectMapper.writeValueAsString(errorResponse));
         } catch (Exception exception) {
             handlerExceptionResolver.resolveException(request, response, null, exception);
         }

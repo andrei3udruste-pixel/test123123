@@ -1,5 +1,6 @@
 package finalStake.config;
 
+import finalStake.security.JwtAuthenticationEntryPoint;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -32,6 +33,7 @@ public class WebSecurityConfig {
 
     private final AuthenticationProvider authenticationProvider;
     private final AuthenticationTokenFilter authenticationTokenFilter;
+    private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -40,11 +42,17 @@ public class WebSecurityConfig {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         );
         http.authorizeHttpRequests(authorizeRequests -> authorizeRequests
-                .requestMatchers("/api/auth/**").permitAll()
-                .requestMatchers("/api/wallet/**").authenticated()
-                .requestMatchers("/api/withdrawal/admin/**").hasAnyRole("ADMIN","ACCOUNTING")
+                // Public endpoints - authentication
+                .requestMatchers("/api/auth/signin", "/api/auth/signup").permitAll()
+                .requestMatchers("/api/auth/admin/signin").permitAll()
+                .requestMatchers("/api/auth/confirmEmail/**", "/api/auth/resetPassword/**").permitAll()
+                // Swagger documentation
                 .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                // All other requests require authentication (role checks done at controller level)
                 .anyRequest().authenticated()
+        );
+        http.exceptionHandling(exception -> exception
+                .authenticationEntryPoint(jwtAuthenticationEntryPoint)
         );
         http.cors(cors -> cors.configurationSource(corsConfigurationSource()));
         http.authenticationProvider(authenticationProvider);

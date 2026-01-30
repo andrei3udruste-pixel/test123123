@@ -1,124 +1,107 @@
-<div class="withdraw-page">
-  <h2>{{ 'withdrawal.title' | translate }}</h2>
+<mat-card class="max-w-xl mx-auto p-4">
+  <mat-card-title>
+    <p class="p-3 mb-1 text-3xl md:text-4xl">
+      {{ 'withdrawal.title' | translate }}
+    </p>
+  </mat-card-title>
 
-  @if (wallet) {
-    <div class="wallet-info">
-      <strong>
-        {{ 'wallet.balance' | translate }}:
-      </strong>
-      {{ wallet.balance | number:'1.2-2' }} {{ wallet.currency }}
-    </div>
-  }
+  <mat-card-content>
 
-  <form [formGroup]="form" (ngSubmit)="submit()" class="withdraw-form">
-
-    <div class="form-group">
-      <label for="amount">
-        {{ 'withdrawal.amount' | translate }}
-      </label>
-
-      <input
-        id="amount"
-        type="number"
-        formControlName="amount"
-        [placeholder]="'withdrawal.amount' | translate"
-        min="1"
-        step="0.01"
-      />
-
-      @if (form.get('amount')?.touched && form.get('amount')?.invalid) {
-        <div class="error">
-          @if (form.get('amount')?.errors?.['required']) {
-            <span>{{ 'withdrawal.amount' | translate }} is required</span>
-          }
-          @if (form.get('amount')?.errors?.['min']) {
-            <span>{{ 'withdrawal.amount' | translate }} must be greater than 0</span>
-          }
+    @if (wallet) {
+      <div class="flex flex-col gap-3 mb-6 text-sm">
+        <div class="grid grid-cols-1 md:grid-cols-[140px_1fr] items-center gap-2">
+          <span class="font-medium opacity-70">{{ 'wallet.balance' | translate }}</span>
+          <span class="text-lg font-semibold">{{ wallet.balance | number:'1.2-2' }} {{ wallet.currency }}</span>
         </div>
-      }
-    </div>
+      </div>
+    }
 
-    <div class="form-group">
-      <label for="payoutMethod">
-        {{ 'withdrawal.payoutMethod' | translate }}
-      </label>
+    <form [formGroup]="form" (ngSubmit)="submit()" class="flex flex-col gap-4">
 
-      <select
-        id="payoutMethod"
-        formControlName="payoutMethod"
-      >
-        <option value="" disabled selected>
-          {{ 'withdrawal.payoutMethod.placeholder' | translate }}
-        </option>
-        <option value="IBAN">IBAN</option>
-        <option value="REVOLUT">Revolut</option>
-        <option value="PAYPAL">PayPal</option>
-      </select>
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>{{ 'withdrawal.amount' | translate }}</mat-label>
+        <input matInput type="number" formControlName="amount" min="1" step="0.01" />
+        @if (form.get('amount')?.touched && form.get('amount')?.hasError('required')) {
+          <mat-error>{{ 'withdrawal.amount' | translate }} is required</mat-error>
+        }
+        @if (form.get('amount')?.touched && form.get('amount')?.hasError('min')) {
+          <mat-error>{{ 'withdrawal.amount' | translate }} must be greater than 0</mat-error>
+        }
+      </mat-form-field>
 
-      @if (form.get('payoutMethod')?.touched && form.get('payoutMethod')?.invalid) {
-        <div class="error">
-          <span>{{ 'withdrawal.payoutMethod' | translate }} is required</span>
-        </div>
-      }
-    </div>
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>{{ 'withdrawal.payoutMethod' | translate }}</mat-label>
+        <mat-select formControlName="payoutMethod">
+          <mat-option value="IBAN">IBAN</mat-option>
+          <mat-option value="REVOLUT">Revolut</mat-option>
+          <mat-option value="PAYPAL">PayPal</mat-option>
+        </mat-select>
+        @if (form.get('payoutMethod')?.touched && form.get('payoutMethod')?.hasError('required')) {
+          <mat-error>{{ 'withdrawal.payoutMethod' | translate }} is required</mat-error>
+        }
+      </mat-form-field>
 
-    <div class="form-group">
-      <label for="payoutDetails">
-        {{ 'withdrawal.payoutDetails' | translate }}
-      </label>
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>{{ 'withdrawal.payoutDetails' | translate }}</mat-label>
+        <input matInput type="text" formControlName="payoutDetails" [placeholder]="'withdrawal.payoutDetails.placeholder' | translate" />
+        @if (form.get('payoutDetails')?.touched && form.get('payoutDetails')?.hasError('required')) {
+          <mat-error>{{ 'withdrawal.payoutDetails' | translate }} is required</mat-error>
+        }
+      </mat-form-field>
 
-      <input
-        id="payoutDetails"
-        type="text"
-        formControlName="payoutDetails"
-        [placeholder]="'withdrawal.payoutDetails.placeholder' | translate"
-      />
+      <div class="flex justify-end gap-3">
+        <button
+          mat-flat-button
+          color="primary"
+          type="submit"
+          [disabled]="form.invalid">
+          {{ 'withdrawal.submit' | translate }}
+        </button>
+      </div>
 
-      @if (form.get('payoutDetails')?.touched && form.get('payoutDetails')?.invalid) {
-        <div class="error">
-          <span>{{ 'withdrawal.payoutDetails' | translate }} is required</span>
-        </div>
-      }
-    </div>
+    </form>
 
-    <button type="submit" [disabled]="form.invalid">
-      {{ 'withdrawal.submit' | translate }}
-    </button>
-  </form>
+    @if (withdrawals.length > 0) {
+      <div class="mt-8">
+        <h3 class="text-xl font-semibold mb-4">{{ 'withdrawal.menu' | translate }}</h3>
 
-  @if (withdrawals.length > 0) {
-    <div class="withdrawals-list">
-      <h3>{{ 'withdrawal.menu' | translate }}</h3>
+        <table mat-table [dataSource]="withdrawals" class="mat-elevation-z1 w-full rounded-lg overflow-hidden">
 
-      <table>
-        <thead>
-        <tr>
-          <th>Date</th>
-          <th>{{ 'withdrawal.amount' | translate }}</th>
-          <th>Status</th>
-        </tr>
-        </thead>
+          <ng-container matColumnDef="createdAt">
+            <th mat-header-cell *matHeaderCellDef>Date</th>
+            <td mat-cell *matCellDef="let w">{{ w.createdAt | date: 'dd.MM.yyyy HH:mm' }}</td>
+          </ng-container>
 
-        <tbody>
-          @for (w of withdrawals; track w.id) {
-            <tr>
-              <td>{{ w.createdAt | date: 'dd.MM.yyyy HH:mm' }}</td>
-              <td>{{ w.amount }}</td>
-              <td>
-                <span class="status" [ngClass]="w.status.toLowerCase()">
-                  {{ ('withdrawal.status.' + w.status) | translate }}
-                </span>
-              </td>
-            </tr>
-          }
-        </tbody>
-      </table>
-    </div>
-  }
+          <ng-container matColumnDef="amount">
+            <th mat-header-cell *matHeaderCellDef>{{ 'withdrawal.amount' | translate }}</th>
+            <td mat-cell *matCellDef="let w">{{ w.amount | number:'1.2-2' }}</td>
+          </ng-container>
 
-  @if (withdrawals.length === 0) {
-    <div class="empty">
-      {{ 'withdrawal.empty' | translate }}
-    </div>
-  }
-</div>
+          <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef>Status</th>
+            <td mat-cell *matCellDef="let w">
+              <span [ngClass]="{
+                'text-orange-500': w.status === 'PENDING',
+                'text-blue-600': w.status === 'APPROVED',
+                'text-green-600': w.status === 'PAID',
+                'text-red-600': w.status === 'REJECTED'
+              }" class="font-semibold uppercase">
+                {{ ('withdrawal.status.' + w.status) | translate }}
+              </span>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="['createdAt', 'amount', 'status']"></tr>
+          <tr mat-row *matRowDef="let row; columns: ['createdAt', 'amount', 'status']"></tr>
+        </table>
+      </div>
+    }
+
+    @if (withdrawals.length === 0) {
+      <div class="mt-8 text-gray-500">
+        {{ 'withdrawal.empty' | translate }}
+      </div>
+    }
+
+  </mat-card-content>
+</mat-card>

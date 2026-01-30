@@ -1,46 +1,73 @@
-@if (withdrawal()) {
-  <mat-card class="page-card">
-    <mat-card-title>
+<mat-card class="max-w-xl mx-auto p-4">
+  <mat-card-title>
+    <p class="p-3 mb-1 text-3xl md:text-4xl">
       {{ 'withdrawal.admin.detailsTitle' | translate }}
-    </mat-card-title>
+    </p>
+  </mat-card-title>
 
-    <mat-card-content>
-      <div class="details-grid">
-        <div><strong>ID:</strong></div>
-        <div>{{ w().id }}</div>
+  <mat-card-content>
 
-        <div><strong>{{ 'withdrawal.admin.user' | translate }}:</strong></div>
-        <div>{{ w().username }}</div>
+    @if (!withdrawal()) {
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    }
 
-        <div><strong>{{ 'withdrawal.amount' | translate }}:</strong></div>
-        <div>{{ w().amount | number:'1.2-2' }}</div>
+    @if (withdrawal()) {
 
-        <div><strong>{{ 'withdrawal.admin.status' | translate }}:</strong></div>
-        <div>{{ ('withdrawal.status.' + w().status) | translate }}</div>
+      <div class="flex flex-col gap-5 mb-6">
 
-        <div><strong>{{ 'withdrawal.admin.payoutMethod' | translate }}:</strong></div>
-        <div>{{ w().payoutMethod }}</div>
-
-        <div><strong>{{ 'withdrawal.admin.payoutDetails' | translate }}:</strong></div>
-        <div>{{ w().payoutDetails }}</div>
-
-        <div><strong>{{ 'withdrawal.admin.createdAt' | translate }}:</strong></div>
-        <div>{{ w().createdAt | date:'dd.MM.yyyy HH:mm' }}</div>
-
-        <div><strong>{{ 'withdrawal.admin.processedAt' | translate }}:</strong></div>
-        <div>
-          {{ w().processedAt ? (w().processedAt | date:'dd.MM.yyyy HH:mm') : '-' }}
+        <div class="grid grid-cols-1 md:grid-cols-[160px_1fr] items-center gap-2">
+          <span class="font-medium opacity-70">ID</span>
+          <span>{{ w().id }}</span>
         </div>
 
-        <div><strong>{{ 'withdrawal.admin.adminNote' | translate }}:</strong></div>
-        <div>{{ w().adminNote || '-' }}</div>
+        <div class="grid grid-cols-1 md:grid-cols-[160px_1fr] items-center gap-2">
+          <span class="font-medium opacity-70">{{ 'withdrawal.admin.user' | translate }}</span>
+          <span>{{ w().username }}</span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-[160px_1fr] items-center gap-2">
+          <span class="font-medium opacity-70">{{ 'withdrawal.amount' | translate }}</span>
+          <span>{{ w().amount | number:'1.2-2' }}</span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-[160px_1fr] items-center gap-2">
+          <span class="font-medium opacity-70">{{ 'withdrawal.admin.status' | translate }}</span>
+          <span>{{ ('withdrawal.status.' + w().status) | translate }}</span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-[160px_1fr] items-center gap-2">
+          <span class="font-medium opacity-70">{{ 'withdrawal.admin.payoutMethod' | translate }}</span>
+          <span>{{ w().payoutMethod }}</span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-[160px_1fr] items-center gap-2">
+          <span class="font-medium opacity-70">{{ 'withdrawal.admin.payoutDetails' | translate }}</span>
+          <span>{{ w().payoutDetails }}</span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-[160px_1fr] items-center gap-2">
+          <span class="font-medium opacity-70">{{ 'withdrawal.admin.createdAt' | translate }}</span>
+          <span>{{ w().createdAt | date:'dd.MM.yyyy HH:mm' }}</span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-[160px_1fr] items-center gap-2">
+          <span class="font-medium opacity-70">{{ 'withdrawal.admin.processedAt' | translate }}</span>
+          <span>{{ w().processedAt ? (w().processedAt | date:'dd.MM.yyyy HH:mm') : '-' }}</span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-[160px_1fr] items-center gap-2">
+          <span class="font-medium opacity-70">{{ 'withdrawal.admin.adminNote' | translate }}</span>
+          <span>{{ w().adminNote || '-' }}</span>
+        </div>
+
       </div>
 
-      <div class="actions">
+      <div class="flex gap-3 justify-end">
         <button mat-stroked-button (click)="back()">
-          {{ 'common.back' | translate }}
+          {{ 'actions.back' | translate }}
         </button>
       </div>
-    </mat-card-content>
-  </mat-card>
-}
+    }
+
+  </mat-card-content>
+</mat-card>
