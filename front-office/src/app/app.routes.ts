@@ -7,6 +7,7 @@ import {loginGuard} from './shared/guards/login/login-guard';
 import {authGuard} from './shared/guards/auth/auth-guard';
 import {Layout} from './modules/main/layout/layout';
 import mainRoutes from './modules/main/main.routes';
+import { BlackjackComponent } from './features/blackjack/blackjack.component';
 
 export const routes: Routes = [
   {
@@ -23,6 +24,12 @@ export const routes: Routes = [
     component: LoginPage,
     canActivate: [loginGuard]
   },
+
+  {
+  path: 'blackjack',
+  loadChildren: () => import('./modules/blackjack/blackjack.routes').then(m => m.default)
+},
+  
   {
     path: '',
     component: Layout,

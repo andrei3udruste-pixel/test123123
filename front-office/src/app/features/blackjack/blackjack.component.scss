@@ -1,0 +1,87 @@
+.blackjack-page {
+  padding: 24px;
+  display: flex;
+  justify-content: center;
+}
+
+.blackjack-card {
+  width: 100%;
+  max-width: 900px;
+  padding: 24px;
+}
+
+.blackjack-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.balance-display {
+  font-size: 14px;
+  color: #555;
+}
+
+.game-area {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  margin: 24px 0;
+}
+
+.dealer-area, .player-area {
+  text-align: center;
+}
+
+.hand {
+  font-size: 1.5rem;
+  padding: 16px;
+  background: #000;
+  color: white;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.controls {
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.status-msg {
+  font-weight: 500;
+}
+
+.status-msg.win {
+  color: #2e7d32;
+}
+
+.bet-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.bet-controls input {
+  width: 140px;
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  text-align: center;
+}
+
+button {
+  padding: 12px 32px;
+  font-size: 1.2rem;
+  background: #1976d2;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+button:disabled {
+  background: #ccc;
+}
